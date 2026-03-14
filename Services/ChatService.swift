@@ -5,7 +5,7 @@ struct ChatRequest: Encodable {
 }
 
 enum ChatService {
-    static func send(conversationId: String, message: String) async -> AsyncThrowingStream<String, Error> {
+    static func send(conversationId: String, message: String) async -> AsyncThrowingStream<SSEEvent, Error> {
         await APIClient.shared.stream(
             path: "/chat/\(conversationId)",
             body: ChatRequest(message: message)

@@ -5,8 +5,17 @@ struct ChatView: View {
     @State private var viewModel: ChatViewModel
     @FocusState private var isInputFocused: Bool
 
-    init(conversationId: String) {
-        _viewModel = State(initialValue: ChatViewModel(conversationId: conversationId))
+    init(conversationId: String, agentId: String, userId: String) {
+        _viewModel = State(initialValue: ChatViewModel(
+            conversationId: conversationId,
+            agentId: agentId,
+            userId: userId
+        ))
+    }
+
+    private var streamingWithEmptyContent: Bool {
+        viewModel.isStreaming &&
+        (viewModel.messages.last.map { $0.role == .assistant && $0.content.isEmpty } ?? false)
     }
 
     var body: some View {
@@ -21,11 +30,12 @@ struct ChatView: View {
                                 .transition(.move(edge: .bottom).combined(with: .opacity))
                         }
 
-                        if viewModel.isStreaming, let last = viewModel.messages.last,
-                           last.role == .assistant, last.content.isEmpty {
+                        // Show typing indicator when AI is composing or streaming an empty placeholder
+                        if viewModel.isTyping || streamingWithEmptyContent {
                             TypingIndicator()
                                 .padding(.leading, 16)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .id("typing")
                         }
                     }
                     .padding(.vertical, 12)
@@ -39,6 +49,13 @@ struct ChatView: View {
                             proxy.scrollTo(lastId, anchor: .bottom)
                         }
                         viewModel.scrollToBottom = false
+                    }
+                }
+                .onChange(of: viewModel.isTyping) {
+                    if viewModel.isTyping {
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            proxy.scrollTo("typing", anchor: .bottom)
+                        }
                     }
                 }
             }
@@ -80,24 +97,101 @@ struct ChatView: View {
         .navigationTitle(appViewModel.agentName ?? String(localized: "聊天"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            // Leading: Intimacy badge (7.7)
+            ToolbarItem(placement: .topBarLeading) {
+                if let intimacy = viewModel.intimacy {
+                    IntimacyBadge(level: intimacy.level)
+                }
+            }
+
+            // Principal: AI status label (7.5) — shown below nav title via subtitle trick
             ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink {
-                    SettingsHubView()
-                } label: {
-                    Image(systemName: "line.3.horizontal")
-                        .font(.system(size: 16))
+                HStack(spacing: 8) {
+                    if let status = viewModel.agentStatus {
+                        AgentStatusBadge(status: status)
+                    }
+                    NavigationLink {
+                        SettingsHubView()
+                    } label: {
+                        Image(systemName: "line.3.horizontal")
+                            .font(.system(size: 16))
+                    }
                 }
             }
         }
         .gradientBackground()
         .task {
             await viewModel.loadHistory()
+            await withTaskGroup(of: Void.self) { group in
+                group.addTask { await self.viewModel.loadStatus() }
+                group.addTask { await self.viewModel.loadIntimacy() }
+            }
         }
         .onDisappear {
             viewModel.cancel()
         }
     }
 }
+
+// MARK: - AgentStatusBadge (7.5)
+
+private struct AgentStatusBadge: View {
+    let status: AgentStatus
+
+    private var color: Color {
+        switch status.status {
+        case "sleep": return .indigo
+        case "busy":  return .orange
+        default:      return .green
+        }
+    }
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: status.statusIcon)
+                .font(.system(size: 9))
+            Text(status.activity)
+                .font(.caption2)
+        }
+        .foregroundStyle(color)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(color.opacity(0.12))
+        .clipShape(Capsule())
+    }
+}
+
+// MARK: - IntimacyBadge (7.7)
+
+private struct IntimacyBadge: View {
+    let level: IntimacyLevel
+
+    private var badgeColor: Color {
+        switch level.level {
+        case "L5": return .pink
+        case "L4": return .red
+        case "L3": return .orange
+        case "L2": return .yellow
+        default:   return .gray
+        }
+    }
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: level.symbolName)
+                .font(.system(size: 9))
+            Text(level.label)
+                .font(.caption2)
+        }
+        .foregroundStyle(badgeColor)
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4)
+        .background(badgeColor.opacity(0.12))
+        .clipShape(Capsule())
+    }
+}
+
+// MARK: - SettingsHubView
 
 /// Hub page for Memory / Emotion / Settings
 struct SettingsHubView: View {

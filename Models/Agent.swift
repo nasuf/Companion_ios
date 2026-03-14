@@ -16,6 +16,29 @@ struct Agent: Codable, Identifiable {
     }
 }
 
+/// Response from GET /agents/{agent_id}/status
+struct AgentStatus: Decodable {
+    let activity: String
+    let type: String
+    let status: String   // "idle" | "busy" | "sleep"
+
+    var statusIcon: String {
+        switch status {
+        case "sleep": return "moon.fill"
+        case "busy":  return "clock.fill"
+        default:      return "circle.fill"
+        }
+    }
+
+    var statusColor: String {
+        switch status {
+        case "sleep": return "statusSleep"
+        case "busy":  return "statusBusy"
+        default:      return "statusIdle"
+        }
+    }
+}
+
 struct AgentCreate: Encodable {
     let name: String
     let userId: String

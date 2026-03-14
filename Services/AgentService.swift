@@ -30,4 +30,11 @@ enum AgentService {
             path: "/agents/\(id)"
         )
     }
+
+    static func getStatus(agentId: String) async throws -> AgentStatus {
+        try await APIClient.shared.request(
+            method: "GET",
+            path: "/agents/\(agentId)/status"
+        )
+    }
 }

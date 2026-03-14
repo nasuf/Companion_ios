@@ -11,9 +11,9 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .gradientBackground()
             } else if let conversationId = appViewModel.conversationId,
-                      appViewModel.agentId != nil {
+                      let agentId = appViewModel.agentId {
                 NavigationStack {
-                    ChatView(conversationId: conversationId)
+                    ChatView(conversationId: conversationId, agentId: agentId, userId: appViewModel.userId)
                 }
                 .transition(.opacity)
             } else {

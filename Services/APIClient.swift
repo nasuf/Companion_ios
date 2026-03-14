@@ -1,5 +1,10 @@
 import Foundation
 
+enum SSEEvent {
+    case token(String)
+    case typing(duration: Double)
+}
+
 enum APIError: LocalizedError {
     case invalidURL
     case httpError(Int, String)
@@ -69,7 +74,7 @@ actor APIClient {
     func stream(
         path: String,
         body: some Encodable
-    ) -> AsyncThrowingStream<String, Error> {
+    ) -> AsyncThrowingStream<SSEEvent, Error> {
         AsyncThrowingStream { continuation in
             Task {
                 do {
@@ -86,11 +91,15 @@ actor APIClient {
                             if currentEvent == "done" {
                                 break
                             }
-                            if currentEvent == "token", let jsonData = dataStr.data(using: .utf8) {
-                                if let dict = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
-                                   let token = dict["token"] as? String {
-                                    continuation.yield(token)
-                                }
+                            guard let jsonData = dataStr.data(using: .utf8),
+                                  let dict = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any]
+                            else { continue }
+
+                            if currentEvent == "token", let token = dict["token"] as? String {
+                                continuation.yield(.token(token))
+                            } else if currentEvent == "typing" {
+                                let duration = dict["duration"] as? Double ?? 1.0
+                                continuation.yield(.typing(duration: duration))
                             }
                         }
                     }
