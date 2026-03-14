@@ -71,7 +71,7 @@ struct EmotionTimelineView: View {
                                     GlassCard {
                                         VStack(alignment: .leading, spacing: 6) {
                                             HStack {
-                                                Text(formatDate(entry.timestamp))
+                                                Text(DateFormatting.dateTime(entry.timestamp))
                                                     .font(.caption)
                                                     .foregroundStyle(.secondary)
                                                 Spacer()
@@ -119,16 +119,6 @@ struct EmotionTimelineView: View {
         }
     }
 
-    private func formatDate(_ dateStr: String) -> String {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        guard let date = formatter.date(from: dateStr) ?? ISO8601DateFormatter().date(from: dateStr) else {
-            return dateStr
-        }
-        let df = DateFormatter()
-        df.dateFormat = "MM/dd HH:mm"
-        return df.string(from: date)
-    }
 }
 
 private struct EmotionGauge: View {

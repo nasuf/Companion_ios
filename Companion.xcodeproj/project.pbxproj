@@ -48,6 +48,7 @@
 		E5F6A7B8C9D0E1F2A3B4C5D6 /* BoundaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7B8C9D0E1F2A3B4C5D6E7 /* BoundaryService.swift */; };
 		A7B8C9D0E1F2A3B4C5D6E7F8 /* MemoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C9D0E1F2A3B4C5D6E7F8A9 /* MemoryDetailView.swift */; };
 		C9D0E1F2A3B4C5D6E7F8A9B0 /* UserPortraitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1F2A3B4C5D6E7F8A9B0C1 /* UserPortraitView.swift */; };
+		E1F2A3B4C5D6E7F8A9B0C1D2 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A3B4C5D6E7F8A9B0C1D2E3 /* DateFormatting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +94,7 @@
 		F6A7B8C9D0E1F2A3B4C5D6E7 /* BoundaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundaryService.swift; sourceTree = "<group>"; };
 		B8C9D0E1F2A3B4C5D6E7F8A9 /* MemoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDetailView.swift; sourceTree = "<group>"; };
 		D0E1F2A3B4C5D6E7F8A9B0C1 /* UserPortraitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPortraitView.swift; sourceTree = "<group>"; };
+		F2A3B4C5D6E7F8A9B0C1D2E3 /* DateFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -234,6 +236,7 @@
 		E92394792E6F8724333E82E3 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				F2A3B4C5D6E7F8A9B0C1D2E3 /* DateFormatting.swift */,
 				D20F5E6741875DF344FE4D68 /* EmptyStateView.swift */,
 				D6203DC1257656E2ADBBB3FB /* GlassCard.swift */,
 				F44BAE551AA0E898AA184179 /* GradientBackground.swift */,
@@ -334,6 +337,7 @@
 				826F6F66C523126874BAFCDA /* ChatViewModel.swift in Sources */,
 				07B995F7763ABBD83D11E0A6 /* CompanionApp.swift in Sources */,
 				DD7A0DE47E35AF50F30F1BD2 /* ContentView.swift in Sources */,
+				E1F2A3B4C5D6E7F8A9B0C1D2 /* DateFormatting.swift in Sources */,
 				D115814BBFC95D6AB20A8D2C /* Conversation.swift in Sources */,
 				15FAC83D5619BA22AC16BD85 /* ConversationService.swift in Sources */,
 				3C375278A5E5C6EB98AC88EF /* Emotion.swift in Sources */,

@@ -30,13 +30,6 @@ struct AgentStatus: Decodable {
         }
     }
 
-    var statusColor: String {
-        switch status {
-        case "sleep": return "statusSleep"
-        case "busy":  return "statusBusy"
-        default:      return "statusIdle"
-        }
-    }
 }
 
 struct AgentCreate: Encodable {

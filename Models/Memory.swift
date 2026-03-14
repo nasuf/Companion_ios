@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 struct Memory: Codable, Identifiable {
     let id: String
@@ -22,6 +23,14 @@ struct Memory: Codable, Identifiable {
         case 1: return String(localized: "核心记忆")
         case 2: return String(localized: "重要记忆")
         default: return String(localized: "普通记忆")
+        }
+    }
+
+    var levelColor: Color {
+        switch level {
+        case 1: return .red
+        case 2: return .orange
+        default: return .blue
         }
     }
 }

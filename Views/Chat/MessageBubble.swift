@@ -33,7 +33,7 @@ struct MessageBubble: View {
                         RoundedRectangle(cornerRadius: 16)
                     )
 
-                Text(formatTime(message.createdAt))
+                Text(DateFormatting.time(message.createdAt))
                     .font(.caption2)
                     .foregroundStyle(.tertiary)
                     .padding(.horizontal, 4)
@@ -44,14 +44,4 @@ struct MessageBubble: View {
         .padding(.horizontal, 12)
     }
 
-    private func formatTime(_ dateStr: String) -> String {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        guard let date = formatter.date(from: dateStr) ?? ISO8601DateFormatter().date(from: dateStr) else {
-            return ""
-        }
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "HH:mm"
-        return timeFormatter.string(from: date)
-    }
 }

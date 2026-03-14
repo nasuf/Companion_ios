@@ -105,6 +105,7 @@ final class ChatViewModel {
                     self.error = error.localizedDescription
                 }
             }
+            typingTask?.cancel()
             isStreaming = false
             isTyping = false
         }

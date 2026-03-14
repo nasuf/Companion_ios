@@ -3,14 +3,6 @@ import SwiftUI
 struct MemoryDetailView: View {
     let memory: Memory
 
-    private var levelColor: Color {
-        switch memory.level {
-        case 1: return .red
-        case 2: return .orange
-        default: return .blue
-        }
-    }
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -21,7 +13,7 @@ struct MemoryDetailView: View {
                         .foregroundStyle(.white)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 4)
-                        .background(levelColor)
+                        .background(memory.levelColor)
                         .clipShape(Capsule())
 
                     if let type = memory.type {
@@ -61,7 +53,7 @@ struct MemoryDetailView: View {
                     MetadataRow(label: String(localized: "重要度"),
                                 value: String(format: "%.0f%%", memory.importance * 100))
                     MetadataRow(label: String(localized: "创建时间"),
-                                value: formatDate(memory.createdAt))
+                                value: DateFormatting.detail(memory.createdAt))
                     if let similarity = memory.similarity {
                         MetadataRow(label: String(localized: "相似度"),
                                     value: String(format: "%.1f%%", similarity * 100))
@@ -76,16 +68,6 @@ struct MemoryDetailView: View {
         .gradientBackground()
     }
 
-    private func formatDate(_ dateStr: String) -> String {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        guard let date = formatter.date(from: dateStr) ?? ISO8601DateFormatter().date(from: dateStr) else {
-            return dateStr
-        }
-        let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd HH:mm"
-        return df.string(from: date)
-    }
 }
 
 private struct MetadataRow: View {

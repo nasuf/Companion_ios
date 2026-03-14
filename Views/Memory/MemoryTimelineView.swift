@@ -115,20 +115,12 @@ private struct FilterChip: View {
 private struct MemoryCard: View {
     let memory: Memory
 
-    private var levelColor: Color {
-        switch memory.level {
-        case 1: return .red
-        case 2: return .orange
-        default: return .blue
-        }
-    }
-
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             // Timeline dot + line
             VStack(spacing: 0) {
                 Circle()
-                    .fill(levelColor)
+                    .fill(memory.levelColor)
                     .frame(width: 10, height: 10)
                 Rectangle()
                     .fill(.quaternary)
@@ -139,10 +131,10 @@ private struct MemoryCard: View {
                 HStack {
                     Text(memory.levelLabel)
                         .font(.caption2.weight(.medium))
-                        .foregroundStyle(levelColor)
+                        .foregroundStyle(memory.levelColor)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 2)
-                        .background(levelColor.opacity(0.15))
+                        .background(memory.levelColor.opacity(0.15))
                         .clipShape(Capsule())
 
                     if let type = memory.type {
@@ -153,7 +145,7 @@ private struct MemoryCard: View {
 
                     Spacer()
 
-                    Text(formatDate(memory.createdAt))
+                    Text(DateFormatting.short(memory.createdAt))
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }
@@ -177,14 +169,4 @@ private struct MemoryCard: View {
         .padding(.vertical, 4)
     }
 
-    private func formatDate(_ dateStr: String) -> String {
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        guard let date = formatter.date(from: dateStr) ?? ISO8601DateFormatter().date(from: dateStr) else {
-            return dateStr
-        }
-        let df = DateFormatter()
-        df.dateFormat = "MM/dd"
-        return df.string(from: date)
-    }
 }

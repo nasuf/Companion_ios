@@ -4,7 +4,6 @@ struct UserPortraitView: View {
     @Environment(AppViewModel.self) private var appViewModel
     @State private var portrait: String?
     @State private var isLoading = true
-    @State private var error: String?
 
     var body: some View {
         ScrollView {
@@ -47,7 +46,6 @@ struct UserPortraitView: View {
             portrait = response.portrait
         } catch {
             // 404 means no portrait yet, treat as empty
-            self.error = error.localizedDescription
         }
         isLoading = false
     }

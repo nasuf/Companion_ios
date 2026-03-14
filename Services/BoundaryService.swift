@@ -1,6 +1,6 @@
 import Foundation
 
-struct BoundaryStatus: Decodable {
+struct BoundaryStatus: Decodable, Equatable {
     let patience: Int
     let zone: String
 }
