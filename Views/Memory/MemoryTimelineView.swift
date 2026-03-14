@@ -62,7 +62,12 @@ struct MemoryTimelineView: View {
                         ScrollView {
                             LazyVStack(spacing: 0) {
                                 ForEach(viewModel.memories) { memory in
-                                    MemoryCard(memory: memory)
+                                    NavigationLink {
+                                        MemoryDetailView(memory: memory)
+                                    } label: {
+                                        MemoryCard(memory: memory)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
                             }
                             .padding(.horizontal)

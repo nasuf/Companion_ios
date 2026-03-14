@@ -45,6 +45,9 @@
 		FB90A5DC818F6990DC58D878 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23781419E271ED8B04D68D09 /* Memory.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E1F2 /* Intimacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7B8C9D0E1F2A3 /* Intimacy.swift */; };
 		C3D4E5F6A7B8C9D0E1F2A3B4 /* IntimacyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E5F6A7B8C9D0E1F2A3B4C5 /* IntimacyService.swift */; };
+		E5F6A7B8C9D0E1F2A3B4C5D6 /* BoundaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7B8C9D0E1F2A3B4C5D6E7 /* BoundaryService.swift */; };
+		A7B8C9D0E1F2A3B4C5D6E7F8 /* MemoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C9D0E1F2A3B4C5D6E7F8A9 /* MemoryDetailView.swift */; };
+		C9D0E1F2A3B4C5D6E7F8A9B0 /* UserPortraitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1F2A3B4C5D6E7F8A9B0C1 /* UserPortraitView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +90,9 @@
 		FEE68278BF53A03C59A1AFEF /* Agent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agent.swift; sourceTree = "<group>"; };
 		B2C3D4E5F6A7B8C9D0E1F2A3 /* Intimacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intimacy.swift; sourceTree = "<group>"; };
 		D4E5F6A7B8C9D0E1F2A3B4C5 /* IntimacyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntimacyService.swift; sourceTree = "<group>"; };
+		F6A7B8C9D0E1F2A3B4C5D6E7 /* BoundaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundaryService.swift; sourceTree = "<group>"; };
+		B8C9D0E1F2A3B4C5D6E7F8A9 /* MemoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDetailView.swift; sourceTree = "<group>"; };
+		D0E1F2A3B4C5D6E7F8A9B0C1 /* UserPortraitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPortraitView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -128,6 +134,7 @@
 				AF0B232FE248BE3D29B51144 /* ChatService.swift */,
 				498BAFECA6128CD178FD4449 /* ConversationService.swift */,
 				3FEC8619EC1AC2A285958C28 /* EmotionService.swift */,
+				F6A7B8C9D0E1F2A3B4C5D6E7 /* BoundaryService.swift */,
 				D4E5F6A7B8C9D0E1F2A3B4C5 /* IntimacyService.swift */,
 				EDDD02F29FA0955447A3F90B /* MemoryService.swift */,
 				EBF8E76787C1E83DFDA1C97C /* UserService.swift */,
@@ -180,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				43AF4B877C5994A76B357F56 /* SettingsView.swift */,
+				D0E1F2A3B4C5D6E7F8A9B0C1 /* UserPortraitView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -195,6 +203,7 @@
 		CBFB189B3CBDF67BBB058A42 /* Memory */ = {
 			isa = PBXGroup;
 			children = (
+				B8C9D0E1F2A3B4C5D6E7F8A9 /* MemoryDetailView.swift */,
 				16A2A1E4C1C5845BA48C5DD5 /* MemoryTimelineView.swift */,
 			);
 			path = Memory;
@@ -337,6 +346,9 @@
 				B6BE65F64264F9F7D97F8AAC /* GradientBackground.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E1F2 /* Intimacy.swift in Sources */,
 				C3D4E5F6A7B8C9D0E1F2A3B4 /* IntimacyService.swift in Sources */,
+				E5F6A7B8C9D0E1F2A3B4C5D6 /* BoundaryService.swift in Sources */,
+				A7B8C9D0E1F2A3B4C5D6E7F8 /* MemoryDetailView.swift in Sources */,
+				C9D0E1F2A3B4C5D6E7F8A9B0 /* UserPortraitView.swift in Sources */,
 				FB90A5DC818F6990DC58D878 /* Memory.swift in Sources */,
 				076375C8836167E1950C7A44 /* MemoryService.swift in Sources */,
 				D078536B155547E556366E51 /* MemoryTimelineView.swift in Sources */,

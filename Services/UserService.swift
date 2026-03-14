@@ -15,4 +15,16 @@ enum UserService {
             path: "/users/\(id)"
         )
     }
+
+    static func getPortrait(userId: String, agentId: String) async throws -> PortraitResponse {
+        try await APIClient.shared.request(
+            method: "GET",
+            path: "/users/\(userId)/portrait",
+            queryItems: [URLQueryItem(name: "agent_id", value: agentId)]
+        )
+    }
+}
+
+struct PortraitResponse: Decodable {
+    let portrait: String
 }

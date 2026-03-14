@@ -60,6 +60,20 @@ struct ChatView: View {
                 }
             }
 
+            // Blocked overlay (7.6)
+            if viewModel.boundaryStatus?.zone == "blocked" {
+                HStack(spacing: 8) {
+                    Image(systemName: "hand.raised.fill")
+                        .foregroundStyle(.red)
+                    Text("对方暂时不想聊天，试着道个歉吧")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
+                .background(.ultraThinMaterial)
+            }
+
             // Input bar
             HStack(spacing: 12) {
                 TextField(String(localized: "输入消息..."), text: $viewModel.inputText, axis: .vertical)
@@ -97,10 +111,15 @@ struct ChatView: View {
         .navigationTitle(appViewModel.agentName ?? String(localized: "聊天"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            // Leading: Intimacy badge (7.7)
+            // Leading: Intimacy badge (7.7) + Boundary mood (7.6)
             ToolbarItem(placement: .topBarLeading) {
-                if let intimacy = viewModel.intimacy {
-                    IntimacyBadge(level: intimacy.level)
+                HStack(spacing: 6) {
+                    if let intimacy = viewModel.intimacy {
+                        IntimacyBadge(level: intimacy.level)
+                    }
+                    if let boundary = viewModel.boundaryStatus, boundary.zone != "normal" {
+                        BoundaryMoodIndicator(zone: boundary.zone, patience: boundary.patience)
+                    }
                 }
             }
 
@@ -125,6 +144,7 @@ struct ChatView: View {
             await withTaskGroup(of: Void.self) { group in
                 group.addTask { await self.viewModel.loadStatus() }
                 group.addTask { await self.viewModel.loadIntimacy() }
+                group.addTask { await self.viewModel.loadBoundary() }
             }
         }
         .onDisappear {
@@ -191,6 +211,45 @@ private struct IntimacyBadge: View {
     }
 }
 
+// MARK: - BoundaryMoodIndicator (7.6)
+
+private struct BoundaryMoodIndicator: View {
+    let zone: String
+    let patience: Int
+
+    private var icon: String {
+        switch zone {
+        case "blocked": return "xmark.circle.fill"
+        case "low": return "exclamationmark.triangle.fill"
+        case "medium": return "cloud.fill"
+        default: return "face.smiling"
+        }
+    }
+
+    private var color: Color {
+        switch zone {
+        case "blocked": return .red
+        case "low": return .orange
+        case "medium": return .yellow
+        default: return .green
+        }
+    }
+
+    var body: some View {
+        HStack(spacing: 3) {
+            Image(systemName: icon)
+                .font(.system(size: 9))
+            Text("\(patience)")
+                .font(.caption2)
+        }
+        .foregroundStyle(color)
+        .padding(.horizontal, 6)
+        .padding(.vertical, 3)
+        .background(color.opacity(0.12))
+        .clipShape(Capsule())
+    }
+}
+
 // MARK: - SettingsHubView
 
 /// Hub page for Memory / Emotion / Settings
@@ -209,6 +268,12 @@ struct SettingsHubView: View {
                 EmotionTimelineView()
             } label: {
                 Label(String(localized: "情绪"), systemImage: "heart.text.square")
+            }
+
+            NavigationLink {
+                UserPortraitView()
+            } label: {
+                Label(String(localized: "画像"), systemImage: "person.text.rectangle")
             }
 
             NavigationLink {

@@ -16,6 +16,9 @@ final class ChatViewModel {
     // Intimacy (7.7)
     var intimacy: IntimacyData?
 
+    // Boundary (7.6)
+    var boundaryStatus: BoundaryStatus?
+
     private let conversationId: String
     private let agentId: String
     private let userId: String
@@ -45,6 +48,10 @@ final class ChatViewModel {
 
     func loadIntimacy() async {
         intimacy = try? await IntimacyService.get(agentId: agentId, userId: userId)
+    }
+
+    func loadBoundary() async {
+        boundaryStatus = try? await BoundaryService.get(agentId: agentId, userId: userId)
     }
 
     func send() {
