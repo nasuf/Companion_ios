@@ -4,6 +4,8 @@ struct ChatView: View {
     @Environment(AppViewModel.self) private var appViewModel
     @State private var viewModel: ChatViewModel
     @FocusState private var isInputFocused: Bool
+    @State private var isAtBottom = true
+    @State private var hasNewMessage = false
 
     init(conversationId: String, agentId: String, userId: String) {
         _viewModel = State(initialValue: ChatViewModel(
@@ -56,36 +58,69 @@ struct ChatView: View {
                                 .padding(.leading, 16)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
-                        
-                        // Spacer acts as the scroll target so padding isn't clipped
+
+                        // Bottom spacer: detects whether user is scrolled to bottom
                         Color.clear
                             .frame(height: 16)
                             .id("bottom_spacer")
+                            .onAppear { isAtBottom = true; hasNewMessage = false }
+                            .onDisappear { isAtBottom = false }
                     }
                     .padding(.vertical, 12)
                 }
-                .onTapGesture {
-                    isInputFocused = false
-                }
+                .onTapGesture { isInputFocused = false }
                 .onChange(of: viewModel.scrollToBottom) {
                     if viewModel.scrollToBottom {
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            proxy.scrollTo("bottom_spacer", anchor: .bottom)
+                        if isAtBottom {
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                proxy.scrollTo("bottom_spacer", anchor: .bottom)
+                            }
+                        } else {
+                            withAnimation { hasNewMessage = true }
                         }
                         viewModel.scrollToBottom = false
                     }
                 }
                 .onChange(of: viewModel.isTyping) {
                     if viewModel.isTyping {
-                        withAnimation(.easeOut(duration: 0.2)) {
-                            proxy.scrollTo("bottom_spacer", anchor: .bottom)
+                        if isAtBottom {
+                            withAnimation(.easeOut(duration: 0.2)) {
+                                proxy.scrollTo("bottom_spacer", anchor: .bottom)
+                            }
+                        } else {
+                            withAnimation { hasNewMessage = true }
                         }
                     }
                 }
-                // Only auto-scroll for initial load (when messages go from 0 to N)
                 .onChange(of: viewModel.messages.count) { oldCount, newCount in
                     if oldCount == 0 && newCount > 0 {
                         proxy.scrollTo("bottom_spacer", anchor: .bottom)
+                    }
+                }
+                .overlay(alignment: .bottom) {
+                    if hasNewMessage && !isAtBottom {
+                        Button {
+                            withAnimation(.spring(duration: 0.35)) {
+                                proxy.scrollTo("bottom_spacer", anchor: .bottom)
+                            }
+                            hasNewMessage = false
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "arrow.down")
+                                    .font(.system(size: 11, weight: .bold))
+                                Text("新消息")
+                                    .font(.caption.weight(.semibold))
+                            }
+                            .foregroundStyle(.white)
+                            .padding(.horizontal, 14)
+                            .padding(.vertical, 8)
+                            .background(BrandGradient.primary)
+                            .clipShape(Capsule())
+                            .shadow(color: Color(red: 1, green: 0.4, blue: 0.4).opacity(0.4), radius: 6, y: 3)
+                        }
+                        .padding(.bottom, 12)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .animation(.spring(duration: 0.3), value: hasNewMessage)
                     }
                 }
             }
