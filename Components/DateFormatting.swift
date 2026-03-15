@@ -1,6 +1,8 @@
 import Foundation
 
 /// Cached date formatters to avoid repeated allocation in view rendering loops.
+/// All methods must be called from the main actor (DateFormatter is not thread-safe).
+@MainActor
 enum DateFormatting {
     private static let isoParser: ISO8601DateFormatter = {
         let f = ISO8601DateFormatter()
@@ -62,4 +64,13 @@ enum DateFormatting {
         guard let date = parse(dateStr) else { return "" }
         return timeOnly.string(from: date)
     }
+
+    /// ISO 8601 string from current date — for creating local messages.
+    /// Uses nonisolated helper since ISO8601DateFormatter is thread-safe.
+    nonisolated static func nowISO() -> String {
+        _isoWriter.string(from: Date())
+    }
+
+    // Separate instance for writing (nonisolated-safe since ISO8601DateFormatter is thread-safe)
+    private nonisolated(unsafe) static let _isoWriter = ISO8601DateFormatter()
 }

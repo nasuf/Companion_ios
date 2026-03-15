@@ -5,7 +5,7 @@ enum MessageRole: String, Codable {
     case assistant
 }
 
-struct Message: Codable, Identifiable {
+struct Message: Codable, Identifiable, Equatable {
     let id: String
     let conversationId: String
     let role: MessageRole
@@ -26,7 +26,7 @@ extension Message {
             conversationId: conversationId,
             role: .user,
             content: content,
-            createdAt: ISO8601DateFormatter().string(from: Date())
+            createdAt: DateFormatting.nowISO()
         )
     }
 
@@ -36,7 +36,7 @@ extension Message {
             conversationId: conversationId,
             role: .assistant,
             content: "",
-            createdAt: ISO8601DateFormatter().string(from: Date())
+            createdAt: DateFormatting.nowISO()
         )
     }
 }

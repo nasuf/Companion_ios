@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 /// Response from GET /intimacy/{agent_id}/{user_id}
 struct IntimacyData: Decodable {
@@ -19,6 +20,16 @@ struct IntimacyLevel: Decodable {
     let level: String   // "L1" … "L5"
     let label: String   // "初识" … "挚友"
     let score: Double
+
+    var badgeColor: Color {
+        switch level {
+        case "L5": return .pink
+        case "L4": return .red
+        case "L3": return .orange
+        case "L2": return .yellow
+        default:   return .gray
+        }
+    }
 
     /// SF Symbol name for the badge
     var symbolName: String {

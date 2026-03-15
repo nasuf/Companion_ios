@@ -186,16 +186,6 @@ private struct AgentStatusBadge: View {
 private struct IntimacyBadge: View {
     let level: IntimacyLevel
 
-    private var badgeColor: Color {
-        switch level.level {
-        case "L5": return .pink
-        case "L4": return .red
-        case "L3": return .orange
-        case "L2": return .yellow
-        default:   return .gray
-        }
-    }
-
     var body: some View {
         HStack(spacing: 4) {
             Image(systemName: level.symbolName)
@@ -203,10 +193,10 @@ private struct IntimacyBadge: View {
             Text(level.label)
                 .font(.caption2)
         }
-        .foregroundStyle(badgeColor)
+        .foregroundStyle(level.badgeColor)
         .padding(.horizontal, 8)
         .padding(.vertical, 4)
-        .background(badgeColor.opacity(0.12))
+        .background(level.badgeColor.opacity(0.12))
         .clipShape(Capsule())
     }
 }
