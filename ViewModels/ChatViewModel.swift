@@ -31,15 +31,47 @@ final class ChatViewModel {
         self.userId = userId
     }
 
+    private let pageSize = 100
+    var hasMoreHistory = false
+    var isLoadingMoreHistory = false
+    private var historyOffset = 0
+
     func loadHistory() async {
         isLoading = true
         do {
-            messages = try await ChatService.loadMessages(conversationId: conversationId)
+            // Fetch latest 100 (returned newest-first from API) and reverse for display
+            let fetched = try await ChatService.loadMessages(
+                conversationId: conversationId,
+                limit: pageSize,
+                offset: 0
+            )
+            messages = fetched.reversed()
+            historyOffset = fetched.count
+            hasMoreHistory = fetched.count == pageSize
         } catch {
             self.error = error.localizedDescription
         }
         isLoading = false
         scrollToBottom = true
+    }
+
+    func loadMoreHistory() async {
+        guard hasMoreHistory, !isLoadingMoreHistory else { return }
+        isLoadingMoreHistory = true
+        do {
+            let fetched = try await ChatService.loadMessages(
+                conversationId: conversationId,
+                limit: pageSize,
+                offset: historyOffset
+            )
+            // Prepend older messages (reversed so oldest-first)
+            messages = fetched.reversed() + messages
+            historyOffset += fetched.count
+            hasMoreHistory = fetched.count == pageSize
+        } catch {
+            self.error = error.localizedDescription
+        }
+        isLoadingMoreHistory = false
     }
 
     func loadStatus() async {

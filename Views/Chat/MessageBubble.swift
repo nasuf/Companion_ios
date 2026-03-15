@@ -24,14 +24,19 @@ struct MessageBubble: View {
                     )
                     .background {
                         if !isUser {
-                            RoundedRectangle(cornerRadius: 16)
+                            RoundedRectangle(cornerRadius: 18)
                                 .fill(.ultraThinMaterial)
                         }
                     }
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 18)
+                            .stroke(Color.white.opacity(isUser ? 0.3 : 0.15), lineWidth: 1)
+                    )
                     .foregroundStyle(isUser ? .white : .primary)
                     .clipShape(
-                        RoundedRectangle(cornerRadius: 16)
+                        RoundedRectangle(cornerRadius: 18)
                     )
+                    .shadow(color: isUser ? Color(red: 1.0, green: 0.5, blue: 0.4).opacity(0.3) : Color.black.opacity(0.05), radius: 5, y: 2)
 
                 Text(DateFormatting.time(message.createdAt))
                     .font(.caption2)

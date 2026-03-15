@@ -12,10 +12,10 @@ enum ChatService {
         )
     }
 
-    static func loadMessages(conversationId: String) async throws -> [Message] {
+    static func loadMessages(conversationId: String, limit: Int = 100, offset: Int = 0) async throws -> [Message] {
         try await APIClient.shared.request(
             method: "GET",
-            path: "/conversations/\(conversationId)/messages"
+            path: "/conversations/\(conversationId)/messages?limit=\(limit)&offset=\(offset)"
         )
     }
 }
