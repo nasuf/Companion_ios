@@ -133,6 +133,21 @@ final class ChatViewModel {
                         )
                         // Signal that new reply content exists (view decides scroll vs badge)
                         hasUnreadReply = true
+
+                    case .delay(let duration):
+                        // AI is busy/sleeping — show typing indicator for the conceptual delay
+                        isTyping = true
+                        typingTask?.cancel()
+                        typingTask = Task {
+                            try? await Task.sleep(for: .seconds(min(duration, 10)))
+                            if !Task.isCancelled { isTyping = false }
+                        }
+
+                    case .readNoReply:
+                        // AI chose "read but no reply" — remove the placeholder bubble
+                        isTyping = false
+                        typingTask?.cancel()
+                        messages.remove(at: aiIndex)
                     }
                 }
             } catch {

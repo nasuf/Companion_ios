@@ -3,6 +3,8 @@ import Foundation
 enum SSEEvent {
     case token(String)
     case typing(duration: Double)
+    case delay(duration: Double)
+    case readNoReply
 }
 
 enum APIError: LocalizedError {
@@ -100,6 +102,11 @@ actor APIClient {
                             } else if currentEvent == "typing" {
                                 let duration = dict["duration"] as? Double ?? 1.0
                                 continuation.yield(.typing(duration: duration))
+                            } else if currentEvent == "delay" {
+                                let duration = dict["duration"] as? Double ?? 5.0
+                                continuation.yield(.delay(duration: duration))
+                            } else if currentEvent == "read" {
+                                continuation.yield(.readNoReply)
                             }
                         }
                     }

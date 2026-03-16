@@ -108,6 +108,7 @@ struct EmotionTimelineView: View {
                 ProgressView()
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationTitle(String(localized: "情绪"))
         .gradientBackground()
         .task {
