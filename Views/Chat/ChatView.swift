@@ -1,11 +1,20 @@
 import SwiftUI
 
+// MARK: - Scroll Position Tracking
+
+private struct ContentBottomKey: PreferenceKey {
+    static var defaultValue: CGFloat = 0
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
+    }
+}
+
 struct ChatView: View {
     @Environment(AppViewModel.self) private var appViewModel
     @State private var viewModel: ChatViewModel
     @FocusState private var isInputFocused: Bool
-    @State private var isAtBottom = true
-    @State private var hasNewMessage = false
+    @State private var isNearBottom = true
+    @State private var scrollViewHeight: CGFloat = 0
 
     init(conversationId: String, agentId: String, userId: String) {
         _viewModel = State(initialValue: ChatViewModel(
@@ -59,38 +68,54 @@ struct ChatView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
 
-                        // Bottom spacer: detects whether user is scrolled to bottom
+                        // Bottom anchor: scroll target
                         Color.clear
-                            .frame(height: 16)
+                            .frame(height: 1)
                             .id("bottom_spacer")
-                            .onAppear { isAtBottom = true; hasNewMessage = false }
-                            .onDisappear { isAtBottom = false }
                     }
-                    .padding(.vertical, 12)
+                    .padding(.top, 12)
+                    .background(
+                        GeometryReader { contentGeo in
+                            Color.clear.preference(
+                                key: ContentBottomKey.self,
+                                value: contentGeo.frame(in: .named("chatScroll")).maxY
+                            )
+                        }
+                    )
+                }
+                .coordinateSpace(name: "chatScroll")
+                .background(
+                    GeometryReader { scrollGeo in
+                        Color.clear.onAppear { scrollViewHeight = scrollGeo.size.height }
+                            .onChange(of: scrollGeo.size.height) { _, h in scrollViewHeight = h }
+                    }
+                )
+                .onPreferenceChange(ContentBottomKey.self) { contentBottom in
+                    // 200pt threshold ≈ 1.5–2 message bubbles
+                    isNearBottom = contentBottom <= scrollViewHeight + 200
+                    if isNearBottom {
+                        viewModel.hasUnreadReply = false
+                    }
                 }
                 .onTapGesture { isInputFocused = false }
                 .onChange(of: viewModel.scrollToBottom) {
+                    // Only auto-scroll for user's own send action
                     if viewModel.scrollToBottom {
-                        if isAtBottom {
-                            withAnimation(.easeOut(duration: 0.2)) {
-                                proxy.scrollTo("bottom_spacer", anchor: .bottom)
-                            }
-                        } else {
-                            withAnimation { hasNewMessage = true }
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            proxy.scrollTo("bottom_spacer", anchor: .bottom)
                         }
                         viewModel.scrollToBottom = false
                     }
                 }
-                .onChange(of: viewModel.isTyping) {
-                    if viewModel.isTyping {
-                        if isAtBottom {
-                            withAnimation(.easeOut(duration: 0.2)) {
-                                proxy.scrollTo("bottom_spacer", anchor: .bottom)
-                            }
-                        } else {
-                            withAnimation { hasNewMessage = true }
+                .onChange(of: viewModel.hasUnreadReply) {
+                    // When new reply arrives and user can see the last message → auto-scroll
+                    if viewModel.hasUnreadReply && isNearBottom {
+                        withAnimation(.easeOut(duration: 0.2)) {
+                            proxy.scrollTo("bottom_spacer", anchor: .bottom)
                         }
+                        viewModel.hasUnreadReply = false
                     }
+                    // If last message is off-screen, the badge will show via the overlay
                 }
                 .onChange(of: viewModel.messages.count) { oldCount, newCount in
                     if oldCount == 0 && newCount > 0 {
@@ -98,12 +123,17 @@ struct ChatView: View {
                     }
                 }
                 .overlay(alignment: .bottom) {
-                    if hasNewMessage && !isAtBottom {
+                    // Show "新消息" only when:
+                    // 1. There IS unread reply content (hasUnreadReply)
+                    // 2. User has scrolled away from bottom (!isAtBottom)
+                    // 3. Not currently showing loading/typing indicator
+                    if viewModel.hasUnreadReply && !isNearBottom
+                        && !viewModel.isTyping && !streamingWithEmptyContent {
                         Button {
                             withAnimation(.spring(duration: 0.35)) {
                                 proxy.scrollTo("bottom_spacer", anchor: .bottom)
                             }
-                            hasNewMessage = false
+                            viewModel.hasUnreadReply = false
                         } label: {
                             HStack(spacing: 6) {
                                 Image(systemName: "arrow.down")
@@ -111,16 +141,20 @@ struct ChatView: View {
                                 Text("新消息")
                                     .font(.caption.weight(.semibold))
                             }
-                            .foregroundStyle(.white)
+                            .foregroundStyle(.primary)
                             .padding(.horizontal, 14)
                             .padding(.vertical, 8)
-                            .background(BrandGradient.primary)
+                            .background(.ultraThinMaterial)
                             .clipShape(Capsule())
-                            .shadow(color: Color(red: 1, green: 0.4, blue: 0.4).opacity(0.4), radius: 6, y: 3)
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color.white.opacity(0.2), lineWidth: 0.5)
+                            )
+                            .shadow(color: .black.opacity(0.15), radius: 8, y: 4)
                         }
                         .padding(.bottom, 12)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
-                        .animation(.spring(duration: 0.3), value: hasNewMessage)
+                        .animation(.spring(duration: 0.3), value: viewModel.hasUnreadReply)
                     }
                 }
             }

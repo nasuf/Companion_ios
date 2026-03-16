@@ -9,6 +9,7 @@ final class ChatViewModel {
     var isTyping = false          // AI is composing (typing indicator phase)
     var error: String?
     var scrollToBottom = false
+    var hasUnreadReply = false     // true when new assistant content arrives while not at bottom
 
     // AI status (7.5)
     var agentStatus: AgentStatus?
@@ -100,7 +101,8 @@ final class ChatViewModel {
 
         isStreaming = true
         isTyping = false
-        scrollToBottom = true
+        scrollToBottom = true   // scroll to show user's own message
+        hasUnreadReply = false
         error = nil
 
         streamTask = Task {
@@ -129,7 +131,8 @@ final class ChatViewModel {
                             content: current.content + token,
                             createdAt: current.createdAt
                         )
-                        scrollToBottom = true
+                        // Signal that new reply content exists (view decides scroll vs badge)
+                        hasUnreadReply = true
                     }
                 }
             } catch {
