@@ -39,4 +39,14 @@ extension Message {
             createdAt: DateFormatting.nowISO()
         )
     }
+
+    static func assistantMessage(conversationId: String, content: String) -> Message {
+        Message(
+            id: UUID().uuidString,
+            conversationId: conversationId,
+            role: .assistant,
+            content: content,
+            createdAt: DateFormatting.nowISO()
+        )
+    }
 }

@@ -120,7 +120,30 @@ final class ChatViewModel {
                             }
                         }
 
+                    case .reply(let text, let index, _):
+                        isTyping = false
+                        typingTask?.cancel()
+                        if index == 0 {
+                            // Replace placeholder with first reply
+                            messages[aiIndex] = Message(
+                                id: messages[aiIndex].id,
+                                conversationId: messages[aiIndex].conversationId,
+                                role: .assistant,
+                                content: text,
+                                createdAt: messages[aiIndex].createdAt
+                            )
+                        } else {
+                            // Append subsequent replies as new bubbles
+                            let newMsg = Message.assistantMessage(
+                                conversationId: conversationId,
+                                content: text
+                            )
+                            messages.append(newMsg)
+                        }
+                        hasUnreadReply = true
+
                     case .token(let token):
+                        // Fallback for boundary/template replies still using token event
                         isTyping = false
                         typingTask?.cancel()
                         let current = messages[aiIndex]
@@ -131,23 +154,15 @@ final class ChatViewModel {
                             content: current.content + token,
                             createdAt: current.createdAt
                         )
-                        // Signal that new reply content exists (view decides scroll vs badge)
                         hasUnreadReply = true
 
                     case .delay(let duration):
-                        // AI is busy/sleeping — show typing indicator for the conceptual delay
                         isTyping = true
                         typingTask?.cancel()
                         typingTask = Task {
                             try? await Task.sleep(for: .seconds(min(duration, 10)))
                             if !Task.isCancelled { isTyping = false }
                         }
-
-                    case .readNoReply:
-                        // AI chose "read but no reply" — remove the placeholder bubble
-                        isTyping = false
-                        typingTask?.cancel()
-                        messages.remove(at: aiIndex)
                     }
                 }
             } catch {

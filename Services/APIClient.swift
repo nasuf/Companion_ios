@@ -2,9 +2,9 @@ import Foundation
 
 enum SSEEvent {
     case token(String)
+    case reply(text: String, index: Int, stickerURL: String?)
     case typing(duration: Double)
     case delay(duration: Double)
-    case readNoReply
 }
 
 enum APIError: LocalizedError {
@@ -97,7 +97,12 @@ actor APIClient {
                                   let dict = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any]
                             else { continue }
 
-                            if currentEvent == "token", let token = dict["token"] as? String {
+                            if currentEvent == "reply",
+                               let text = dict["text"] as? String,
+                               let index = dict["index"] as? Int {
+                                let stickerURL = dict["sticker_url"] as? String
+                                continuation.yield(.reply(text: text, index: index, stickerURL: stickerURL))
+                            } else if currentEvent == "token", let token = dict["token"] as? String {
                                 continuation.yield(.token(token))
                             } else if currentEvent == "typing" {
                                 let duration = dict["duration"] as? Double ?? 1.0
@@ -105,8 +110,6 @@ actor APIClient {
                             } else if currentEvent == "delay" {
                                 let duration = dict["duration"] as? Double ?? 5.0
                                 continuation.yield(.delay(duration: duration))
-                            } else if currentEvent == "read" {
-                                continuation.yield(.readNoReply)
                             }
                         }
                     }
