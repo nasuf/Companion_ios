@@ -1,20 +1,11 @@
 import SwiftUI
 
-// MARK: - Scroll Position Tracking
-
-private struct ContentBottomKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = max(value, nextValue())
-    }
-}
 
 struct ChatView: View {
     @Environment(AppViewModel.self) private var appViewModel
     @State private var viewModel: ChatViewModel
     @FocusState private var isInputFocused: Bool
-    @State private var isNearBottom = true
-    @State private var scrollViewHeight: CGFloat = 0
+    @State private var lastVisibleIndex: Int = 0
 
     init(conversationId: String, agentId: String, userId: String) {
         _viewModel = State(initialValue: ChatViewModel(
@@ -46,10 +37,11 @@ struct ChatView: View {
                         }
                         .id("top_trigger")
 
-                        ForEach(viewModel.messages) { message in
+                        ForEach(Array(viewModel.messages.enumerated()), id: \.element.id) { index, message in
                             MessageBubble(message: message)
                                 .id(message.id)
                                 .transition(.move(edge: .bottom).combined(with: .opacity))
+                                .onAppear { lastVisibleIndex = max(lastVisibleIndex, index) }
                         }
 
                         // 微信模式：只在 AI 正在输入时显示 typing indicator
@@ -61,36 +53,14 @@ struct ChatView: View {
 
                         // Bottom anchor: scroll target
                         Color.clear
-                            .frame(height: 1)
+                            .frame(height: 16)
                             .id("bottom_spacer")
                     }
                     .padding(.top, 12)
-                    .background(
-                        GeometryReader { contentGeo in
-                            Color.clear.preference(
-                                key: ContentBottomKey.self,
-                                value: contentGeo.frame(in: .named("chatScroll")).maxY
-                            )
-                        }
-                    )
-                }
-                .coordinateSpace(name: "chatScroll")
-                .background(
-                    GeometryReader { scrollGeo in
-                        Color.clear.onAppear { scrollViewHeight = scrollGeo.size.height }
-                            .onChange(of: scrollGeo.size.height) { _, h in scrollViewHeight = h }
-                    }
-                )
-                .onPreferenceChange(ContentBottomKey.self) { contentBottom in
-                    // 200pt threshold ≈ 1.5–2 message bubbles
-                    isNearBottom = contentBottom <= scrollViewHeight + 200
-                    if isNearBottom {
-                        viewModel.hasUnreadReply = false
-                    }
                 }
                 .onTapGesture { isInputFocused = false }
                 .onChange(of: viewModel.scrollToBottom) {
-                    // Only auto-scroll for user's own send action
+                    // User's own send → always scroll
                     if viewModel.scrollToBottom {
                         withAnimation(.easeOut(duration: 0.2)) {
                             proxy.scrollTo("bottom_spacer", anchor: .bottom)
@@ -99,16 +69,19 @@ struct ChatView: View {
                     }
                 }
                 .onChange(of: viewModel.hasUnreadReply) {
-                    // When new reply arrives and user can see the last message → auto-scroll
-                    if viewModel.hasUnreadReply && isNearBottom {
+                    guard viewModel.hasUnreadReply else { return }
+                    let totalCount = viewModel.messages.count
+                    // Within last 3 messages (倒数3条以内) → auto-scroll
+                    if lastVisibleIndex >= totalCount - 4 {
                         withAnimation(.easeOut(duration: 0.2)) {
                             proxy.scrollTo("bottom_spacer", anchor: .bottom)
                         }
                         viewModel.hasUnreadReply = false
                     }
-                    // If last message is off-screen, the badge will show via the overlay
+                    // Otherwise → badge shows via overlay (do nothing here)
                 }
                 .onChange(of: viewModel.messages.count) { oldCount, newCount in
+                    // Initial load → always scroll
                     if oldCount == 0 && newCount > 0 {
                         proxy.scrollTo("bottom_spacer", anchor: .bottom)
                     }
@@ -118,7 +91,7 @@ struct ChatView: View {
                     // 1. There IS unread reply content (hasUnreadReply)
                     // 2. User has scrolled away from bottom (!isAtBottom)
                     // 3. Not currently showing loading/typing indicator
-                    if viewModel.hasUnreadReply && !isNearBottom && !viewModel.isTyping {
+                    if viewModel.hasUnreadReply && lastVisibleIndex < viewModel.messages.count - 4 && !viewModel.isTyping {
                         Button {
                             withAnimation(.spring(duration: 0.35)) {
                                 proxy.scrollTo("bottom_spacer", anchor: .bottom)
