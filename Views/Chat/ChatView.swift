@@ -44,13 +44,6 @@ struct ChatView: View {
                                 .onAppear { lastVisibleIndex = max(lastVisibleIndex, index) }
                         }
 
-                        // 微信模式：只在 AI 正在输入时显示 typing indicator
-                        if viewModel.isTyping {
-                            TypingIndicator()
-                                .padding(.leading, 16)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-
                         // Bottom anchor: scroll target
                         Color.clear
                             .frame(height: 16)
