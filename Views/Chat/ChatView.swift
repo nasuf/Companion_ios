@@ -24,11 +24,6 @@ struct ChatView: View {
         ))
     }
 
-    private var streamingWithEmptyContent: Bool {
-        viewModel.isStreaming &&
-        (viewModel.messages.last.map { $0.role == .assistant && $0.content.isEmpty } ?? false)
-    }
-
     var body: some View {
         VStack(spacing: 0) {
             // Messages
@@ -52,17 +47,13 @@ struct ChatView: View {
                         .id("top_trigger")
 
                         ForEach(viewModel.messages) { message in
-                            if message.role == .assistant && message.content.isEmpty && viewModel.isStreaming {
-                                // Hide the empty placeholder bubble during streaming
-                            } else {
-                                MessageBubble(message: message)
-                                    .id(message.id)
-                                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                            }
+                            MessageBubble(message: message)
+                                .id(message.id)
+                                .transition(.move(edge: .bottom).combined(with: .opacity))
                         }
 
-                        // Show typing indicator when AI is composing or streaming an empty placeholder
-                        if viewModel.isTyping || streamingWithEmptyContent {
+                        // 微信模式：只在 AI 正在输入时显示 typing indicator
+                        if viewModel.isTyping {
                             TypingIndicator()
                                 .padding(.leading, 16)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -127,8 +118,7 @@ struct ChatView: View {
                     // 1. There IS unread reply content (hasUnreadReply)
                     // 2. User has scrolled away from bottom (!isAtBottom)
                     // 3. Not currently showing loading/typing indicator
-                    if viewModel.hasUnreadReply && !isNearBottom
-                        && !viewModel.isTyping && !streamingWithEmptyContent {
+                    if viewModel.hasUnreadReply && !isNearBottom && !viewModel.isTyping {
                         Button {
                             withAnimation(.spring(duration: 0.35)) {
                                 proxy.scrollTo("bottom_spacer", anchor: .bottom)
@@ -207,10 +197,11 @@ struct ChatView: View {
                 group.addTask { await self.viewModel.loadStatus() }
                 group.addTask { await self.viewModel.loadIntimacy() }
                 group.addTask { await self.viewModel.loadBoundary() }
+                group.addTask { await self.viewModel.connectToChat() }
             }
         }
         .onDisappear {
-            viewModel.cancel()
+            viewModel.disconnectFromChat()
         }
     }
 
@@ -272,19 +263,19 @@ struct ChatView: View {
                 Button {
                     viewModel.send()
                 } label: {
-                    Image(systemName: viewModel.isStreaming ? "stop.fill" : "arrow.up")
+                    Image(systemName: viewModel.isWaitingReply ? "stop.fill" : "arrow.up")
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundStyle(.white)
                         .frame(width: 36, height: 36)
                         .background(
-                            viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !viewModel.isStreaming
+                            viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !viewModel.isWaitingReply
                             ? AnyShapeStyle(Color.gray.opacity(0.5))
                             : AnyShapeStyle(BrandGradient.primary)
                         )
                         .clipShape(Circle())
-                        .shadow(color: (viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !viewModel.isStreaming) ? .clear : Color(red: 1.0, green: 0.5, blue: 0.4).opacity(0.4), radius: 4, y: 2)
+                        .shadow(color: (viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !viewModel.isWaitingReply) ? .clear : Color(red: 1.0, green: 0.5, blue: 0.4).opacity(0.4), radius: 4, y: 2)
                 }
-                .disabled(viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !viewModel.isStreaming)
+                .disabled(viewModel.inputText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !viewModel.isWaitingReply)
                 .sensoryFeedback(.impact, trigger: viewModel.messages.count)
             }
             .padding(.horizontal, 12)

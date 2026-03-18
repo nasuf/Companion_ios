@@ -51,7 +51,10 @@ struct SettingsView: View {
                     Button(role: .destructive) {
                         showDeleteAlert = true
                     } label: {
-                        Text("删除 AI 伙伴")
+                        HStack {
+                            Image(systemName: "trash")
+                            Text("清空所有数据")
+                        }
                     }
                 } header: {
                     Text("AI 伙伴")
@@ -71,13 +74,13 @@ struct SettingsView: View {
             }
         }
         .navigationTitle(String(localized: "设置"))
-        .alert(String(localized: "确认删除"), isPresented: $showDeleteAlert) {
+        .alert(String(localized: "确认清空"), isPresented: $showDeleteAlert) {
             Button(String(localized: "取消"), role: .cancel) {}
-            Button(String(localized: "删除"), role: .destructive) {
+            Button(String(localized: "清空"), role: .destructive) {
                 deleteAgent()
             }
         } message: {
-            Text("删除后将清除所有对话和记忆，此操作不可撤销")
+            Text("将彻底清除所有对话记录、记忆、画像及AI相关数据，此操作不可撤销")
         }
     }
 

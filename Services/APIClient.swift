@@ -5,6 +5,137 @@ enum SSEEvent {
     case reply(text: String, index: Int, stickerURL: String?)
     case typing(duration: Double)
     case delay(duration: Double)
+    case pending
+    case proactive(text: String, agentId: String)
+    case done
+}
+
+
+// MARK: - WebSocket Client
+
+actor WebSocketClient {
+    private var task: URLSessionWebSocketTask?
+    private var pingTask: Task<Void, Never>?
+    private var isConnected = false
+    private let baseURL: String
+
+    init() {
+        self.baseURL = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "http://localhost:8000"
+    }
+
+    func connect(conversationId: String) -> AsyncThrowingStream<SSEEvent, Error> {
+        disconnect()
+
+        let wsURL = baseURL
+            .replacingOccurrences(of: "http://", with: "ws://")
+            .replacingOccurrences(of: "https://", with: "wss://")
+        guard let url = URL(string: "\(wsURL)/ws/\(conversationId)") else {
+            return AsyncThrowingStream { $0.finish(throwing: APIError.invalidURL) }
+        }
+
+        let session = URLSession(configuration: .default)
+        let wsTask = session.webSocketTask(with: url)
+        self.task = wsTask
+        wsTask.resume()
+        isConnected = true
+
+        startPing()
+
+        return AsyncThrowingStream { continuation in
+            Task {
+                defer {
+                    continuation.finish()
+                }
+                while await self.isConnected {
+                    do {
+                        let msg = try await wsTask.receive()
+                        switch msg {
+                        case .string(let text):
+                            guard let data = text.data(using: .utf8),
+                                  let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                                  let type = json["type"] as? String,
+                                  let payload = json["data"] as? [String: Any]
+                            else { continue }
+
+                            switch type {
+                            case "typing":
+                                let dur = payload["duration"] as? Double ?? 1.0
+                                continuation.yield(.typing(duration: dur))
+                            case "delay":
+                                let dur = payload["duration"] as? Double ?? 5.0
+                                continuation.yield(.delay(duration: dur))
+                            case "reply":
+                                if let text = payload["text"] as? String,
+                                   let index = payload["index"] as? Int {
+                                    let sticker = payload["sticker_url"] as? String
+                                    continuation.yield(.reply(text: text, index: index, stickerURL: sticker))
+                                }
+                            case "pending":
+                                continuation.yield(.pending)
+                            case "proactive":
+                                if let text = payload["text"] as? String {
+                                    let agentId = payload["agent_id"] as? String ?? ""
+                                    continuation.yield(.proactive(text: text, agentId: agentId))
+                                }
+                            case "done":
+                                continuation.yield(.done)
+                            case "pong":
+                                break
+                            case "error":
+                                let msg = payload["message"] as? String ?? "Unknown error"
+                                continuation.finish(throwing: APIError.networkError(
+                                    NSError(domain: "WS", code: -1, userInfo: [NSLocalizedDescriptionKey: msg])
+                                ))
+                                return
+                            default:
+                                break
+                            }
+                        case .data:
+                            break
+                        @unknown default:
+                            break
+                        }
+                    } catch {
+                        if await self.isConnected {
+                            continuation.finish(throwing: error)
+                        }
+                        return
+                    }
+                }
+            }
+        }
+    }
+
+    func send(message: String) async throws {
+        guard let task = task else {
+            throw APIError.networkError(NSError(domain: "WS", code: -1, userInfo: [NSLocalizedDescriptionKey: "Not connected"]))
+        }
+        let payload: [String: Any] = ["type": "message", "data": ["message": message]]
+        let data = try JSONSerialization.data(withJSONObject: payload)
+        try await task.send(.string(String(data: data, encoding: .utf8)!))
+    }
+
+    func disconnect() {
+        isConnected = false
+        pingTask?.cancel()
+        pingTask = nil
+        task?.cancel(with: .goingAway, reason: nil)
+        task = nil
+    }
+
+    private func startPing() {
+        pingTask?.cancel()
+        pingTask = Task {
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(30))
+                guard !Task.isCancelled, await self.isConnected else { break }
+                let ping: [String: Any] = ["type": "ping"]
+                if let data = try? JSONSerialization.data(withJSONObject: ping) {
+                    try? await self.task?.send(.string(String(data: data, encoding: .utf8)!))
+                }
+            }
+        }
+    }
 }
 
 enum APIError: LocalizedError {
@@ -110,6 +241,8 @@ actor APIClient {
                             } else if currentEvent == "delay" {
                                 let duration = dict["duration"] as? Double ?? 5.0
                                 continuation.yield(.delay(duration: duration))
+                            } else if currentEvent == "pending" {
+                                continuation.yield(.pending)
                             }
                         }
                     }
