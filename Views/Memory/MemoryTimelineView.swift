@@ -137,10 +137,16 @@ private struct MemoryCard: View {
                         .background(memory.levelColor.opacity(0.15))
                         .clipShape(Capsule())
 
-                    if let type = memory.type {
-                        Text(type)
+                    if !memory.typeLabel.isEmpty {
+                        Text(memory.typeLabel)
                             .font(.caption2)
                             .foregroundStyle(.secondary)
+                    }
+
+                    if memory.isAIMemory {
+                        Label("TA", systemImage: "sparkles")
+                            .font(.caption2)
+                            .foregroundStyle(.purple)
                     }
 
                     Spacer()

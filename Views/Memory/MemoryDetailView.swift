@@ -6,7 +6,7 @@ struct MemoryDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                // Level badge + type
+                // Level badge + type + source
                 HStack {
                     Text(memory.levelLabel)
                         .font(.caption.weight(.semibold))
@@ -16,8 +16,8 @@ struct MemoryDetailView: View {
                         .background(memory.levelColor)
                         .clipShape(Capsule())
 
-                    if let type = memory.type {
-                        Text(type)
+                    if !memory.typeLabel.isEmpty {
+                        Text(memory.typeLabel)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                             .padding(.horizontal, 8)
@@ -25,6 +25,15 @@ struct MemoryDetailView: View {
                             .background(.ultraThinMaterial)
                             .clipShape(Capsule())
                     }
+
+                    Text(memory.sourceLabel)
+                        .font(.caption)
+                        .foregroundStyle(memory.isAIMemory ? .purple : .secondary)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(memory.isAIMemory ? Color.purple.opacity(0.1) : Color.clear)
+                        .background(.ultraThinMaterial)
+                        .clipShape(Capsule())
 
                     Spacer()
                 }
@@ -50,6 +59,12 @@ struct MemoryDetailView: View {
 
                 // Metadata
                 VStack(spacing: 12) {
+                    MetadataRow(label: String(localized: "来源"),
+                                value: memory.sourceLabel)
+                    if !memory.typeLabel.isEmpty {
+                        MetadataRow(label: String(localized: "类型"),
+                                    value: memory.typeLabel)
+                    }
                     MetadataRow(label: String(localized: "重要度"),
                                 value: String(format: "%.0f%%", memory.importance * 100))
                     MetadataRow(label: String(localized: "创建时间"),
