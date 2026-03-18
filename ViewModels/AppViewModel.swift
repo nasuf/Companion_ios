@@ -113,14 +113,19 @@ final class AppViewModel {
 
     func deleteAgent() async {
         guard let agentId else { return }
-        do {
-            try await AgentService.delete(id: agentId)
-        } catch {
-            // Agent may already be gone, continue cleanup
-        }
+        let deletingAgentId = agentId
+
+        // Clear local navigation state first so the chat view tears down
+        // and cancels any in-flight WebSocket reconnect loop immediately.
         self.agentId = nil
         self.agentName = nil
         self.conversationId = nil
+
+        do {
+            try await AgentService.delete(id: deletingAgentId)
+        } catch {
+            // Agent may already be gone, continue cleanup
+        }
     }
 }
 

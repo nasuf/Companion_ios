@@ -15,6 +15,7 @@ struct ContentView: View {
                 NavigationStack {
                     ChatView(conversationId: conversationId, agentId: agentId, userId: appViewModel.userId)
                 }
+                .id("\(agentId):\(conversationId)")
                 .transition(.opacity)
             } else {
                 OnboardingView()
