@@ -7,6 +7,7 @@ final class ChatViewModel {
     var isConnected = false
     var isWaitingReply = false  // AI 正在生成回复
     var isTyping = false       // 显示"正在输入"指示器
+    var deliveryHint = "在线"
     var error: String?
     var scrollToBottom = false
     var hasUnreadReply = false
@@ -97,6 +98,7 @@ final class ChatViewModel {
     func connectToChat() async {
         let stream = await ChatService.connect(conversationId: conversationId)
         isConnected = true
+        deliveryHint = "在线"
         reconnectAttempts = 0
 
         listenTask = Task {
@@ -114,6 +116,7 @@ final class ChatViewModel {
             isConnected = false
             isTyping = false
             isWaitingReply = false
+            deliveryHint = "重连中"
             typingTask?.cancel()
 
             if !Task.isCancelled {
@@ -130,6 +133,7 @@ final class ChatViewModel {
         isConnected = false
         isTyping = false
         isWaitingReply = false
+        deliveryHint = "已断开"
         Task { await ChatService.disconnect() }
     }
 
@@ -157,6 +161,7 @@ final class ChatViewModel {
         messages.append(userMsg)
         scrollToBottom = true
         isWaitingReply = true
+        deliveryHint = "发送中"
         error = nil
 
         Task {
@@ -165,6 +170,7 @@ final class ChatViewModel {
             } catch {
                 self.error = error.localizedDescription
                 isWaitingReply = false
+                deliveryHint = "发送失败"
             }
         }
     }
@@ -175,23 +181,33 @@ final class ChatViewModel {
         switch event {
         case .typing(let duration):
             isTyping = true
+            deliveryHint = "对方正在输入…"
             typingTask?.cancel()
             typingTask = Task {
                 try? await Task.sleep(for: .seconds(duration))
-                if !Task.isCancelled { isTyping = false }
+                if !Task.isCancelled {
+                    isTyping = false
+                    if self.isConnected {
+                        self.deliveryHint = "在线"
+                    }
+                }
             }
 
         case .delay(let duration):
             isTyping = true
+            deliveryHint = "预计 \(Int(duration.rounded())) 秒后回复"
             typingTask?.cancel()
             typingTask = Task {
                 try? await Task.sleep(for: .seconds(min(duration, 10)))
-                if !Task.isCancelled { isTyping = false }
+                if !Task.isCancelled {
+                    isTyping = false
+                }
             }
 
         case .reply(let text, _, let stickerURL):
             isTyping = false
             typingTask?.cancel()
+            deliveryHint = "在线"
 
             // 微信模式：直接插入完整消息气泡
             var msg = Message.assistantMessage(conversationId: conversationId, content: text)
@@ -217,20 +233,32 @@ final class ChatViewModel {
             }
             hasUnreadReply = true
 
-        case .pending:
-            // 碎片消息已入队，不需要做什么（没有 placeholder 需要移除）
-            isWaitingReply = false
+        case .pending(let status, let delay):
+            switch status {
+            case "aggregating":
+                deliveryHint = "消息已进入聚合"
+            case "queued":
+                if let delay {
+                    deliveryHint = "已排队，预计 \(Int(delay.rounded())) 秒后回复"
+                } else {
+                    deliveryHint = "消息已排队"
+                }
+            default:
+                deliveryHint = "消息处理中"
+            }
 
         case .proactive(let text, _):
             // 服务端主动消息
             let msg = Message.assistantMessage(conversationId: conversationId, content: text)
             messages.append(msg)
             hasUnreadReply = true
+            deliveryHint = "在线"
 
         case .done:
             isWaitingReply = false
             isTyping = false
             typingTask?.cancel()
+            deliveryHint = isConnected ? "在线" : "已断开"
         }
     }
 

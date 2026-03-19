@@ -5,7 +5,7 @@ enum SSEEvent {
     case reply(text: String, index: Int, stickerURL: String?)
     case typing(duration: Double)
     case delay(duration: Double)
-    case pending
+    case pending(status: String, delay: Double?)
     case proactive(text: String, agentId: String)
     case done
 }
@@ -71,7 +71,9 @@ actor WebSocketClient {
                                     continuation.yield(.reply(text: text, index: index, stickerURL: sticker))
                                 }
                             case "pending":
-                                continuation.yield(.pending)
+                                let status = payload["status"] as? String ?? "pending"
+                                let delay = payload["delay"] as? Double
+                                continuation.yield(.pending(status: status, delay: delay))
                             case "proactive":
                                 if let text = payload["text"] as? String {
                                     let agentId = payload["agent_id"] as? String ?? ""
@@ -242,7 +244,9 @@ actor APIClient {
                                 let duration = dict["duration"] as? Double ?? 5.0
                                 continuation.yield(.delay(duration: duration))
                             } else if currentEvent == "pending" {
-                                continuation.yield(.pending)
+                                let status = dict["status"] as? String ?? "pending"
+                                let delay = dict["delay"] as? Double
+                                continuation.yield(.pending(status: status, delay: delay))
                             }
                         }
                     }

@@ -208,7 +208,19 @@ struct ChatView: View {
         VStack(spacing: 0) {
             // Inline Emoji Picker
             emojiPicker
-            
+
+            HStack(spacing: 8) {
+                Circle()
+                    .fill(viewModel.isConnected ? Color.green.opacity(0.8) : Color.orange.opacity(0.8))
+                    .frame(width: 7, height: 7)
+                Text(viewModel.deliveryHint)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Spacer()
+            }
+            .padding(.horizontal, 14)
+            .padding(.top, 8)
+
             // Input bar
             HStack(spacing: 12) {
                 TextField(String(localized: "输入消息..."), text: $viewModel.inputText, axis: .vertical)
