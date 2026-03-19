@@ -281,6 +281,7 @@ private struct AgentStatusBadge: View {
     private var color: Color {
         switch status.status {
         case "sleep": return .indigo
+        case "very_busy": return .red
         case "busy":  return .orange
         default:      return .green
         }
@@ -290,7 +291,7 @@ private struct AgentStatusBadge: View {
         HStack(spacing: 4) {
             Image(systemName: status.statusIcon)
                 .font(.system(size: 9))
-            Text(status.activity)
+            Text("\(status.displayStatus) · \(status.activity)")
                 .font(.caption2)
         }
         .foregroundStyle(color)
