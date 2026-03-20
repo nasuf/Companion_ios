@@ -35,17 +35,20 @@ struct Memory: Codable, Identifiable {
         }
     }
 
-    /// English type → Chinese display label
+    /// English type → Chinese display label (handles pipe-separated values like "identity|emotion")
     var typeLabel: String {
-        switch type {
-        case "identity": return "身份"
-        case "emotion": return "情绪"
-        case "preference": return "偏好"
-        case "life": return "生活"
-        case "thought": return "思维"
-        case "consolidated": return "合并"
-        default: return type ?? ""
-        }
+        guard let type, !type.isEmpty else { return "" }
+        return type.split(separator: "|").map { part in
+            switch part.trimmingCharacters(in: .whitespaces) {
+            case "identity": return "身份"
+            case "emotion": return "情绪"
+            case "preference": return "偏好"
+            case "life": return "生活"
+            case "thought": return "思维"
+            case "consolidated": return "合并"
+            default: return String(part)
+            }
+        }.joined(separator: "·")
     }
 
     /// Source display label

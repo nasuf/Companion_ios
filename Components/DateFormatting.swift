@@ -36,9 +36,15 @@ enum DateFormatting {
         return f
     }()
 
-    /// Parse ISO 8601 date string, trying fractional seconds first.
+    /// Parse ISO 8601 date string. Also handles Python's `str(datetime)` format
+    /// which uses a space instead of 'T' (e.g. "2026-03-20 10:15:06.579000+00:00").
     static func parse(_ dateStr: String) -> Date? {
-        isoParser.date(from: dateStr) ?? isoFallback.date(from: dateStr)
+        if let d = isoParser.date(from: dateStr) ?? isoFallback.date(from: dateStr) {
+            return d
+        }
+        // Python str(datetime) uses space instead of T
+        let normalized = dateStr.replacingOccurrences(of: " ", with: "T", range: dateStr.range(of: " "))
+        return isoParser.date(from: normalized) ?? isoFallback.date(from: normalized)
     }
 
     /// "MM/dd" — for memory timeline cards
