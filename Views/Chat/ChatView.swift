@@ -7,6 +7,7 @@ struct ChatView: View {
     @FocusState private var isInputFocused: Bool
     @State private var lastVisibleIndex: Int = 0
     @State private var showSettingsDrawer = false
+    @State private var drawerDestination: DrawerDestination?
 
     init(conversationId: String, agentId: String, userId: String) {
         _viewModel = State(initialValue: ChatViewModel(
@@ -137,7 +138,13 @@ struct ChatView: View {
 
                     ChatSideDrawer(
                         isPresented: $showSettingsDrawer,
-                        emotionState: viewModel.emotionState
+                        emotionState: viewModel.emotionState,
+                        intimacy: viewModel.intimacy,
+                        boundary: viewModel.boundaryStatus,
+                        onNavigate: { dest in
+                            showSettingsDrawer = false
+                            drawerDestination = dest
+                        }
                     )
                     .padding(.top, 8)
                     .padding(.bottom, 8)
@@ -163,7 +170,7 @@ struct ChatView: View {
             // Leading: Boundary mood (7.6)
             ToolbarItem(placement: .topBarLeading) {
                 if let boundary = viewModel.boundaryStatus, boundary.zone != "normal" {
-                    BoundaryMoodIndicator(zone: boundary.zone, patience: boundary.patience)
+                    BoundaryMoodIndicator(boundary: boundary)
                 }
             }
 
@@ -185,6 +192,14 @@ struct ChatView: View {
             }
         }
         .gradientBackground()
+        .navigationDestination(item: $drawerDestination) { dest in
+            switch dest {
+            case .memory: MemoryTimelineView()
+            case .emotion: EmotionTimelineView()
+            case .portrait: UserPortraitView()
+            case .settings: SettingsView()
+            }
+        }
         .task {
             await viewModel.loadHistory()
             await withTaskGroup(of: Void.self) { group in
@@ -194,8 +209,10 @@ struct ChatView: View {
                 group.addTask { await self.viewModel.loadEmotion() }
                 group.addTask { await self.viewModel.connectToChat() }
             }
+            viewModel.startStatusPolling()
         }
         .onDisappear {
+            viewModel.stopStatusPolling()
             viewModel.disconnectFromChat()
         }
     }
@@ -338,7 +355,7 @@ private struct EmotionBadge: View {
 
     private var padText: String {
         String(
-            format: "P%.1f A%.1f D%.1f",
+            format: "P%+.1f  A%+.1f  D%+.1f",
             emotion.pleasure,
             emotion.arousal,
             emotion.dominance
@@ -450,11 +467,10 @@ private struct IntimacyBadge: View {
 // MARK: - BoundaryMoodIndicator (7.6)
 
 private struct BoundaryMoodIndicator: View {
-    let zone: String
-    let patience: Int
+    let boundary: BoundaryStatus
 
     private var icon: String {
-        switch zone {
+        switch boundary.zone {
         case "blocked": return "xmark.circle.fill"
         case "low": return "exclamationmark.triangle.fill"
         case "medium": return "cloud.fill"
@@ -462,28 +478,26 @@ private struct BoundaryMoodIndicator: View {
         }
     }
 
-    private var color: Color {
-        switch zone {
-        case "blocked": return .red
-        case "low": return .orange
-        case "medium": return .yellow
-        default: return .green
-        }
-    }
-
     var body: some View {
         HStack(spacing: 3) {
             Image(systemName: icon)
                 .font(.system(size: 9))
-            Text("\(patience)")
+            Text("\(boundary.patience)")
                 .font(.caption2)
         }
-        .foregroundStyle(color)
+        .foregroundStyle(boundary.zoneColor)
         .padding(.horizontal, 6)
         .padding(.vertical, 3)
-        .background(color.opacity(0.12))
+        .background(boundary.zoneColor.opacity(0.12))
         .clipShape(Capsule())
     }
+}
+
+// MARK: - DrawerDestination
+
+enum DrawerDestination: Hashable, Identifiable {
+    case memory, emotion, portrait, settings
+    var id: Self { self }
 }
 
 // MARK: - ChatSideDrawer
@@ -493,93 +507,116 @@ private struct ChatSideDrawer: View {
     @Binding var isPresented: Bool
     @GestureState private var dragOffset: CGFloat = 0
     let emotionState: EmotionState?
+    let intimacy: IntimacyData?
+    let boundary: BoundaryStatus?
+    var onNavigate: (DrawerDestination) -> Void
 
     var body: some View {
-        NavigationStack {
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 18) {
-                    Capsule()
-                        .fill(Color.white.opacity(0.22))
-                        .frame(width: 34, height: 4)
-                        .frame(maxWidth: .infinity)
-                        .padding(.top, 4)
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 18) {
+                Capsule()
+                    .fill(Color.white.opacity(0.22))
+                    .frame(width: 34, height: 4)
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 4)
 
-                    HStack {
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(appViewModel.agentName ?? String(localized: "更多"))
-                                .font(.title3.weight(.semibold))
-                            Text("聊天侧栏")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                        Button {
-                            withAnimation(.spring(duration: 0.28)) {
-                                isPresented = false
-                            }
-                        } label: {
-                            Image(systemName: "xmark")
-                                .font(.system(size: 13, weight: .semibold))
-                                .foregroundStyle(.secondary)
-                                .frame(width: 30, height: 30)
-                                .background(Color.white.opacity(0.08))
-                                .clipShape(Circle())
-                        }
+                HStack {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(appViewModel.agentName ?? String(localized: "更多"))
+                            .font(.title3.weight(.semibold))
                     }
+                    Spacer()
+                    Button {
+                        withAnimation(.spring(duration: 0.28)) {
+                            isPresented = false
+                        }
+                    } label: {
+                        Image(systemName: "xmark")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundStyle(.secondary)
+                            .frame(width: 30, height: 30)
+                            .background(Color.white.opacity(0.08))
+                            .clipShape(Circle())
+                    }
+                }
 
+                // 状态面板：情绪 + 亲密度 + 耐心
+                VStack(spacing: 10) {
                     if let emotionState {
-                        VStack(alignment: .leading, spacing: 12) {
-                            HStack {
-                                Text("PAD 值")
-                                    .font(.caption.weight(.semibold))
-                                    .foregroundStyle(.secondary)
-                            }
+                        drawerMetric(label: "情绪", systemImage: "heart.fill") {
                             EmotionBadge(emotion: emotionState)
                         }
-                        .padding(14)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Color.white.opacity(0.05))
-                        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                .stroke(Color.white.opacity(0.07), lineWidth: 1)
-                        )
                     }
-
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("快捷入口")
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(.secondary)
-
-                        VStack(spacing: 10) {
-                            drawerLink(title: "记忆", subtitle: "查看 L1 / L2 / L3 记忆", systemImage: "brain.head.profile") {
-                                MemoryTimelineView()
+                    if let intimacy {
+                        drawerMetric(label: "亲密度", systemImage: "person.2.fill") {
+                            HStack(spacing: 6) {
+                                Text(intimacy.level.label)
+                                    .font(.system(size: 10, weight: .semibold))
+                                    .foregroundStyle(intimacy.level.badgeColor)
+                                Text(String(format: "%.0f", intimacy.level.score))
+                                    .font(.system(size: 9, weight: .medium, design: .monospaced))
+                                    .foregroundStyle(.secondary)
                             }
-                            drawerLink(title: "情绪", subtitle: "查看情绪轨迹和当前状态", systemImage: "heart.text.square") {
-                                EmotionTimelineView()
-                            }
-                            drawerLink(title: "画像", subtitle: "查看用户与 AI 画像", systemImage: "person.text.rectangle") {
-                                UserPortraitView()
-                            }
-                            drawerLink(title: "设置", subtitle: "主题、语言和清空数据", systemImage: "gearshape") {
-                                SettingsView()
-                            }
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(intimacy.level.badgeColor.opacity(0.12))
+                            .clipShape(Capsule())
                         }
                     }
-
-                    Spacer(minLength: 0)
+                    if let boundary {
+                        drawerMetric(label: "耐心", systemImage: "gauge.medium") {
+                            HStack(spacing: 6) {
+                                Text(boundary.zoneTone)
+                                    .font(.system(size: 10, weight: .semibold))
+                                    .foregroundStyle(boundary.zoneColor)
+                                Text("\(boundary.patience)")
+                                    .font(.system(size: 9, weight: .medium, design: .monospaced))
+                                    .foregroundStyle(.secondary)
+                            }
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(boundary.zoneColor.opacity(0.12))
+                            .clipShape(Capsule())
+                        }
+                    }
                 }
-                .padding(18)
+                .padding(14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.white.opacity(0.05))
+                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        .stroke(Color.white.opacity(0.07), lineWidth: 1)
+                )
+
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("快捷入口")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+
+                    VStack(spacing: 10) {
+                        drawerButton(title: "记忆", subtitle: "查看 L1 / L2 / L3 记忆", systemImage: "brain.head.profile") {
+                            onNavigate(.memory)
+                        }
+                        drawerButton(title: "情绪", subtitle: "查看情绪轨迹和当前状态", systemImage: "heart.text.square") {
+                            onNavigate(.emotion)
+                        }
+                        drawerButton(title: "画像", subtitle: "查看用户与 AI 画像", systemImage: "person.text.rectangle") {
+                            onNavigate(.portrait)
+                        }
+                        drawerButton(title: "设置", subtitle: "主题、语言和清空数据", systemImage: "gearshape") {
+                            onNavigate(.settings)
+                        }
+                    }
+                }
+
+                Spacer(minLength: 0)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .background(.thinMaterial)
-            .navigationBarHidden(true)
+            .padding(18)
         }
         .frame(width: 296)
-        .background(
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .fill(Color.black.opacity(0.08))
-        )
+        .frame(maxHeight: .infinity, alignment: .topLeading)
+        .background(.thinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 24, style: .continuous)
@@ -603,15 +640,31 @@ private struct ChatSideDrawer: View {
         )
     }
 
-    private func drawerLink<Destination: View>(
+    private func drawerMetric<Content: View>(
+        label: String,
+        systemImage: String,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        HStack {
+            Image(systemName: systemImage)
+                .font(.system(size: 10))
+                .foregroundStyle(.secondary)
+                .frame(width: 14)
+            Text(label)
+                .font(.caption.weight(.medium))
+                .foregroundStyle(.secondary)
+            Spacer()
+            content()
+        }
+    }
+
+    private func drawerButton(
         title: String,
         subtitle: String,
         systemImage: String,
-        @ViewBuilder destination: () -> Destination
+        action: @escaping () -> Void
     ) -> some View {
-        NavigationLink {
-            destination()
-        } label: {
+        Button(action: action) {
             HStack(spacing: 12) {
                 Image(systemName: systemImage)
                     .font(.system(size: 15, weight: .semibold))

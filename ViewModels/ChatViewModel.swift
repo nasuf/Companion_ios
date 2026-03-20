@@ -31,6 +31,7 @@ final class ChatViewModel {
     private let userId: String
     private var listenTask: Task<Void, Never>?
     private var typingTask: Task<Void, Never>?
+    private var statusPollTask: Task<Void, Never>?
     private var reconnectAttempts = 0
     private let maxReconnectDelay: Double = 30
 
@@ -100,6 +101,23 @@ final class ChatViewModel {
 
     func loadEmotion() async {
         emotionState = try? await EmotionService.current(agentId: agentId)
+    }
+
+    /// 每60秒轮询一次作息状态，因为状态是基于时间段计算的
+    func startStatusPolling() {
+        statusPollTask?.cancel()
+        statusPollTask = Task {
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(60))
+                guard !Task.isCancelled else { break }
+                await loadStatus()
+            }
+        }
+    }
+
+    func stopStatusPolling() {
+        statusPollTask?.cancel()
+        statusPollTask = nil
     }
 
     // MARK: - WebSocket 连接
@@ -213,13 +231,6 @@ final class ChatViewModel {
             // TODO: 处理 stickerURL（如需要）
             messages.append(msg)
             hasUnreadReply = true
-            
-            // Refresh real-time status
-            Task {
-                await loadEmotion()
-                await loadBoundary()
-                await loadIntimacy()
-            }
 
         case .token(let token):
             // 兼容旧的 boundary/template 回复
@@ -270,8 +281,6 @@ final class ChatViewModel {
             messages.append(msg)
             hasUnreadReply = true
             deliveryHint = "在线"
-            
-            Task { await loadEmotion() }
 
         case .done:
             isWaitingReply = false
@@ -280,11 +289,13 @@ final class ChatViewModel {
             stopCountdown()
             deliveryHint = isConnected ? "在线" : "已断开"
             scrollToBottom = true
-            
+
             Task {
-                await loadEmotion()
-                await loadBoundary()
-                await loadIntimacy()
+                async let s: Void = loadStatus()
+                async let e: Void = loadEmotion()
+                async let b: Void = loadBoundary()
+                async let i: Void = loadIntimacy()
+                _ = await (s, e, b, i)
             }
         }
     }
@@ -316,6 +327,7 @@ final class ChatViewModel {
     }
 
     func cancel() {
+        stopStatusPolling()
         disconnectFromChat()
     }
 }
