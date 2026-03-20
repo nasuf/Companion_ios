@@ -28,31 +28,31 @@
 		87BA5B6178EA33229E62FDD7 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7EC96C8993FC423ED78890 /* OnboardingView.swift */; };
 		990314E833D01CEE5E8CD225 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C20A05121D41B59CD0822E /* AppViewModel.swift */; };
 		9BC48F23DB96787A164247F7 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0B232FE248BE3D29B51144 /* ChatService.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* Intimacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7B8C9D0E1F2A3 /* Intimacy.swift */; };
 		A48E1A7F95EB59DB8883DDDD /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 10060BB070382C2E14CEB0CB /* Localizable.xcstrings */; };
+		A7B8C9D0E1F2A3B4C5D6E7F8 /* MemoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C9D0E1F2A3B4C5D6E7F8A9 /* MemoryDetailView.swift */; };
 		B6BE65F64264F9F7D97F8AAC /* GradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44BAE551AA0E898AA184179 /* GradientBackground.swift */; };
+		C3D4E5F6A7B8C9D0E1F2A3B4 /* IntimacyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E5F6A7B8C9D0E1F2A3B4C5 /* IntimacyService.swift */; };
+		C9D0E1F2A3B4C5D6E7F8A9B0 /* UserPortraitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1F2A3B4C5D6E7F8A9B0C1 /* UserPortraitView.swift */; };
 		D078536B155547E556366E51 /* MemoryTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A2A1E4C1C5845BA48C5DD5 /* MemoryTimelineView.swift */; };
 		D08655CCC2CC4A9E68E7F695 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3E3D1AB980CB9F5470A9ADC /* ChatView.swift */; };
 		D115814BBFC95D6AB20A8D2C /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D01EE1E4F3092B7E5AC3E /* Conversation.swift */; };
 		D64473B0308369591218070C /* TypingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2494CBEB9D0E93F23FF2DD /* TypingIndicator.swift */; };
 		DD7A0DE47E35AF50F30F1BD2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0DA26A0AFA76B7DDF0EA82 /* ContentView.swift */; };
+		E1F2A3B4C5D6E7F8A9B0C1D2 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A3B4C5D6E7F8A9B0C1D2E3 /* DateFormatting.swift */; };
 		E32F89AC88D298EF2AE1DDCC /* GenderSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC586F66CB689D098D773B00 /* GenderSelectionView.swift */; };
 		E3B17C242E9216D1EF16AC7B /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F8FE5B7FC823AD301195C25 /* Message.swift */; };
+		E5F6A7B8C9D0E1F2A3B4C5D6 /* BoundaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7B8C9D0E1F2A3B4C5D6E7 /* BoundaryService.swift */; };
 		E6AC0604DD461812BAC6575D /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D20F5E6741875DF344FE4D68 /* EmptyStateView.swift */; };
 		EA452F822A0F836D01B46600 /* MemoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D630E664F540D41DDDE8BEA5 /* MemoryViewModel.swift */; };
 		EADE0748FCB4307C6B46D182 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D20D86BB5C8AFC6A4AB704C /* APIClient.swift */; };
 		EB19CC9BA295C9B9E239D5A7 /* EmotionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEC8619EC1AC2A285958C28 /* EmotionService.swift */; };
 		F5DCA4FBCFC030F2A8FEFD64 /* EmotionTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937D6F82F02C6FA45A38A6E8 /* EmotionTimelineView.swift */; };
 		FB90A5DC818F6990DC58D878 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23781419E271ED8B04D68D09 /* Memory.swift */; };
-		A1B2C3D4E5F6A7B8C9D0E1F2 /* Intimacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7B8C9D0E1F2A3 /* Intimacy.swift */; };
-		C3D4E5F6A7B8C9D0E1F2A3B4 /* IntimacyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4E5F6A7B8C9D0E1F2A3B4C5 /* IntimacyService.swift */; };
-		E5F6A7B8C9D0E1F2A3B4C5D6 /* BoundaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A7B8C9D0E1F2A3B4C5D6E7 /* BoundaryService.swift */; };
-		A7B8C9D0E1F2A3B4C5D6E7F8 /* MemoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8C9D0E1F2A3B4C5D6E7F8A9 /* MemoryDetailView.swift */; };
-		C9D0E1F2A3B4C5D6E7F8A9B0 /* UserPortraitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E1F2A3B4C5D6E7F8A9B0C1 /* UserPortraitView.swift */; };
-		E1F2A3B4C5D6E7F8A9B0C1D2 /* DateFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A3B4C5D6E7F8A9B0C1D2E3 /* DateFormatting.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		07346A7ACE7FC8753F7FAE68 /* Companion.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Companion.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		07346A7ACE7FC8753F7FAE68 /* Companion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Companion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09D1B8794D31F444FE3B35EB /* PersonalitySliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalitySliderView.swift; sourceTree = "<group>"; };
 		10060BB070382C2E14CEB0CB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		16A2A1E4C1C5845BA48C5DD5 /* MemoryTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryTimelineView.swift; sourceTree = "<group>"; };
@@ -68,13 +68,17 @@
 		78BD52FECF1CD47E887D7A95 /* NameInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameInputView.swift; sourceTree = "<group>"; };
 		937D6F82F02C6FA45A38A6E8 /* EmotionTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTimelineView.swift; sourceTree = "<group>"; };
 		AF0B232FE248BE3D29B51144 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
+		B2C3D4E5F6A7B8C9D0E1F2A3 /* Intimacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intimacy.swift; sourceTree = "<group>"; };
 		B303377F6F476D7012603EA4 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
 		B54D7DA7197FE1967FF3CA42 /* Emotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emotion.swift; sourceTree = "<group>"; };
+		B8C9D0E1F2A3B4C5D6E7F8A9 /* MemoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDetailView.swift; sourceTree = "<group>"; };
 		B9C20A05121D41B59CD0822E /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		C4ED0A90A75365072B4DF2E0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		D0E1F2A3B4C5D6E7F8A9B0C1 /* UserPortraitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPortraitView.swift; sourceTree = "<group>"; };
 		D20F5E6741875DF344FE4D68 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		D42A7C21169892655EC22CC9 /* CompanionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionApp.swift; sourceTree = "<group>"; };
 		D4AE67055133B0345D64CDED /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
+		D4E5F6A7B8C9D0E1F2A3B4C5 /* IntimacyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntimacyService.swift; sourceTree = "<group>"; };
 		D55D01EE1E4F3092B7E5AC3E /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
 		D6203DC1257656E2ADBBB3FB /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCard.swift; sourceTree = "<group>"; };
 		D630E664F540D41DDDE8BEA5 /* MemoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewModel.swift; sourceTree = "<group>"; };
@@ -85,16 +89,12 @@
 		EBF8E76787C1E83DFDA1C97C /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		ED0DA26A0AFA76B7DDF0EA82 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		EDDD02F29FA0955447A3F90B /* MemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryService.swift; sourceTree = "<group>"; };
+		F2A3B4C5D6E7F8A9B0C1D2E3 /* DateFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatting.swift; sourceTree = "<group>"; };
 		F44BAE551AA0E898AA184179 /* GradientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackground.swift; sourceTree = "<group>"; };
 		F5E56E32B69C843031578526 /* AgentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentService.swift; sourceTree = "<group>"; };
+		F6A7B8C9D0E1F2A3B4C5D6E7 /* BoundaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundaryService.swift; sourceTree = "<group>"; };
 		FB3EE4663AC9E0024770852F /* EmotionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionViewModel.swift; sourceTree = "<group>"; };
 		FEE68278BF53A03C59A1AFEF /* Agent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Agent.swift; sourceTree = "<group>"; };
-		B2C3D4E5F6A7B8C9D0E1F2A3 /* Intimacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intimacy.swift; sourceTree = "<group>"; };
-		D4E5F6A7B8C9D0E1F2A3B4C5 /* IntimacyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntimacyService.swift; sourceTree = "<group>"; };
-		F6A7B8C9D0E1F2A3B4C5D6E7 /* BoundaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundaryService.swift; sourceTree = "<group>"; };
-		B8C9D0E1F2A3B4C5D6E7F8A9 /* MemoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDetailView.swift; sourceTree = "<group>"; };
-		D0E1F2A3B4C5D6E7F8A9B0C1 /* UserPortraitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPortraitView.swift; sourceTree = "<group>"; };
-		F2A3B4C5D6E7F8A9B0C1D2E3 /* DateFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatting.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -381,6 +381,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P44Z8JVBHV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_GENERATION_MODE = GeneratedFile;
@@ -407,6 +408,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = P44Z8JVBHV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_GENERATION_MODE = GeneratedFile;
