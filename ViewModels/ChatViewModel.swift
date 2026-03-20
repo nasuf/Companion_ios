@@ -189,20 +189,11 @@ final class ChatViewModel {
     @MainActor
     private func handleEvent(_ event: SSEEvent) {
         switch event {
-        case .typing(let duration):
+        case .typing(_):
             isTyping = true
             deliveryHint = "对方正在输入…"
             stopCountdown()
             typingTask?.cancel()
-            typingTask = Task {
-                try? await Task.sleep(for: .seconds(duration))
-                if !Task.isCancelled {
-                    isTyping = false
-                    if self.isConnected {
-                        self.deliveryHint = "在线"
-                    }
-                }
-            }
 
         case .delay(let duration):
             isTyping = true
@@ -210,12 +201,6 @@ final class ChatViewModel {
             deliveryHint = "预计 \(d) 秒后回复"
             startCountdown(seconds: d)
             typingTask?.cancel()
-            typingTask = Task {
-                try? await Task.sleep(for: .seconds(min(duration, 10)))
-                if !Task.isCancelled {
-                    isTyping = false
-                }
-            }
 
         case .reply(let text, _, _):
             isTyping = false

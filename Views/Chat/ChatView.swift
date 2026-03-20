@@ -17,8 +17,7 @@ struct ChatView: View {
     }
 
     var body: some View {
-        ZStack(alignment: .trailing) {
-            VStack(spacing: 0) {
+        VStack(spacing: 0) {
             // Messages
             ScrollViewReader { proxy in
                 ScrollView {
@@ -122,29 +121,32 @@ struct ChatView: View {
 
             // Emoji Picker & Input bar wrapped in glass
             inputArea
-            }
-
+        }
+        .overlay {
             if showSettingsDrawer {
-                Color.black.opacity(0.24)
-                    .ignoresSafeArea()
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        withAnimation(.spring(duration: 0.28)) {
-                            showSettingsDrawer = false
+                ZStack(alignment: .trailing) {
+                    Color.black.opacity(0.24)
+                        .ignoresSafeArea()
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            withAnimation(.spring(duration: 0.28)) {
+                                showSettingsDrawer = false
+                            }
                         }
-                    }
-                    .transition(.opacity)
+                        .transition(.opacity)
 
-                ChatSideDrawer(
-                    isPresented: $showSettingsDrawer,
-                    emotionState: viewModel.emotionState
-                )
-                .padding(.top, 8)
-                .padding(.bottom, 8)
-                .padding(.trailing, 8)
-                .transition(.move(edge: .trailing).combined(with: .opacity))
+                    ChatSideDrawer(
+                        isPresented: $showSettingsDrawer,
+                        emotionState: viewModel.emotionState
+                    )
+                    .padding(.top, 8)
+                    .padding(.bottom, 8)
+                    .padding(.trailing, 8)
+                    .transition(.move(edge: .trailing).combined(with: .opacity))
+                }
             }
         }
+        .animation(.spring(duration: 0.28), value: showSettingsDrawer)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             // Principal: Title and Intimacy Badge
@@ -318,12 +320,16 @@ private struct EmotionBadge: View {
         }
     }
 
+    private var padColor: Color {
+        colorScheme == .dark ? Color.white.opacity(0.55) : Color.black.opacity(0.45)
+    }
+
     private var backgroundColor: Color {
-        colorScheme == .dark ? Color.white.opacity(0.1) : Color.black.opacity(0.08)
+        colorScheme == .dark ? Color.white.opacity(0.12) : Color.black.opacity(0.06)
     }
 
     private var borderColor: Color {
-        colorScheme == .dark ? Color.white.opacity(0.14) : Color.black.opacity(0.12)
+        colorScheme == .dark ? Color.white.opacity(0.18) : Color.black.opacity(0.1)
     }
 
     private var shadowColor: Color {
@@ -368,7 +374,7 @@ private struct EmotionBadge: View {
 
             Text(padText)
                 .font(.system(size: padSize, weight: .medium, design: .monospaced))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(padColor)
                 .lineLimit(1)
         }
     }
@@ -386,7 +392,7 @@ private struct EmotionBadge: View {
 
             Text(String(format: "P%.1f", emotion.pleasure))
                 .font(.system(size: 8, weight: .medium, design: .monospaced))
-                .foregroundStyle(.secondary)
+                .foregroundStyle(padColor)
                 .lineLimit(1)
         }
     }
@@ -527,14 +533,6 @@ private struct ChatSideDrawer: View {
                                 Text("PAD 值")
                                     .font(.caption.weight(.semibold))
                                     .foregroundStyle(.secondary)
-                                Spacer()
-                                NavigationLink {
-                                    EmotionTimelineView()
-                                } label: {
-                                    Text("查看详情")
-                                        .font(.caption.weight(.medium))
-                                        .foregroundStyle(.secondary)
-                                }
                             }
                             EmotionBadge(emotion: emotionState)
                         }
