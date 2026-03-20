@@ -20,77 +20,76 @@ struct EmotionTimelineView: View {
                                         .font(.title2.weight(.semibold))
                                         .foregroundStyle(.purple)
                                     HStack(spacing: 20) {
-                                        EmotionGauge(label: "V", value: current.valence)
+                                        EmotionGauge(label: "P", value: current.pleasure)
                                         EmotionGauge(label: "A", value: current.arousal)
                                         EmotionGauge(label: "D", value: current.dominance)
-                                    }
-                                }
-                            }
-                            .padding(.horizontal)
-                        }
+                                        }
+                                        }
+                                        }
+                                        .padding(.horizontal)
+                                        }
 
-                        // Chart
-                        if !viewModel.timeline.isEmpty {
-                            GlassCard {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text("情绪变化")
+                                        // Chart
+                                        if !viewModel.timeline.isEmpty {
+                                        GlassCard {
+                                        VStack(alignment: .leading, spacing: 8) {
+                                        Text("情绪变化")
                                         .font(.headline)
 
-                                    Chart {
+                                        Chart {
                                         ForEach(Array(viewModel.timeline.enumerated()), id: \.offset) { index, entry in
-                                            LineMark(
-                                                x: .value("Index", index),
-                                                y: .value("Valence", entry.valence)
-                                            )
-                                            .foregroundStyle(.purple)
-                                            .interpolationMethod(.catmullRom)
+                                           LineMark(
+                                               x: .value("Index", index),
+                                               y: .value("Pleasure", entry.pleasure)
+                                           )
+                                           .foregroundStyle(.purple)
+                                           .interpolationMethod(.catmullRom)
 
-                                            AreaMark(
-                                                x: .value("Index", index),
-                                                y: .value("Valence", entry.valence)
-                                            )
-                                            .foregroundStyle(
-                                                .linearGradient(
-                                                    colors: [.purple.opacity(0.3), .clear],
-                                                    startPoint: .top,
-                                                    endPoint: .bottom
-                                                )
-                                            )
-                                            .interpolationMethod(.catmullRom)
+                                           AreaMark(
+                                               x: .value("Index", index),
+                                               y: .value("Pleasure", entry.pleasure)
+                                           )
+                                           .foregroundStyle(
+                                               .linearGradient(
+                                                   colors: [.purple.opacity(0.3), .clear],
+                                                   startPoint: .top,
+                                                   endPoint: .bottom
+                                               )
+                                           )
+                                           .interpolationMethod(.catmullRom)
                                         }
-                                    }
-                                    .frame(height: 200)
-                                    .chartYScale(domain: -1...1)
-                                }
-                            }
-                            .padding(.horizontal)
+                                        }
+                                        .frame(height: 200)
+                                        .chartYScale(domain: -1...1)
+                                        }
+                                        }
+                                        .padding(.horizontal)
 
-                            // History entries
-                            VStack(spacing: 8) {
-                                ForEach(viewModel.timeline) { entry in
-                                    GlassCard {
+                                        // History entries
+                                        VStack(spacing: 8) {
+                                        ForEach(viewModel.timeline) { entry in
+                                        GlassCard {
                                         VStack(alignment: .leading, spacing: 6) {
-                                            HStack {
-                                                Text(DateFormatting.dateTime(entry.timestamp))
-                                                    .font(.caption)
-                                                    .foregroundStyle(.secondary)
-                                                Spacer()
-                                                HStack(spacing: 8) {
-                                                    Text("V:\(String(format: "%.1f", entry.valence))")
-                                                    Text("A:\(String(format: "%.1f", entry.arousal))")
-                                                    Text("D:\(String(format: "%.1f", entry.dominance))")
-                                                }
-                                                .font(.caption2.monospacedDigit())
-                                                .foregroundStyle(.secondary)
-                                            }
-                                            Text(entry.messagePreview)
-                                                .font(.subheadline)
-                                                .lineLimit(2)
+                                           HStack {
+                                               Text(DateFormatting.dateTime(entry.timestamp))
+                                                   .font(.caption)
+                                                   .foregroundStyle(.secondary)
+                                               Spacer()
+                                               HStack(spacing: 8) {
+                                                   Text("P:\(String(format: "%.1f", entry.pleasure))")
+                                                   Text("A:\(String(format: "%.1f", entry.arousal))")
+                                                   Text("D:\(String(format: "%.1f", entry.dominance))")
+                                               }
+                                               .font(.caption2.monospacedDigit())
+                                               .foregroundStyle(.secondary)
+                                           }
+                                           Text(entry.messagePreview)
+                                               .font(.subheadline)
+                                               .lineLimit(2)
                                         }
-                                    }
-                                }
-                            }
-                            .padding(.horizontal)
+                                        }
+                                        }
+                                        }                            .padding(.horizontal)
                         } else if !viewModel.isLoading {
                             EmptyStateView(
                                 icon: "heart",

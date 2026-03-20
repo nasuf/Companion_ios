@@ -2,14 +2,16 @@ import SwiftUI
 
 struct GlassCard<Content: View>: View {
     let content: Content
+    let padding: CGFloat
 
-    init(@ViewBuilder content: () -> Content) {
+    init(padding: CGFloat = 16, @ViewBuilder content: () -> Content) {
+        self.padding = padding
         self.content = content()
     }
 
     var body: some View {
         content
-            .padding()
+            .padding(padding)
             .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .overlay(
@@ -20,9 +22,11 @@ struct GlassCard<Content: View>: View {
 }
 
 struct GlassCardModifier: ViewModifier {
+    let padding: CGFloat
+
     func body(content: Content) -> some View {
         content
-            .padding()
+            .padding(padding)
             .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .overlay(
@@ -33,7 +37,7 @@ struct GlassCardModifier: ViewModifier {
 }
 
 extension View {
-    func glassCard() -> some View {
-        modifier(GlassCardModifier())
+    func glassCard(padding: CGFloat = 16) -> some View {
+        modifier(GlassCardModifier(padding: padding))
     }
 }

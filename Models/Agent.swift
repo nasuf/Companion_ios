@@ -7,10 +7,12 @@ struct Agent: Codable, Identifiable {
     let personality: [String: Double]?
     let background: String?
     let values: [String: String]?
+    let lifeOverview: String?
     let createdAt: String
 
     enum CodingKeys: String, CodingKey {
         case id, name, personality, background, values
+        case lifeOverview = "life_overview"
         case userId = "user_id"
         case createdAt = "created_at"
     }

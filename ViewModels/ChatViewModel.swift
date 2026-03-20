@@ -8,6 +8,8 @@ final class ChatViewModel {
     var isWaitingReply = false  // AI 正在生成回复
     var isTyping = false       // 显示"正在输入"指示器
     var deliveryHint = "在线"
+    var countdown: Int?
+    private var countdownTimer: Timer?
     var error: String?
     var scrollToBottom = false
     var hasUnreadReply = false
@@ -20,6 +22,9 @@ final class ChatViewModel {
 
     // Boundary (7.6)
     var boundaryStatus: BoundaryStatus?
+
+    // Emotion (real-time PAD)
+    var emotionState: EmotionState?
 
     private let conversationId: String
     private let agentId: String
@@ -93,6 +98,10 @@ final class ChatViewModel {
         boundaryStatus = try? await BoundaryService.get(agentId: agentId, userId: userId)
     }
 
+    func loadEmotion() async {
+        emotionState = try? await EmotionService.current(agentId: agentId)
+    }
+
     // MARK: - WebSocket 连接
 
     func connectToChat() async {
@@ -104,7 +113,7 @@ final class ChatViewModel {
         listenTask = Task {
             do {
                 for try await event in stream {
-                    handleEvent(event)
+                    await handleEvent(event)
                 }
             } catch {
                 if !Task.isCancelled {
@@ -177,11 +186,13 @@ final class ChatViewModel {
 
     // MARK: - 事件处理
 
+    @MainActor
     private func handleEvent(_ event: SSEEvent) {
         switch event {
         case .typing(let duration):
             isTyping = true
             deliveryHint = "对方正在输入…"
+            stopCountdown()
             typingTask?.cancel()
             typingTask = Task {
                 try? await Task.sleep(for: .seconds(duration))
@@ -195,7 +206,9 @@ final class ChatViewModel {
 
         case .delay(let duration):
             isTyping = true
-            deliveryHint = "预计 \(Int(duration.rounded())) 秒后回复"
+            let d = Int(duration.rounded())
+            deliveryHint = "预计 \(d) 秒后回复"
+            startCountdown(seconds: d)
             typingTask?.cancel()
             typingTask = Task {
                 try? await Task.sleep(for: .seconds(min(duration, 10)))
@@ -204,21 +217,30 @@ final class ChatViewModel {
                 }
             }
 
-        case .reply(let text, _, let stickerURL):
+        case .reply(let text, _, _):
             isTyping = false
             typingTask?.cancel()
+            stopCountdown()
             deliveryHint = "在线"
 
             // 微信模式：直接插入完整消息气泡
-            var msg = Message.assistantMessage(conversationId: conversationId, content: text)
+            let msg = Message.assistantMessage(conversationId: conversationId, content: text)
             // TODO: 处理 stickerURL（如需要）
             messages.append(msg)
             hasUnreadReply = true
+            
+            // Refresh real-time status
+            Task {
+                await loadEmotion()
+                await loadBoundary()
+                await loadIntimacy()
+            }
 
         case .token(let token):
             // 兼容旧的 boundary/template 回复
             isTyping = false
             typingTask?.cancel()
+            stopCountdown()
             if let last = messages.last, last.role == .assistant {
                 let updated = Message(
                     id: last.id,
@@ -237,29 +259,75 @@ final class ChatViewModel {
             switch status {
             case "aggregating":
                 deliveryHint = "消息已进入聚合"
+                stopCountdown()
             case "queued":
-                if let delay {
-                    deliveryHint = "已排队，预计 \(Int(delay.rounded())) 秒后回复"
+                if let delay = delay {
+                    let d = Int(delay.rounded())
+                    deliveryHint = "已排队，预计 \(d) 秒后回复"
+                    if d > 0 {
+                        startCountdown(seconds: d)
+                    } else {
+                        stopCountdown()
+                    }
                 } else {
                     deliveryHint = "消息已排队"
+                    stopCountdown()
                 }
             default:
                 deliveryHint = "消息处理中"
+                stopCountdown()
             }
 
         case .proactive(let text, _):
             // 服务端主动消息
+            stopCountdown()
             let msg = Message.assistantMessage(conversationId: conversationId, content: text)
             messages.append(msg)
             hasUnreadReply = true
             deliveryHint = "在线"
+            
+            Task { await loadEmotion() }
 
         case .done:
             isWaitingReply = false
             isTyping = false
             typingTask?.cancel()
+            stopCountdown()
             deliveryHint = isConnected ? "在线" : "已断开"
+            scrollToBottom = true
+            
+            Task {
+                await loadEmotion()
+                await loadBoundary()
+                await loadIntimacy()
+            }
         }
+    }
+
+    private func startCountdown(seconds: Int) {
+        stopCountdown()
+        countdown = seconds
+        countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
+            guard let self = self else { return }
+            if let current = self.countdown, current > 1 {
+                self.countdown = current - 1
+                // 保持提示词前缀，仅更新数字
+                if self.deliveryHint.contains("排队") {
+                    self.deliveryHint = "已排队，预计 \(current - 1) 秒后回复"
+                } else if self.deliveryHint.contains("预计") {
+                    self.deliveryHint = "预计 \(current - 1) 秒后回复"
+                }
+            } else {
+                self.stopCountdown()
+                self.deliveryHint = "即将回复"
+            }
+        }
+    }
+
+    private func stopCountdown() {
+        countdownTimer?.invalidate()
+        countdownTimer = nil
+        countdown = nil
     }
 
     func cancel() {

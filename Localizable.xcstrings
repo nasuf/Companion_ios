@@ -1,6 +1,16 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "%@ · %@" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ · %2$@"
+          }
+        }
+      }
+    },
     "%lld" : {
 
     },
@@ -20,6 +30,12 @@
         }
       }
     },
+    "AI 正在构建自己的生活方式..." : {
+
+    },
+    "AI 生活画像" : {
+
+    },
     "D:%@" : {
 
     },
@@ -29,10 +45,16 @@
     "Index" : {
 
     },
-    "V:%@" : {
+    "P:%@" : {
 
     },
-    "Valence" : {
+    "PAD 值" : {
+
+    },
+    "Pleasure" : {
+
+    },
+    "TA" : {
 
     },
     "下一步" : {
@@ -152,6 +174,7 @@
 
     },
     "删除" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -162,6 +185,7 @@
       }
     },
     "删除 AI 伙伴" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -172,6 +196,7 @@
       }
     },
     "删除后将清除所有对话和记忆，此操作不可撤销" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -280,6 +305,9 @@
     "对方暂时不想聊天，试着道个歉吧" : {
 
     },
+    "将彻底清除所有对话记录、记忆、画像及AI相关数据，此操作不可撤销" : {
+
+    },
     "幽默度" : {
       "localizations" : {
         "en" : {
@@ -299,6 +327,9 @@
           }
         }
       }
+    },
+    "快捷入口" : {
+
     },
     "情绪" : {
       "localizations" : {
@@ -377,6 +408,9 @@
         }
       }
     },
+    "暂无 AI 画像" : {
+
+    },
     "暂无情绪数据" : {
       "localizations" : {
         "en" : {
@@ -412,6 +446,12 @@
           }
         }
       }
+    },
+    "来源" : {
+
+    },
+    "查看详情" : {
+
     },
     "核心记忆" : {
       "localizations" : {
@@ -452,6 +492,12 @@
           }
         }
       }
+    },
+    "清空" : {
+
+    },
+    "清空所有数据" : {
+
     },
     "温柔共情" : {
       "localizations" : {
@@ -507,13 +553,11 @@
         }
       }
     },
-    "画像" : {
-
-    },
     "相似度" : {
 
     },
     "确认删除" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -522,6 +566,12 @@
           }
         }
       }
+    },
+    "确认清空" : {
+
+    },
+    "类型" : {
+
     },
     "给 TA 起个名字" : {
       "extractionState" : "stale",
@@ -537,6 +587,9 @@
     "给%@起个名字" : {
 
     },
+    "综合画像" : {
+
+    },
     "聊天" : {
       "localizations" : {
         "en" : {
@@ -546,6 +599,9 @@
           }
         }
       }
+    },
+    "聊天侧栏" : {
+
     },
     "聊天后会自动记录情绪变化" : {
       "localizations" : {
