@@ -197,6 +197,7 @@ struct ChatView: View {
             case .memory: MemoryTimelineView()
             case .emotion: EmotionTimelineView()
             case .portrait: UserPortraitView()
+            case .schedule: ScheduleHistoryView()
             case .settings: SettingsView()
             }
         }
@@ -496,7 +497,7 @@ private struct BoundaryMoodIndicator: View {
 // MARK: - DrawerDestination
 
 enum DrawerDestination: Hashable, Identifiable {
-    case memory, emotion, portrait, settings
+    case memory, emotion, portrait, schedule, settings
     var id: Self { self }
 }
 
@@ -603,6 +604,9 @@ private struct ChatSideDrawer: View {
                         }
                         drawerButton(title: "画像", subtitle: "查看用户与 AI 画像", systemImage: "person.text.rectangle") {
                             onNavigate(.portrait)
+                        }
+                        drawerButton(title: "作息", subtitle: "查看生活画像和每日作息", systemImage: "calendar.badge.clock") {
+                            onNavigate(.schedule)
                         }
                         drawerButton(title: "设置", subtitle: "主题、语言和清空数据", systemImage: "gearshape") {
                             onNavigate(.settings)

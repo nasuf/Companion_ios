@@ -151,7 +151,7 @@ private struct MemoryCard: View {
 
                     Spacer()
 
-                    Text(DateFormatting.short(memory.createdAt))
+                    Text(DateFormatting.dateTime(memory.createdAt))
                         .font(.caption2)
                         .foregroundStyle(.tertiary)
                 }

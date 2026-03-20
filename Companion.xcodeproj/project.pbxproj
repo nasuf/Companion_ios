@@ -11,11 +11,14 @@
 		07B995F7763ABBD83D11E0A6 /* CompanionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42A7C21169892655EC22CC9 /* CompanionApp.swift */; };
 		09B349A66DE35552C09C1757 /* PersonalitySliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D1B8794D31F444FE3B35EB /* PersonalitySliderView.swift */; };
 		15FAC83D5619BA22AC16BD85 /* ConversationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498BAFECA6128CD178FD4449 /* ConversationService.swift */; };
+		17BDF4AC63561E015A5D5F15 /* ScheduleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCFC51590F4AAFDB04E2D1E7 /* ScheduleService.swift */; };
 		1BB27B4D2A2A89E7CBC44148 /* EmotionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3EE4663AC9E0024770852F /* EmotionViewModel.swift */; };
 		32789BF166851E65D30B59E7 /* Agent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEE68278BF53A03C59A1AFEF /* Agent.swift */; };
 		33A4D54B94ED85F7D27B8393 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBF8E76787C1E83DFDA1C97C /* UserService.swift */; };
 		347BE0A31234D9C9C10376FE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AF4B877C5994A76B357F56 /* SettingsView.swift */; };
 		3C375278A5E5C6EB98AC88EF /* Emotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54D7DA7197FE1967FF3CA42 /* Emotion.swift */; };
+		3E7ACAE8076AC7B6D202BE91 /* ScheduleHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA45CB941F1F4C6BC2B0982C /* ScheduleHistoryView.swift */; };
+		4E069D253C2ABCDB5280F0B1 /* ScheduleHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB726C869C48E2DE601895D /* ScheduleHistoryView.swift */; };
 		61C9E38DC8432BC902256FBA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4ED0A90A75365072B4DF2E0 /* User.swift */; };
 		62F5F27E1389CFC169243CA5 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B303377F6F476D7012603EA4 /* OnboardingViewModel.swift */; };
 		65EA3F7447AC0DF0F8C86C1C /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AE67055133B0345D64CDED /* MessageBubble.swift */; };
@@ -66,7 +69,9 @@
 		498BAFECA6128CD178FD4449 /* ConversationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationService.swift; sourceTree = "<group>"; };
 		5F8FE5B7FC823AD301195C25 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		78BD52FECF1CD47E887D7A95 /* NameInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameInputView.swift; sourceTree = "<group>"; };
+		8FB726C869C48E2DE601895D /* ScheduleHistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScheduleHistoryView.swift; path = Views/Schedule/ScheduleHistoryView.swift; sourceTree = "<group>"; };
 		937D6F82F02C6FA45A38A6E8 /* EmotionTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionTimelineView.swift; sourceTree = "<group>"; };
+		AA45CB941F1F4C6BC2B0982C /* ScheduleHistoryView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScheduleHistoryView.swift; sourceTree = "<group>"; };
 		AF0B232FE248BE3D29B51144 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		B2C3D4E5F6A7B8C9D0E1F2A3 /* Intimacy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intimacy.swift; sourceTree = "<group>"; };
 		B303377F6F476D7012603EA4 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
@@ -84,6 +89,7 @@
 		D630E664F540D41DDDE8BEA5 /* MemoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryViewModel.swift; sourceTree = "<group>"; };
 		DC2494CBEB9D0E93F23FF2DD /* TypingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicator.swift; sourceTree = "<group>"; };
 		DC586F66CB689D098D773B00 /* GenderSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderSelectionView.swift; sourceTree = "<group>"; };
+		DCFC51590F4AAFDB04E2D1E7 /* ScheduleService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
 		E04D3A499DA47F2A5A366DAD /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		E3E3D1AB980CB9F5470A9ADC /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		EBF8E76787C1E83DFDA1C97C /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
@@ -140,6 +146,7 @@
 				D4E5F6A7B8C9D0E1F2A3B4C5 /* IntimacyService.swift */,
 				EDDD02F29FA0955447A3F90B /* MemoryService.swift */,
 				EBF8E76787C1E83DFDA1C97C /* UserService.swift */,
+				DCFC51590F4AAFDB04E2D1E7 /* ScheduleService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -168,7 +175,18 @@
 		};
 		56F231D02F6393B10070215B /* Products */ = {
 			isa = PBXGroup;
+			children = (
+			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		853F1D2C54C78D378348A5A8 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				AA45CB941F1F4C6BC2B0982C /* ScheduleHistoryView.swift */,
+			);
+			name = Schedule;
+			path = Schedule;
 			sourceTree = "<group>";
 		};
 		92635B817E9E224AD5ADCA3C /* Views */ = {
@@ -181,6 +199,7 @@
 				CBFB189B3CBDF67BBB058A42 /* Memory */,
 				CF6E50906197EFB9ECB43683 /* Onboarding */,
 				B161762E8C872A7DF655332E /* Settings */,
+				853F1D2C54C78D378348A5A8 /* Schedule */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -272,8 +291,6 @@
 			dependencies = (
 			);
 			name = Companion;
-			packageProductDependencies = (
-			);
 			productName = Companion;
 			productReference = 07346A7ACE7FC8753F7FAE68 /* Companion.app */;
 			productType = "com.apple.product-type.application";
@@ -297,6 +314,7 @@
 			);
 			mainGroup = 1E3AA8A0A595C7E618019434;
 			minimizedProjectReferenceProxies = 1;
+			productRefGroup = BE542E0A35B0108013933350 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
 				{
@@ -368,6 +386,9 @@
 				D64473B0308369591218070C /* TypingIndicator.swift in Sources */,
 				61C9E38DC8432BC902256FBA /* User.swift in Sources */,
 				33A4D54B94ED85F7D27B8393 /* UserService.swift in Sources */,
+				4E069D253C2ABCDB5280F0B1 /* ScheduleHistoryView.swift in Sources */,
+				17BDF4AC63561E015A5D5F15 /* ScheduleService.swift in Sources */,
+				3E7ACAE8076AC7B6D202BE91 /* ScheduleHistoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
