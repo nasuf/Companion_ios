@@ -82,9 +82,9 @@ private struct DayScheduleCard: View {
             }
 
             VStack(spacing: 0) {
-                ForEach(Array(day.schedule.enumerated()), id: \.offset) { _, slot in
+                ForEach(Array(day.schedule.enumerated()), id: \.offset) { index, slot in
                     SlotRow(slot: slot)
-                    if slot.start != day.schedule.last?.start {
+                    if index < day.schedule.count - 1 {
                         Divider().opacity(0.3)
                     }
                 }
