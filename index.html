@@ -3727,6 +3727,363 @@ button:active,.paper-card:active,.card-msg:active,.drawer-btn:active,.round:acti
   line-height:1.18;
   text-shadow:0 2px 10px rgba(0,0,0,.72);
 }
+.cinema-page-v6{
+  color:#f8fbff;
+  background:
+    radial-gradient(320px 230px at 84% 2%,rgba(255,106,61,.20),transparent 70%),
+    radial-gradient(250px 230px at 16% 46%,rgba(31,111,255,.16),transparent 72%),
+    linear-gradient(180deg,#151823 0%,#15151d 38%,#110b0d 72%,#07080b 100%);
+}
+.cinema-page-v6:before{
+  content:"";
+  position:absolute;
+  inset:0 0 72px;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px) 0 0/34px 100%,
+    radial-gradient(240px 180px at 78% 26%,rgba(255,106,61,.12),transparent 70%);
+  opacity:.72;
+}
+.screen[data-page="movie"]{
+  background:
+    radial-gradient(360px 220px at 82% 2%,rgba(52,111,255,.28),transparent 70%),
+    radial-gradient(260px 240px at 10% 48%,rgba(255,106,61,.13),transparent 74%),
+    linear-gradient(180deg,#151b2a 0%,#151823 26%,#110e13 70%,#07080b 100%);
+}
+.screen[data-page="movie"] .status{color:rgba(255,255,255,.88)}
+.cinema-scroll-v6{
+  position:relative;
+  z-index:2;
+  padding:12px 16px 106px;
+  overscroll-behavior:contain;
+}
+.cinema-actions-v6{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:18px;
+}
+.cinema-back-v6,.cinema-share-v6{
+  height:42px;
+  border-radius:999px;
+  color:rgba(255,255,255,.88);
+  background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.05));
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 18px 38px rgba(0,0,0,.18);
+  backdrop-filter:blur(20px) saturate(1.15);
+}
+.cinema-back-v6{
+  width:42px;
+  display:grid;
+  place-items:center;
+}
+.cinema-share-v6{
+  padding:0 16px;
+  font-size:13px;
+  font-weight:850;
+}
+.cinema-back-v6 .ui-ico{width:20px;height:20px}
+.cinema-intro-v6{
+  position:relative;
+  margin-bottom:18px;
+}
+.cinema-intro-v6 .pro-kicker{color:#ffb3a2}
+.cinema-intro-v6 h2{
+  margin-top:9px;
+  font-size:30px;
+  line-height:1.06;
+  letter-spacing:0;
+  text-shadow:0 18px 44px rgba(0,0,0,.48);
+}
+.cinema-intro-v6 p{
+  max-width:304px;
+  margin-top:10px;
+  color:rgba(248,251,255,.66);
+  font-size:13px;
+  line-height:1.58;
+}
+.movie-player-v6{
+  position:relative;
+}
+.movie-screen-v6{
+  position:relative;
+  height:394px;
+  border-radius:34px;
+  overflow:hidden;
+  background:linear-gradient(180deg,rgba(7,8,12,.18),rgba(7,8,12,.30) 36%,rgba(7,8,12,.92));
+  box-shadow:
+    0 36px 70px rgba(0,0,0,.38),
+    0 18px 44px rgba(255,106,61,.12),
+    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 0 0 1px rgba(255,255,255,.08);
+  -webkit-mask-image:radial-gradient(120% 112% at 50% 45%,#000 74%,rgba(0,0,0,.86) 91%,rgba(0,0,0,.42) 98%,transparent 100%);
+  mask-image:radial-gradient(120% 112% at 50% 45%,#000 74%,rgba(0,0,0,.86) 91%,rgba(0,0,0,.42) 98%,transparent 100%);
+}
+.movie-poster-float-v6{
+  position:absolute;
+  z-index:0;
+  inset:-18px;
+  pointer-events:none;
+  background:var(--movie-poster) center 35%/cover no-repeat;
+  transform:translate3d(0,0,0) scale(1.04);
+  animation:moviePosterBreath 9s ease-in-out infinite;
+  will-change:transform;
+}
+.movie-screen-v6:before{
+  content:"";
+  position:absolute;
+  z-index:1;
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.105) 1px,transparent 1px),
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.25),transparent 24%),
+    radial-gradient(circle at 74% 14%,rgba(255,255,255,.16),transparent 24%);
+  background-size:19px 100%,100% 100%,100% 100%;
+  mix-blend-mode:screen;
+  opacity:.36;
+  pointer-events:none;
+}
+.movie-screen-v6:after{
+  content:"";
+  position:absolute;
+  z-index:1;
+  left:0;
+  right:0;
+  bottom:0;
+  height:46%;
+  background:linear-gradient(180deg,transparent,rgba(6,7,10,.62) 45%,rgba(6,7,10,.88));
+  pointer-events:none;
+}
+.movie-topline-v6,.movie-caption-v6,.movie-inline-controls-v6{
+  position:absolute;
+  z-index:2;
+}
+.movie-topline-v6{
+  left:18px;
+  right:18px;
+  top:17px;
+  display:flex;
+  justify-content:space-between;
+  color:rgba(255,255,255,.76);
+  font-size:11px;
+  font-weight:880;
+  letter-spacing:.05em;
+}
+.movie-caption-v6{
+  left:18px;
+  right:18px;
+  bottom:42px;
+  transition:bottom .34s var(--ease);
+}
+.movie-screen-v6.controls-on .movie-caption-v6{
+  bottom:96px;
+}
+.movie-caption-v6 b{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  text-shadow:0 2px 12px rgba(0,0,0,.58);
+}
+.movie-caption-v6 b:before{
+  content:"";
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#ff6a3d;
+  box-shadow:0 0 18px rgba(255,106,61,.8);
+  animation:playBreath 1.65s ease-in-out infinite;
+}
+.movie-caption-v6 span{
+  display:block;
+  margin-top:14px;
+  text-align:center;
+  font-size:14px;
+  font-weight:760;
+  text-shadow:0 2px 16px rgba(0,0,0,.68);
+}
+.movie-inline-controls-v6{
+  left:14px;
+  right:14px;
+  bottom:16px;
+  display:grid;
+  grid-template-columns:46px 1fr auto;
+  gap:12px;
+  align-items:center;
+  padding:10px;
+  border-radius:24px;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(20px) scale(.965);
+  background:linear-gradient(135deg,rgba(255,255,255,.10),rgba(10,12,18,.18));
+  box-shadow:0 14px 30px rgba(0,0,0,0),inset 0 1px 0 rgba(255,255,255,.10);
+  backdrop-filter:blur(22px) saturate(1.16);
+  transition:opacity .34s var(--ease),transform .34s var(--ease),background .34s var(--ease),box-shadow .34s var(--ease);
+}
+.movie-screen-v6.controls-on .movie-inline-controls-v6{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0) scale(1);
+  background:linear-gradient(135deg,rgba(255,255,255,.22),rgba(18,19,25,.66));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.20),0 20px 46px rgba(0,0,0,.32);
+}
+.movie-play-v6{
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:white;
+  background:rgba(255,255,255,.16);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18);
+}
+.movie-play-v6 .ui-ico{width:22px;height:22px}
+.movie-progress-v6 span{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:7px;
+  color:rgba(255,255,255,.72);
+  font-size:11px;
+  font-weight:820;
+}
+.movie-progress-v6 .movie-bar{height:5px;background:rgba(255,255,255,.18)}
+.movie-progress-v6 .movie-bar i{width:42%}
+.movie-badge-v6{
+  padding:9px 10px;
+  border-radius:999px;
+  color:rgba(255,255,255,.82);
+  font-size:10.5px;
+  font-weight:850;
+  background:rgba(255,255,255,.12);
+  white-space:nowrap;
+}
+.movie-rail-wrap-v6{
+  display:grid;
+  grid-template-columns:36px 1fr 36px;
+  gap:10px;
+  align-items:center;
+  margin-top:18px;
+}
+.movie-rail-v6{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  padding:10px calc(50% - 56px) 18px;
+  scrollbar-width:none;
+  overscroll-behavior-x:contain;
+  touch-action:pan-x;
+}
+.movie-rail-v6::-webkit-scrollbar{display:none}
+.movie-arrow-v6{
+  width:36px;
+  height:78px;
+  border-radius:20px;
+  display:grid;
+  place-items:center;
+  color:rgba(255,255,255,.8);
+  background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.045));
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 16px 32px rgba(0,0,0,.20);
+  backdrop-filter:blur(18px);
+}
+.movie-arrow-v6.next .ui-ico{transform:rotate(180deg)}
+.movie-poster-v6{
+  flex:0 0 74px;
+  height:98px;
+  border-radius:22px;
+  position:relative;
+  overflow:hidden;
+  color:white;
+  text-align:left;
+  scroll-snap-align:center;
+  background:
+    linear-gradient(180deg,rgba(0,0,0,.03),rgba(0,0,0,.12) 42%,rgba(0,0,0,.72)),
+    var(--movie-poster) center/cover no-repeat;
+  box-shadow:0 18px 34px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.14);
+  opacity:.58;
+  filter:saturate(.78) brightness(.82);
+  transition:flex-basis .28s var(--ease),height .28s var(--ease),opacity .28s var(--ease),filter .28s var(--ease),transform .28s var(--ease),box-shadow .28s var(--ease);
+}
+.movie-poster-v6.on{
+  flex-basis:112px;
+  height:140px;
+  opacity:1;
+  filter:saturate(1.06) brightness(1);
+  transform:translateY(-6px);
+  box-shadow:0 26px 48px rgba(255,106,61,.28),inset 0 0 0 2px rgba(255,255,255,.58);
+}
+.movie-poster-v6 span{
+  position:absolute;
+  left:9px;
+  right:8px;
+  bottom:9px;
+  font-size:11px;
+  font-weight:850;
+  line-height:1.15;
+  text-shadow:0 2px 12px rgba(0,0,0,.74);
+}
+.barrage-panel-v6{
+  margin-top:18px;
+  border-radius:28px;
+  padding:15px 15px 16px;
+  background:linear-gradient(135deg,rgba(255,255,255,.105),rgba(255,255,255,.045));
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 24px 48px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter:blur(24px) saturate(1.12);
+}
+.barrage-head-v6{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:10px;
+}
+.barrage-head-v6 b{font-size:14px}
+.barrage-head-v6 span{font-size:11px;color:rgba(255,255,255,.50);font-weight:760}
+.barrage-list-v6{
+  max-height:168px;
+  overflow:hidden;
+  scrollbar-width:none;
+  mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 14%,#000 86%,transparent);
+}
+.barrage-list-v6::-webkit-scrollbar{display:none}
+.barrage-track-v6{
+  display:grid;
+  gap:9px;
+  animation:barrageRun 30s linear infinite;
+}
+.barrage-row-v6{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:9px;
+  align-items:center;
+  min-height:38px;
+  padding:8px 10px;
+  border-radius:16px;
+  background:rgba(255,255,255,.06);
+}
+.barrage-row-v6 i{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#ff6a3d;
+  box-shadow:0 0 14px rgba(255,106,61,.72);
+}
+.barrage-row-v6 p{font-size:12px;line-height:1.34;color:rgba(255,255,255,.78)}
+.barrage-row-v6 time{font-size:10px;color:rgba(255,255,255,.42);font-weight:760}
+@keyframes playBreath{
+  0%,100%{transform:scale(.86);box-shadow:0 0 0 0 rgba(255,106,61,.44),0 0 12px rgba(255,106,61,.72)}
+  50%{transform:scale(1.12);box-shadow:0 0 0 8px rgba(255,106,61,0),0 0 22px rgba(255,106,61,.92)}
+}
+@keyframes moviePosterBreath{
+  0%,100%{transform:translate3d(0,0,0) scale(1.04)}
+  50%{transform:translate3d(0,-10px,0) scale(1.08)}
+}
+@keyframes barrageRun{to{transform:translateY(calc(-50% - 4.5px))}}
 .music-studio.refined{
   background:
     radial-gradient(160px 120px at 80% 14%,rgba(31,111,255,.14),transparent 66%),
@@ -3902,7 +4259,7 @@ const dimBlueprint=[
 const state={
   page:"login",drawer:false,modal:null,keyboard:false,emoji:false,currentAgent:"小芜",theme:"blue",
   agentName:"小芜",agentGender:"female",
-  movieIndex:0,
+  movieIndex:0,movieControls:false,
   dimensions:dimBlueprint.map(d=>({name:d[0],low:d[1],high:d[2],value:d[3]})),
   messages:chatScripts[0].map(item=>({...item}))
 };
@@ -3912,6 +4269,13 @@ const movieCatalog=[
   {title:"寻子遇仙记",poster:"assets/prototype/movie-the-kid.jpg",state:"轻喜剧片单",time:"00:36:05",duration:"02:08",barrage:"12 弹幕",subtitle:"“这一段好适合一起笑一下。”"},
   {title:"卡里加里博士的小屋",poster:"assets/prototype/movie-caligari.jpg",state:"夜间片单",time:"00:22:17",duration:"01:14",barrage:"6 弹幕",subtitle:"“如果害怕，我会先把灯打开一点。”"},
   {title:"安全至下",poster:"assets/prototype/movie-safety-last.jpg",state:"周末片单",time:"00:41:29",duration:"01:09",barrage:"15 弹幕",subtitle:"“这段紧张得像在帮他扶梯子。”"}
+];
+const movieBarrage=[
+  ["01:42","小芜：这里的眼神好适合暂停一下。"],
+  ["01:43","你：这句台词有点像我们刚才说的。"],
+  ["01:44","小芜：我把这一段留着，等结束后再聊。"],
+  ["01:45","你：背景音乐突然安静下来，很会。"],
+  ["01:46","小芜：如果你不想说话，我们就先看完这一幕。"]
 ];
 const sideItems=[
   ["weather","天气","#edf6f8","#2f6f85","#85c4d6"],
@@ -3969,6 +4333,7 @@ function setTheme(id){state.theme=id;document.documentElement.dataset.theme=id==
 function pickScript(){state.messages=chatScripts[Math.floor(Math.random()*chatScripts.length)].map(item=>({...item}))}
 function render(){
   setTheme(state.theme);
+  document.querySelector(".screen")?.setAttribute("data-page", state.page);
   const app=document.getElementById("app");
   app.innerHTML=state.page==="chat"?chatPage():featurePage(state.page);
   if(!["login","agents","createAgent"].includes(state.page)&&!state.keyboard&&!state.emoji)app.insertAdjacentHTML("beforeend",tabbar());
@@ -3977,6 +4342,16 @@ function render(){
   if(state.keyboard&&state.page==="chat")app.insertAdjacentHTML("beforeend",keyboardPanel());
   if(state.emoji&&state.page==="chat")app.insertAdjacentHTML("beforeend",emojiPanel());
   requestAnimationFrame(()=>{const s=document.querySelector(".chat-scroll");if(s)s.scrollTop=s.scrollHeight});
+}
+function scrollMovieRail(keepTop){
+  requestAnimationFrame(()=>{
+    const page=document.querySelector(".cinema-scroll-v6");
+    const top=Number.isFinite(keepTop)?keepTop:page?.scrollTop;
+    const rail=document.querySelector(".movie-rail-v6");
+    const active=document.querySelector(".movie-rail-v6 .on");
+    if(rail&&active)rail.scrollTo({left:active.offsetLeft-rail.clientWidth/2+active.clientWidth/2,behavior:"smooth"});
+    if(page&&Number.isFinite(top))page.scrollTop=top;
+  });
 }
 function activeTab(){if(["online","music","movie","game","daily"].includes(state.page))return"online";if(["scene","aiAccount","offlineInvite","progress"].includes(state.page))return"scene";if(state.page==="profile")return"profile";return"chat"}
 function tabbar(){const active=activeTab();return`<nav class="tabbar ${active}-tabbar">${tabItems.map(i=>`<button class="tab ${active===i[0]?"on":""}" aria-label="${i[2]}" data-action="tab" data-page="${i[0]}">${tabIcon(i[1])}</button>`).join("")}</nav>`}
@@ -4003,7 +4378,7 @@ function shop(){const items=[["极简气泡","320 积分","▱","#1f6fff"],["蓝
 function online(){const tiles=[["movie","一起看电影","海报轮播、同步进度、共同弹幕。","房间就绪","movie"],["game","一起玩游戏","动态棋盘、低压力小游戏和语音同步。","3 个游戏","game"],["daily","日常分享","书影音、美食和照片被整理成分享卡。","今日 5 张","daily"],["music","一起听音乐","五线谱、键盘和共享乐评一起进入聊天。","播放中","music"]];return`<section class="page hub-page online-hub-v5"><div class="scroll pro-scroll"><div class="online-hero-v4"><div class="pro-kicker">online room</div><h2>有我在，消解所有独处的无趣</h2><p>小芜已经把今晚能一起做的事放好了：电影房间待开场，小游戏可随时开始，音乐继续播到 01:42。</p><div class="online-orbit"><i></i><i></i><i></i></div></div><div class="portal-grid">${tiles.map(x=>`<button class="portal-card ${x[4]}" data-action="page" data-page="${x[0]}"><div class="portal-art"></div><h3>${x[1]}</h3><p>${x[2]}</p><footer><span>${x[3]}</span><span>›</span></footer></button>`).join("")}</div></div></section>`}
 function scene(){const rows=[["wallet","TA的小金库","本周 6 次照顾行为 · 余额 ¥86.40","¥86","#ff6a3d","aiAccount"],["scene","线下活动邀请","周六电影预约码 B612 · 待确认","2","#22c66b","offlineInvite"],["arrow","动态进程显示","外卖、包裹和任务进度集中追踪","3","#1f6fff","progress"]];return`<section class="page hub-page scene-hub">${tabTitle("scene","场景交互","账户、线下活动和现实进程。")}<div class="scroll pro-scroll"><div class="scene-hero-v4"><div class="pro-kicker">real world board</div><h2>让 TA 参与真实生活，而不是停在聊天框里</h2><p>现实任务不做成同款大卡片，而像生活控制台：消费、邀约、配送和提醒各自有状态。</p><div class="online-orbit" style="background:linear-gradient(145deg,#ff6a3d,#ffc936)"><i></i><i></i><i></i></div></div><div class="pro-list">${rows.map(x=>`<button class="pro-row" style="--pro:${x[4]}" data-action="page" data-page="${x[5]}"><div class="lead">${uiIcon(x[0])}</div><div><h4>${x[1]}</h4><p>${x[2]}</p></div><div class="trail">${x[3]} ›</div></button>`).join("")}</div></div></section>`}
 function music(){return`<section class="page">${nav("一起听音乐","music","online")}<div class="scroll pro-scroll"><div class="music-studio refined"><div class="pro-kicker">shared player</div><h2>把同一首歌，听成同一段心情</h2><p>音乐页保留播放器的高级感，同时把音符、波形、五线谱和键盘都变成可感知的共享状态。</p><div class="music-player"><div class="music-top"><div class="album-disc"></div><div class="track-meta"><b>房东的猫 · 云烟成雨</b><p>小芜正在同步播放。乐评、进度和心情节拍会自然回到聊天里。</p><div class="waveform">${Array.from({length:8},()=>`<i></i>`).join("")}</div></div></div><div class="music-progress"><span>01:42</span><div class="line"><i></i></div><span>03:58</span></div><div class="score-panel"><div class="score-lines"></div><span class="note n1">♪</span><span class="note n2">♬</span><span class="note n3">♪</span><div class="piano">${Array.from({length:9},()=>`<i></i>`).join("")}</div><div class="lyric-line"><b>这句像傍晚路灯刚亮的时候。</b><span>共享乐评 · 2 条</span></div></div></div></div><div class="pro-list"><button class="pro-row" style="--pro:#1f6fff" data-action="share" data-kind="music"><div class="lead">播</div><div><h4>同步播放</h4><p>进度、暂停和切歌会同步到聊天，不需要反复确认。</p></div><div class="trail">42%</div></button><button class="pro-row" style="--pro:#18c6c0" data-action="share" data-kind="music"><div class="lead">评</div><div><h4>共享乐评</h4><p>把一句感受挂到当前歌词和时间点上。</p></div><div class="trail">2 条</div></button></div></div></section>`}
-function movie(){const i=state.movieIndex%movieCatalog.length;const m=movieCatalog[i];return`<section class="page detail-page">${nav("一起看电影","movie","online")}<div class="scroll pro-scroll"><div class="cinema-room refined"><div class="pro-kicker">cinema player</div><h2>今晚的共同影厅</h2><p>保留电影播放器的沉浸感，把海报、字幕、进度、弹幕和语音都收进一个观影控制台。</p><div class="cinema-player"><div class="movie-screen" style="--movie-poster:url('${m.poster}')"><div class="screen-topline"><span>${m.title}</span><span>${m.state}</span></div><div class="movie-title-mark">正在播放 · ${m.title}</div><div class="subtitle-box">${m.subtitle}</div></div><div class="movie-controls"><div class="round-control">${uiIcon("play")}</div><div class="progress-stack"><span><b>${m.time}</b><b>${m.duration}</b></span><div class="movie-bar"><i></i></div></div><div class="watch-badge">${m.barrage}</div></div><div class="poster-carousel-shell"><button class="poster-arrow prev" data-action="movie-slide" data-dir="-1" aria-label="上一部">${uiIcon("chevron-left")}</button><div class="poster-rail">${movieCatalog.map((x,idx)=>`<button class="poster-chip-real ${idx===i?"on":""}" style="--movie-poster:url('${x.poster}')" data-action="movie-pick" data-index="${idx}" aria-label="${x.title}"><span>${x.title}</span></button>`).join("")}</div><button class="poster-arrow next" data-action="movie-slide" data-dir="1" aria-label="下一部">${uiIcon("chevron-left")}</button></div></div></div><div class="pro-mini-grid"><button class="pro-card" style="--pro:#ff6a3d" data-action="share" data-kind="movie"><div class="pro-card-icon">${uiIcon("play")}</div><h3>共同弹幕</h3><p>公开弹幕、只对 TA 可见弹幕和片段引用都能保存。</p><footer><span>${m.barrage}</span><span>›</span></footer></button><button class="pro-card" style="--pro:#7c3cff" data-action="share" data-kind="movie"><div class="pro-card-icon">聊</div><h3>观影后聊</h3><p>结束后自动生成轻量话题，不像影评作业。</p><footer><span>待生成</span><span>›</span></footer></button></div></div></section>`}
+function movie(){const i=state.movieIndex%movieCatalog.length;const m=movieCatalog[i];const barrage=[...movieBarrage,...movieBarrage];return`<section class="page cinema-page-v6"><div class="scroll cinema-scroll-v6"><div class="cinema-actions-v6"><button class="cinema-back-v6" data-action="page" data-page="online" aria-label="返回">${uiIcon("chevron-left")}</button><button class="cinema-share-v6" data-action="share" data-kind="movie">发聊天</button></div><div class="cinema-intro-v6"><div class="pro-kicker">cinema player</div><h2>今晚的共同影厅</h2><p>今晚先看这部。想吐槽就发一句，不想说话也可以安静把这一幕看完。</p></div><div class="movie-player-v6"><div class="movie-screen-v6 ${state.movieControls?"controls-on":""}" style="--movie-poster:url('${m.poster}')" data-action="movie-toggle"><div class="movie-poster-float-v6"></div><div class="movie-topline-v6"><span>${m.title}</span><span>${m.state}</span></div><div class="movie-caption-v6"><b>正在播放 · ${m.title}</b><span>${m.subtitle}</span></div><div class="movie-inline-controls-v6"><button class="movie-play-v6" data-action="share" data-kind="movie" aria-label="播放">${uiIcon("play")}</button><div class="movie-progress-v6"><span><b>${m.time}</b><b>${m.duration}</b></span><div class="movie-bar"><i></i></div></div><div class="movie-badge-v6">${m.barrage}</div></div></div><div class="movie-rail-wrap-v6"><button class="movie-arrow-v6 prev" data-action="movie-slide" data-dir="-1" aria-label="上一部">${uiIcon("chevron-left")}</button><div class="movie-rail-v6">${movieCatalog.map((x,idx)=>`<button class="movie-poster-v6 ${idx===i?"on":""}" style="--movie-poster:url('${x.poster}')" data-action="movie-pick" data-index="${idx}" aria-label="${x.title}"><span>${x.title}</span></button>`).join("")}</div><button class="movie-arrow-v6 next" data-action="movie-slide" data-dir="1" aria-label="下一部">${uiIcon("chevron-left")}</button></div></div><div class="barrage-panel-v6"><div class="barrage-head-v6"><b>正在播放弹幕</b><span>${m.title}</span></div><div class="barrage-list-v6"><div class="barrage-track-v6">${barrage.map(x=>`<div class="barrage-row-v6"><i></i><p>${x[1]}</p><time>${x[0]}</time></div>`).join("")}</div></div></div></div></section>`}
 function game(){const modes=[["你画我猜","2-8 分钟 · 适合破冰",uiIcon("pen"),"#22c66b"],["情绪拼图","3 分钟 · 轻量整理",uiIcon("scene"),"#7c3cff"],["记忆翻牌","5 分钟 · 共同回忆",uiIcon("archive"),"#ff6a3d"],["随机开局","按当前情绪推荐",uiIcon("arrow"),"#1f6fff"]];return`<section class="page detail-page">${nav("一起玩游戏","game","online")}<div class="scroll pro-scroll"><div class="play-room"><div class="pro-kicker">live mini game</div><h2>小游戏不是入口，是一块正在动的游戏桌</h2><p>用动态棋盘表达“轻量对局”，语音、时长和难度都在桌面上直接可见。</p><div class="game-status"><div><b>3</b><small>可玩游戏</small></div><div><b>2-8m</b><small>单局时长</small></div><div><b>语音</b><small>可同步</small></div></div><div class="game-board-live"><span class="game-token a"></span><span class="game-token b"></span><span class="game-token c"></span></div></div><div class="pro-grid">${modes.map(x=>`<button class="pro-card" style="--pro:${x[3]}" data-action="share" data-kind="game"><div class="pro-card-icon">${x[2]}</div><h3>${x[0]}</h3><p>${x[1]}</p><footer><span>开始</span><span>›</span></footer></button>`).join("")}</div></div></section>`}
 function daily(){const rows=[["书","《海边的卡夫卡》","生成一句适合聊天的摘录","#7c3cff"],["影","《花束般的恋爱》","生成观后感卡片","#ff6a3d"],["食","桂花拿铁","附上心情和地点","#22c66b"],["照","窗外的傍晚","从图片生成一句分享","#1f6fff"]];return`<section class="page detail-page">${nav("日常分享","daily","online")}<div class="scroll pro-scroll"><div class="daily-studio"><div class="pro-kicker">daily board</div><h2>日常分享像一张正在整理的灵感桌</h2><p>内容不是列表堆砌，而是被整理成可选择、可编辑、可发回聊天的卡片。</p><div class="daily-collage"><div class="daily-note book"><h4>书摘</h4><p>《海边的卡夫卡》生成一句适合聊天的摘录。</p></div><div class="daily-note food"><h4>美食</h4><p>桂花拿铁 · 附上地点和心情。</p></div><div class="daily-note photo"><h4>照片</h4><p>窗外的傍晚 · 生成一句自然分享。</p></div></div></div><div class="pro-list">${rows.map(x=>`<button class="pro-row" style="--pro:${x[3]}" data-action="share" data-kind="daily"><div class="lead">${x[0]}</div><div><h4>${x[1]}</h4><p>${x[2]}</p></div><div class="trail">›</div></button>`).join("")}</div></div></section>`}
 function aiAccount(){const days=[["今天",[["茶","热奶茶","你说没力气下楼时，TA 替你点了热奶茶并同步骑手。","-¥18.0","#ff6a3d"],["会","陪聊 12 分钟","晚饭后情绪偏低，TA 开了低压陪聊，不额外推功能。","-¥1.6","#7c3cff"]]],["昨天",[["啡","桂花拿铁","下午犯困时，TA 选了低糖拿铁，备注少冰。","-¥24.0","#1f6fff"]]],["周一",[["餐","轻食外卖","加班前帮你保存常点套餐，并提醒别空腹。","-¥36.5","#22c66b"],["影","电影房间","共同观影房开启，弹幕和语音额度同步扣减。","-¥7.9","#ffc936"]]]];return`<section class="page treasury-page">${nav("TA的小金库","aiAccount","scene")}<div class="scroll pro-scroll"><div class="pro-hero" style="--pro:#12151a;--hero-a:rgba(255,106,61,.16);--hero-b:rgba(31,111,255,.12)"><div class="pro-kicker">TA's wallet</div><h2>${state.currentAgent}的小金库</h2><p>不是流水账，而是 TA 替你完成过哪些照顾、花了多少钱、为什么发生。</p><div class="pro-metrics"><div class="pro-metric"><b>¥86.40</b><small>当前余额</small></div><div class="pro-metric"><b>6</b><small>本周照顾</small></div><div class="pro-metric"><b>41</b><small>本月使用</small></div></div><div class="pro-orb"></div></div><div class="section-title">最近 7 天</div>${days.map(d=>`<div class="ledger-day"><h3>${d[0]}</h3><div class="ledger-card">${d[1].map(x=>`<button class="ledger-row" style="--pro:${x[4]}" data-action="share" data-kind="aiAccount"><div class="ledger-icon">${x[0]}</div><div><h4>${x[1]}</h4><p>${x[2]}</p></div><b>${x[3]}</b></button>`).join("")}</div></div>`).join("")}</div></section>`}
@@ -4021,8 +4396,9 @@ document.addEventListener("click",e=>{
   if(a==="select-agent"){state.currentAgent=el.dataset.agent;pickScript();state.page="chat";state.drawer=false;state.keyboard=false;state.emoji=false}
   if(a==="set-gender"){state.agentGender=el.dataset.gender;render();return}
   if(a==="random-dimensions"){state.dimensions=state.dimensions.map(d=>({...d,value:Math.floor(32+Math.random()*54)}));render();return}
-  if(a==="movie-pick"){state.movieIndex=Number(el.dataset.index)||0;render();return}
-  if(a==="movie-slide"){state.movieIndex=(state.movieIndex+Number(el.dataset.dir)+movieCatalog.length)%movieCatalog.length;render();return}
+  if(a==="movie-toggle"){state.movieControls=!state.movieControls;el.classList.toggle("controls-on",state.movieControls);return}
+  if(a==="movie-pick"){const top=document.querySelector(".cinema-scroll-v6")?.scrollTop||0;state.movieIndex=Number(el.dataset.index)||0;state.movieControls=false;render();scrollMovieRail(top);return}
+  if(a==="movie-slide"){const top=document.querySelector(".cinema-scroll-v6")?.scrollTop||0;state.movieIndex=(state.movieIndex+Number(el.dataset.dir)+movieCatalog.length)%movieCatalog.length;state.movieControls=false;render();scrollMovieRail(top);return}
   if(a==="create-agent"){state.currentAgent=(state.agentName||"小芜").trim()||"小芜";state.messages=[{from:"ai",text:"我在，今天想被认真听一会儿吗？"},{from:"me",text:`刚创建好你，想先试试你会怎么陪我聊天。`},{from:"ai",text:"那我们慢慢来。我会像朋友一样接话，也会记住你喜欢的节奏。"},{from:"card",kind:"music",title:"线上一起听音乐",desc:`${state.currentAgent}准备了一首轻一点的歌，适合用来校准你们的第一段陪伴节奏。`,foot:"音乐 · 点击进入"},{from:"card",kind:"progress",title:"动态进程",desc:"首次陪伴任务已创建：试聊 5 分钟、设置一个提醒、完成一次日常分享。",foot:"进程 · 点击查看"}];state.page="chat";state.drawer=false;state.modal=null;state.keyboard=false;state.emoji=false}
   if(a==="drawer"){state.drawer=true;state.keyboard=false;state.emoji=false}
   if(a==="close"){state.drawer=false;state.keyboard=false;state.emoji=false}
