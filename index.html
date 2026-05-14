@@ -3859,6 +3859,137 @@ button:active,.paper-card:active,.card-msg:active,.drawer-btn:active,.round:acti
   from{transform:translate3d(-4px,-3px,0) scale(1.015)}
   to{transform:translate3d(5px,5px,0) scale(1.045)}
 }
+.game-mode-grid-v6{
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+  margin-top:8px;
+}
+.game-mode-card-v6{
+  min-height:188px;
+  padding:10px;
+  border-radius:27px;
+  display:flex;
+  flex-direction:column;
+  color:#11161a;
+  background:
+    radial-gradient(96px 78px at 82% 12%,var(--soft-a),transparent 72%),
+    radial-gradient(100px 86px at 8% 92%,var(--soft-b),transparent 72%),
+    linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.62));
+  border:1px solid rgba(255,255,255,.80);
+  box-shadow:0 22px 48px rgba(31,67,86,.10),inset 0 1px 0 rgba(255,255,255,.92);
+}
+.game-mode-card-v6:before{
+  display:none;
+}
+.game-mode-card-v6:after{
+  inset:10px;
+  border-radius:22px;
+  opacity:.42;
+  background:
+    linear-gradient(90deg,rgba(22,38,45,.055) 1px,transparent 1px),
+    linear-gradient(180deg,rgba(22,38,45,.045) 1px,transparent 1px);
+  background-size:24px 24px;
+  animation:gameFineGrid 10s ease-in-out infinite alternate;
+}
+.game-card-stage-v7{
+  position:relative;
+  height:92px;
+  border-radius:22px;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.58),rgba(255,255,255,.20)),
+    var(--stage-bg);
+  border:1px solid rgba(255,255,255,.58);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.70),0 12px 28px var(--glow);
+}
+.game-card-stage-v7:before{
+  content:"";
+  position:absolute;
+  inset:-18%;
+  background:var(--stage-lines);
+  opacity:.48;
+  animation:gameStageSweep 8s ease-in-out infinite alternate;
+}
+.game-card-art-v6{
+  position:relative;
+  left:auto;
+  top:auto;
+  width:126px;
+  height:112px;
+  z-index:3!important;
+  opacity:.98;
+}
+.game-card-art-v6 svg{
+  filter:drop-shadow(0 18px 20px rgba(25,45,58,.15));
+}
+.game-mode-card-v6 h3{
+  margin:12px 2px 0;
+  font-size:17px;
+  line-height:1.05;
+}
+.game-mode-card-v6 p{
+  margin:7px 2px 0;
+  min-height:34px;
+  -webkit-line-clamp:2;
+  font-size:11.5px;
+  line-height:1.42;
+  color:rgba(20,30,34,.56);
+}
+.game-mode-card-v6 footer{
+  margin:auto 2px 0;
+  padding-top:8px;
+  border-top:1px solid rgba(20,30,34,.055);
+  font-size:10.5px;
+  color:rgba(20,30,34,.56);
+}
+.game-mode-card-v6 footer span:first-child{
+  padding:4px 7px;
+  border-radius:999px;
+  background:rgba(255,255,255,.66);
+  color:rgba(20,30,34,.64);
+}
+.game-mode-card-v6 footer span:last-child{
+  color:rgba(20,30,34,.42);
+  font-size:15px;
+}
+.game-mode-card-v6.draw{
+  --soft-a:rgba(45,224,135,.18);
+  --soft-b:rgba(31,111,255,.12);
+  --stage-bg:linear-gradient(145deg,rgba(34,205,122,.34),rgba(31,111,255,.22));
+  --stage-lines:linear-gradient(126deg,transparent 34%,rgba(255,255,255,.58) 34.5%,transparent 36%,transparent 62%,rgba(255,255,255,.42) 62.5%,transparent 64%);
+  --glow:rgba(34,205,122,.13);
+}
+.game-mode-card-v6.mood{
+  --soft-a:rgba(124,60,255,.18);
+  --soft-b:rgba(24,198,192,.12);
+  --stage-bg:linear-gradient(145deg,rgba(124,60,255,.30),rgba(24,198,192,.24));
+  --stage-lines:radial-gradient(circle at 78% 26%,rgba(255,255,255,.58),transparent 8%),linear-gradient(90deg,transparent 49%,rgba(255,255,255,.36) 49.5% 50.5%,transparent 51%);
+  --glow:rgba(124,60,255,.14);
+}
+.game-mode-card-v6.memory{
+  --soft-a:rgba(255,106,61,.17);
+  --soft-b:rgba(124,60,255,.12);
+  --stage-bg:linear-gradient(145deg,rgba(255,106,61,.30),rgba(214,70,179,.20));
+  --stage-lines:radial-gradient(circle at 24% 34%,rgba(255,255,255,.42),transparent 10%),linear-gradient(110deg,transparent 18%,rgba(255,255,255,.36) 18.5%,transparent 20%);
+  --glow:rgba(255,106,61,.13);
+}
+.game-mode-card-v6.random{
+  --soft-a:rgba(31,111,255,.18);
+  --soft-b:rgba(255,201,54,.14);
+  --stage-bg:linear-gradient(145deg,rgba(31,111,255,.30),rgba(124,60,255,.22));
+  --stage-lines:conic-gradient(from 30deg at 70% 72%,rgba(255,255,255,.42),transparent 34%,rgba(255,255,255,.20),transparent 70%);
+  --glow:rgba(31,111,255,.13);
+}
+@keyframes gameFineGrid{
+  from{transform:translate3d(-2px,-2px,0)}
+  to{transform:translate3d(3px,4px,0)}
+}
+@keyframes gameStageSweep{
+  from{transform:translate3d(-8px,-4px,0) rotate(-1deg)}
+  to{transform:translate3d(10px,6px,0) rotate(1deg)}
+}
 .daily-studio{background:linear-gradient(180deg,#fff,#faf7ff)}
 .daily-collage{height:250px;margin-top:18px;position:relative}
 .daily-note{position:absolute;border-radius:24px;padding:14px;background:white;box-shadow:0 18px 34px rgba(26,38,54,.10);border:1px solid rgba(24,31,42,.06)}
@@ -5928,7 +6059,7 @@ mood:`<svg viewBox="0 0 180 190" aria-hidden="true"><defs><linearGradient id="mo
 memory:`<svg viewBox="0 0 180 190" aria-hidden="true"><defs><linearGradient id="memPhoto" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff7de"/><stop offset=".58" stop-color="#ffd7d4"/><stop offset="1" stop-color="#b8a5ff"/></linearGradient></defs><rect x="38" y="62" width="78" height="102" rx="18" fill="rgba(255,255,255,.22)" stroke="rgba(255,255,255,.36)" stroke-width="2" transform="rotate(-10 77 113)"/><rect x="82" y="48" width="76" height="104" rx="18" fill="rgba(255,255,255,.30)" stroke="rgba(255,255,255,.42)" stroke-width="2" transform="rotate(4 120 100)"/><rect x="96" y="62" width="42" height="38" rx="13" fill="url(#memPhoto)" opacity=".9"/><path d="M100 118 h38 M100 132 h27" stroke="white" stroke-width="5" stroke-linecap="round" opacity=".75"/><circle cx="70" cy="94" r="14" fill="rgba(255,255,255,.5)"/><path d="M58 130 C68 121 82 122 94 134" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" opacity=".68"/></svg>`,
 random:`<svg viewBox="0 0 180 190" aria-hidden="true"><defs><linearGradient id="diceFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset="1" stop-color="#ffe1a6" stop-opacity=".2"/></linearGradient></defs><path d="M74 140 C84 108 118 102 144 124" fill="none" stroke="rgba(255,255,255,.34)" stroke-width="4" stroke-linecap="round"/><rect x="83" y="52" width="84" height="84" rx="25" fill="url(#diceFace)" stroke="rgba(255,255,255,.46)" stroke-width="2" transform="rotate(10 125 94)"/><circle cx="112" cy="78" r="7" fill="white"/><circle cx="145" cy="84" r="7" fill="white"/><circle cx="128" cy="106" r="7" fill="white"/><circle cx="108" cy="128" r="7" fill="white"/><circle cx="151" cy="125" r="7" fill="white"/><path d="M68 92 a45 45 0 1 0 50 68" fill="none" stroke="rgba(255,255,255,.26)" stroke-width="5" stroke-linecap="round"/><path d="M117 160 l18 4 -10-16" fill="none" stroke="rgba(255,255,255,.52)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
 };return`<div class="game-card-art-v6 ${cls}">${art[cls]||art.random}</div>`}
-function game(){const modes=[{cls:"draw",title:"你画我猜",desc:"画一个词，让小芜来猜。",meta:"2-8 分钟"},{cls:"mood",title:"情绪拼图",desc:"把现在的心情拼出来。",meta:"3 分钟"},{cls:"memory",title:"记忆翻牌",desc:"翻开你们聊过的小片段。",meta:"5 分钟"},{cls:"random",title:"随机开局",desc:"不知道玩什么就交给它。",meta:"小芜推荐"}];return`<section class="page game-page-v6"><div class="game-board-bg-v6" aria-hidden="true"><span></span><span></span><span></span></div><div class="scroll game-scroll-v6"><div class="game-actions-v6"><button class="game-back-v6" data-action="page" data-page="online" aria-label="返回">${uiIcon("chevron-left")}</button><button class="game-share-v6" data-action="share" data-kind="game">发聊天</button></div><div class="game-intro-v6"><div class="pro-kicker">live mini game</div><h2>今晚玩一局轻的</h2><p>想放松一下时，和小芜开一局小游戏。可以边玩边聊，也可以只玩三分钟。</p><div class="game-metrics-v6"><span><b>4</b><small>可玩游戏</small></span><span><b>2-8m</b><small>单局时长</small></span><span><b>语音</b><small>可同步</small></span></div></div><div class="game-mode-grid-v6">${modes.map(x=>`<button class="game-mode-card-v6 ${x.cls}" data-action="share" data-kind="game">${gameArt(x.cls)}<h3>${x.title}</h3><p>${x.desc}</p><footer><span>${x.meta}</span><span>›</span></footer></button>`).join("")}</div></div></section>`}
+function game(){const modes=[{cls:"draw",title:"你画我猜",desc:"一笔一猜，适合刚开始破冰。",meta:"2-8 分钟"},{cls:"mood",title:"情绪拼图",desc:"把今天的心情拆成几块拼回去。",meta:"3 分钟"},{cls:"memory",title:"记忆翻牌",desc:"翻开你们聊过的小片段。",meta:"5 分钟"},{cls:"random",title:"随机开局",desc:"不知道玩什么，就让小芜挑一个。",meta:"小芜推荐"}];return`<section class="page game-page-v6"><div class="game-board-bg-v6" aria-hidden="true"><span></span><span></span><span></span></div><div class="scroll game-scroll-v6"><div class="game-actions-v6"><button class="game-back-v6" data-action="page" data-page="online" aria-label="返回">${uiIcon("chevron-left")}</button><button class="game-share-v6" data-action="share" data-kind="game">发聊天</button></div><div class="game-intro-v6"><div class="pro-kicker">live mini game</div><h2>今晚玩一局轻的</h2><p>想放松一下时，和小芜开一局小游戏。可以边玩边聊，也可以只玩三分钟。</p><div class="game-metrics-v6"><span><b>4</b><small>可玩游戏</small></span><span><b>2-8m</b><small>单局时长</small></span><span><b>语音</b><small>可同步</small></span></div></div><div class="game-mode-grid-v6">${modes.map(x=>`<button class="game-mode-card-v6 ${x.cls}" data-action="share" data-kind="game"><div class="game-card-stage-v7">${gameArt(x.cls)}</div><h3>${x.title}</h3><p>${x.desc}</p><footer><span>${x.meta}</span><span>›</span></footer></button>`).join("")}</div></div></section>`}
 function dailyContent(tab){
   if(tab.id==="book"){
     const books=[
