@@ -3861,22 +3861,22 @@ button:active,.paper-card:active,.card-msg:active,.drawer-btn:active,.round:acti
 }
 .game-mode-grid-v6{
   grid-template-columns:1fr 1fr;
-  gap:11px;
-  margin-top:8px;
+  gap:10px;
+  margin-top:9px;
 }
 .game-mode-card-v6{
-  min-height:188px;
+  min-height:166px;
   padding:10px;
-  border-radius:27px;
+  border-radius:26px;
   display:flex;
   flex-direction:column;
   color:#11161a;
   background:
-    radial-gradient(96px 78px at 82% 12%,var(--soft-a),transparent 72%),
-    radial-gradient(100px 86px at 8% 92%,var(--soft-b),transparent 72%),
-    linear-gradient(180deg,rgba(255,255,255,.86),rgba(255,255,255,.62));
-  border:1px solid rgba(255,255,255,.80);
-  box-shadow:0 22px 48px rgba(31,67,86,.10),inset 0 1px 0 rgba(255,255,255,.92);
+    radial-gradient(96px 78px at 86% 8%,var(--soft-a),transparent 72%),
+    radial-gradient(92px 78px at 4% 96%,var(--soft-b),transparent 72%),
+    linear-gradient(180deg,rgba(255,255,255,.90),rgba(255,255,255,.68));
+  border:1px solid rgba(255,255,255,.86);
+  box-shadow:0 18px 42px rgba(31,67,86,.09),inset 0 1px 0 rgba(255,255,255,.96);
 }
 .game-mode-card-v6:before{
   display:none;
@@ -3893,8 +3893,8 @@ button:active,.paper-card:active,.card-msg:active,.drawer-btn:active,.round:acti
 }
 .game-card-stage-v7{
   position:relative;
-  height:92px;
-  border-radius:22px;
+  height:76px;
+  border-radius:21px;
   overflow:hidden;
   display:grid;
   place-items:center;
@@ -3902,7 +3902,7 @@ button:active,.paper-card:active,.card-msg:active,.drawer-btn:active,.round:acti
     linear-gradient(145deg,rgba(255,255,255,.58),rgba(255,255,255,.20)),
     var(--stage-bg);
   border:1px solid rgba(255,255,255,.58);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.70),0 12px 28px var(--glow);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.72),0 10px 24px var(--glow);
 }
 .game-card-stage-v7:before{
   content:"";
@@ -3916,8 +3916,8 @@ button:active,.paper-card:active,.card-msg:active,.drawer-btn:active,.round:acti
   position:relative;
   left:auto;
   top:auto;
-  width:126px;
-  height:112px;
+  width:112px;
+  height:98px;
   z-index:3!important;
   opacity:.98;
 }
@@ -3925,13 +3925,13 @@ button:active,.paper-card:active,.card-msg:active,.drawer-btn:active,.round:acti
   filter:drop-shadow(0 18px 20px rgba(25,45,58,.15));
 }
 .game-mode-card-v6 h3{
-  margin:12px 2px 0;
-  font-size:17px;
+  margin:10px 2px 0;
+  font-size:16px;
   line-height:1.05;
 }
 .game-mode-card-v6 p{
-  margin:7px 2px 0;
-  min-height:34px;
+  margin:6px 2px 0;
+  min-height:32px;
   -webkit-line-clamp:2;
   font-size:11.5px;
   line-height:1.42;
@@ -3939,13 +3939,13 @@ button:active,.paper-card:active,.card-msg:active,.drawer-btn:active,.round:acti
 }
 .game-mode-card-v6 footer{
   margin:auto 2px 0;
-  padding-top:8px;
+  padding-top:6px;
   border-top:1px solid rgba(20,30,34,.055);
   font-size:10.5px;
   color:rgba(20,30,34,.56);
 }
 .game-mode-card-v6 footer span:first-child{
-  padding:4px 7px;
+  padding:3px 7px;
   border-radius:999px;
   background:rgba(255,255,255,.66);
   color:rgba(20,30,34,.64);
@@ -3953,6 +3953,55 @@ button:active,.paper-card:active,.card-msg:active,.drawer-btn:active,.round:acti
 .game-mode-card-v6 footer span:last-child{
   color:rgba(20,30,34,.42);
   font-size:15px;
+}
+.game-mode-card-v6.draw{
+  grid-column:1/-1;
+  min-height:136px;
+  display:grid;
+  grid-template-columns:118px 1fr;
+  grid-template-rows:auto auto 1fr;
+  column-gap:14px;
+  align-items:center;
+}
+.game-mode-card-v6.draw .game-card-stage-v7{
+  grid-row:1/4;
+  height:112px;
+}
+.game-mode-card-v6.draw .game-card-art-v6{
+  width:142px;
+  height:126px;
+}
+.game-mode-card-v6.draw h3{
+  margin:0;
+  font-size:20px;
+}
+.game-mode-card-v6.draw p{
+  margin-top:8px;
+  font-size:12px;
+  line-height:1.45;
+}
+.game-mode-card-v6.draw footer{
+  margin:10px 0 0;
+}
+.game-mode-card-v6 .game-badge-v7{
+  position:absolute;
+  top:13px;
+  right:13px;
+  z-index:4;
+  padding:4px 7px;
+  border-radius:999px;
+  color:rgba(20,30,34,.58);
+  background:rgba(255,255,255,.62);
+  border:1px solid rgba(255,255,255,.72);
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:.04em;
+  backdrop-filter:blur(12px);
+}
+.game-mode-card-v6.draw .game-badge-v7{
+  top:12px;
+  right:12px;
+  color:#0d4c45;
 }
 .game-mode-card-v6.draw{
   --soft-a:rgba(45,224,135,.18);
@@ -6059,7 +6108,7 @@ mood:`<svg viewBox="0 0 180 190" aria-hidden="true"><defs><linearGradient id="mo
 memory:`<svg viewBox="0 0 180 190" aria-hidden="true"><defs><linearGradient id="memPhoto" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff7de"/><stop offset=".58" stop-color="#ffd7d4"/><stop offset="1" stop-color="#b8a5ff"/></linearGradient></defs><rect x="38" y="62" width="78" height="102" rx="18" fill="rgba(255,255,255,.22)" stroke="rgba(255,255,255,.36)" stroke-width="2" transform="rotate(-10 77 113)"/><rect x="82" y="48" width="76" height="104" rx="18" fill="rgba(255,255,255,.30)" stroke="rgba(255,255,255,.42)" stroke-width="2" transform="rotate(4 120 100)"/><rect x="96" y="62" width="42" height="38" rx="13" fill="url(#memPhoto)" opacity=".9"/><path d="M100 118 h38 M100 132 h27" stroke="white" stroke-width="5" stroke-linecap="round" opacity=".75"/><circle cx="70" cy="94" r="14" fill="rgba(255,255,255,.5)"/><path d="M58 130 C68 121 82 122 94 134" fill="none" stroke="white" stroke-width="4" stroke-linecap="round" opacity=".68"/></svg>`,
 random:`<svg viewBox="0 0 180 190" aria-hidden="true"><defs><linearGradient id="diceFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff" stop-opacity=".66"/><stop offset="1" stop-color="#ffe1a6" stop-opacity=".2"/></linearGradient></defs><path d="M74 140 C84 108 118 102 144 124" fill="none" stroke="rgba(255,255,255,.34)" stroke-width="4" stroke-linecap="round"/><rect x="83" y="52" width="84" height="84" rx="25" fill="url(#diceFace)" stroke="rgba(255,255,255,.46)" stroke-width="2" transform="rotate(10 125 94)"/><circle cx="112" cy="78" r="7" fill="white"/><circle cx="145" cy="84" r="7" fill="white"/><circle cx="128" cy="106" r="7" fill="white"/><circle cx="108" cy="128" r="7" fill="white"/><circle cx="151" cy="125" r="7" fill="white"/><path d="M68 92 a45 45 0 1 0 50 68" fill="none" stroke="rgba(255,255,255,.26)" stroke-width="5" stroke-linecap="round"/><path d="M117 160 l18 4 -10-16" fill="none" stroke="rgba(255,255,255,.52)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`
 };return`<div class="game-card-art-v6 ${cls}">${art[cls]||art.random}</div>`}
-function game(){const modes=[{cls:"draw",title:"你画我猜",desc:"一笔一猜，适合刚开始破冰。",meta:"2-8 分钟"},{cls:"mood",title:"情绪拼图",desc:"把今天的心情拆成几块拼回去。",meta:"3 分钟"},{cls:"memory",title:"记忆翻牌",desc:"翻开你们聊过的小片段。",meta:"5 分钟"},{cls:"random",title:"随机开局",desc:"不知道玩什么，就让小芜挑一个。",meta:"小芜推荐"}];return`<section class="page game-page-v6"><div class="game-board-bg-v6" aria-hidden="true"><span></span><span></span><span></span></div><div class="scroll game-scroll-v6"><div class="game-actions-v6"><button class="game-back-v6" data-action="page" data-page="online" aria-label="返回">${uiIcon("chevron-left")}</button><button class="game-share-v6" data-action="share" data-kind="game">发聊天</button></div><div class="game-intro-v6"><div class="pro-kicker">live mini game</div><h2>今晚玩一局轻的</h2><p>想放松一下时，和小芜开一局小游戏。可以边玩边聊，也可以只玩三分钟。</p><div class="game-metrics-v6"><span><b>4</b><small>可玩游戏</small></span><span><b>2-8m</b><small>单局时长</small></span><span><b>语音</b><small>可同步</small></span></div></div><div class="game-mode-grid-v6">${modes.map(x=>`<button class="game-mode-card-v6 ${x.cls}" data-action="share" data-kind="game"><div class="game-card-stage-v7">${gameArt(x.cls)}</div><h3>${x.title}</h3><p>${x.desc}</p><footer><span>${x.meta}</span><span>›</span></footer></button>`).join("")}</div></div></section>`}
+function game(){const modes=[{cls:"draw",badge:"推荐",title:"你画我猜",desc:"小芜先出词，你画一笔她来猜，适合刚开始破冰。",meta:"2-8 分钟"},{cls:"mood",badge:"整理",title:"情绪拼图",desc:"把今天的心情拆成几块拼回去。",meta:"3 分钟"},{cls:"memory",badge:"回忆",title:"记忆翻牌",desc:"翻开你们聊过的小片段。",meta:"5 分钟"},{cls:"random",badge:"轻松",title:"随机开局",desc:"不知道玩什么，就让小芜挑一个。",meta:"小芜推荐"}];return`<section class="page game-page-v6"><div class="game-board-bg-v6" aria-hidden="true"><span></span><span></span><span></span></div><div class="scroll game-scroll-v6"><div class="game-actions-v6"><button class="game-back-v6" data-action="page" data-page="online" aria-label="返回">${uiIcon("chevron-left")}</button><button class="game-share-v6" data-action="share" data-kind="game">发聊天</button></div><div class="game-intro-v6"><div class="pro-kicker">live mini game</div><h2>今晚玩一局轻的</h2><p>想放松一下时，和小芜开一局小游戏。可以边玩边聊，也可以只玩三分钟。</p><div class="game-metrics-v6"><span><b>4</b><small>可玩游戏</small></span><span><b>2-8m</b><small>单局时长</small></span><span><b>语音</b><small>可同步</small></span></div></div><div class="game-mode-grid-v6">${modes.map(x=>`<button class="game-mode-card-v6 ${x.cls}" data-action="share" data-kind="game"><span class="game-badge-v7">${x.badge}</span><div class="game-card-stage-v7">${gameArt(x.cls)}</div><h3>${x.title}</h3><p>${x.desc}</p><footer><span>${x.meta}</span><span>›</span></footer></button>`).join("")}</div></div></section>`}
 function dailyContent(tab){
   if(tab.id==="book"){
     const books=[
@@ -6073,7 +6122,7 @@ function dailyContent(tab){
   }
   if(tab.id==="film"){
     const films=[
-      ["花束般的恋爱","assets/prototype/movie-the-kid.jpg","两个认真生活的人走到一起，又慢慢错开。适合生成一段不夸张的观后感。",["菅田将晖","有村架纯","恋爱"]],
+      ["花束般的恋爱","assets/prototype/movie-bouquet.jpg","两个认真生活的人走到一起，又慢慢错开。适合生成一段不夸张的观后感。",["菅田将晖","有村架纯","恋爱"]],
       ["海街日记","assets/prototype/movie-poster.jpg","节奏很慢，但很适合做成共同观影后的轻聊天。",["绫濑遥","长泽雅美","家庭"]],
       ["大都会","assets/prototype/movie-metropolis.jpg","画面强烈，适合整理成“今晚看到的一幕”而不是长影评。",["Fritz Lang","科幻","默片"]],
       ["寻子遇仙记","assets/prototype/movie-the-kid.jpg","轻喜剧更适合发一句“今晚先笑一下”，不用解释太多。",["Charlie Chaplin","喜剧","默片"]],
@@ -6101,7 +6150,7 @@ function dailyContent(tab){
 }
 function daily(){const tabs=[
   {id:"book",label:"书籍",accent:"#7c3cff",accent2:"#ff8a3d",glow:"rgba(124,60,255,.20)",soft:"rgba(124,60,255,.20)",image:"url('assets/prototype/daily-journal.jpg')",kicker:"reading notes",title:"把读到的一句，变成能聊下去的话",desc:"书摘不只是复制文字，小芜会帮你保留出处、情绪和想发给对方的语气。",chip:"5 本书"},
-  {id:"film",label:"影视",accent:"#ff6a3d",accent2:"#1f6fff",glow:"rgba(255,106,61,.20)",soft:"rgba(255,106,61,.18)",image:"url('assets/prototype/movie-the-kid.jpg')",kicker:"watch list",title:"看完一幕，就留下一句观后感",desc:"影视内容更适合做成片单、台词和观后聊题，不像书摘那样安静。",chip:"5 部影片"},
+  {id:"film",label:"影视",accent:"#ff6a3d",accent2:"#1f6fff",glow:"rgba(255,106,61,.20)",soft:"rgba(255,106,61,.18)",image:"url('assets/prototype/movie-bouquet.jpg')",kicker:"watch list",title:"看完一幕，就留下一句观后感",desc:"影视内容更适合做成片单、台词和观后聊题，不像书摘那样安静。",chip:"5 部影片"},
   {id:"food",label:"美食",accent:"#22c66b",accent2:"#ffbe3d",glow:"rgba(34,198,107,.20)",soft:"rgba(34,198,107,.18)",image:"url('https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80')",kicker:"taste card",title:"把一顿饭，记成今天的味道",desc:"美食分享要带菜名、口味和做法，像一张能回看的生活小票。",chip:"5 道菜"},
   {id:"photo",label:"照片",accent:"#1f6fff",accent2:"#18c6c0",glow:"rgba(31,111,255,.20)",soft:"rgba(31,111,255,.18)",image:"url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80')",kicker:"photo diary",title:"把照片整理成一句自然分享",desc:"照片分享不需要长文案，保留画面、时间和一句像朋友会说的话就够了。",chip:"32 张照片"}
 ];const active=tabs.find(t=>t.id===state.dailyTab)||tabs[0];return`<section class="page daily-page-v2 daily-${active.id}" style="--daily-accent:${active.accent};--daily-accent-2:${active.accent2};--daily-glow:${active.glow};--daily-accent-soft:${active.soft};--daily-image:${active.image}"><div class="scroll daily-scroll-v2"><div class="daily-actions-v2"><button class="daily-back-v2" data-action="page" data-page="online" aria-label="返回">${uiIcon("chevron-left")}</button><button class="daily-share-v2" data-action="share" data-kind="daily">发聊天</button></div><div class="daily-intro-v2"><div class="pro-kicker">daily board</div><h2>今天有什么，想让小芜一起看见？</h2><p>书、电影、吃到的东西和照片，不用写成长篇。先选一种内容，小芜会帮你整理成能自然发出去的分享卡。</p></div><div class="daily-tabs-v2">${tabs.map(t=>`<button class="daily-tab-v2 ${t.id===active.id?"on":""}" data-action="daily-tab" data-daily="${t.id}">${t.label}</button>`).join("")}</div><div class="daily-board-v2"><div class="daily-board-mark-v2"><i></i>${active.kicker}</div><h3>${active.title}</h3><p>${active.desc}</p><span class="daily-board-chip-v2">${active.chip}</span></div>${dailyContent(active)}</div></section>`}
