@@ -226,9 +226,7 @@ final class ChatViewModel {
             stopCountdown()
             deliveryHint = "在线"
 
-            // 微信模式：直接插入完整消息气泡
             let msg = Message.assistantMessage(conversationId: conversationId, content: text)
-            // TODO: 处理 stickerURL（如需要）
             messages.append(msg)
             hasUnreadReply = true
 

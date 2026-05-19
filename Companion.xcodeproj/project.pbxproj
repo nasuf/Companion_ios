@@ -14,10 +14,8 @@
 		067BAAAD37BFD3E59CEDADEA /* music-cover-03.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B1B916E11AFD9D52974CD276 /* music-cover-03.jpg */; };
 		071DB069E068A5158C744DCA /* weibo.svg in Resources */ = {isa = PBXBuildFile; fileRef = 82580343A020DA622827BEF8 /* weibo.svg */; };
 		07E7CDC4BE46DC0844B4A4BD /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A55A3230263E4CB2812ABA9D /* OnboardingView.swift */; };
-		099E0B687C8392031E0D7BB3 /* ShimmerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D8858A8621A9CD9EB67A49D /* ShimmerView.swift */; };
 		0F0AF1DC9E0D804F47772419 /* unsplash-1500534314209-a25ddb2bd429.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 61E9524BB188BCA97DF8AA7B /* unsplash-1500534314209-a25ddb2bd429.jpg */; };
 		12DACBB36F84BE32DA073493 /* movie-the-bride-2026.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A89C7DE00D67F72E19AED200 /* movie-the-bride-2026.jpg */; };
-		159D1C8610B3BB2C8A92A504 /* TypingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAECCE0F60B7D01C5B071C3F /* TypingIndicator.swift */; };
 		1624215B66ED65764CA202B5 /* ChatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56141A4831E255DFD3DA5053 /* ChatService.swift */; };
 		16E206F0742DAD19A002A381 /* movie-super-mario-galaxy.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 901D3559EE09F5EE36896793 /* movie-super-mario-galaxy.jpeg */; };
 		1AB3E8950F904240F5F72552 /* unsplash-1518005020951-eccb494ad742.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 36414276E38CC47E92F1E87C /* unsplash-1518005020951-eccb494ad742.jpg */; };
@@ -26,11 +24,9 @@
 		212060C8164CB71100C29B46 /* chess-ultra.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3F95DD61CC264EBABB79D708 /* chess-ultra.jpg */; };
 		214E3BC86AECB09B01C4C785 /* PrototypeChatDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB395A86A87DEBA0CF444A0 /* PrototypeChatDrawer.swift */; };
 		2328A88FC203DD30E772D1C1 /* unsplash-1512621776951-a57141f2eefd-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6E064D22C3569A1A6C479326 /* unsplash-1512621776951-a57141f2eefd-2.jpg */; };
-		269A229044A269935594E78A /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93E076B219F0057E9145D30 /* EmptyStateView.swift */; };
 		26B671310176B4AFC7C5E838 /* AgentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5874AD4E778CE78EFC6AB617 /* AgentService.swift */; };
 		2859A9BDD9F2D62F6E12DC0A /* unsplash-1516035069371-29a1b244cc32.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 26F088F8F4279DB337B13D91 /* unsplash-1516035069371-29a1b244cc32.jpg */; };
 		28FF6EEC1A84AA96A9BA19F2 /* pure-pool.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5E5F6F630F0DF26C1BD846C6 /* pure-pool.jpg */; };
-		29BD5E814B8AADDB64FE58F3 /* GlassCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F235E753560E3E9A1156F7A /* GlassCard.swift */; };
 		2A6F1A98B07958DF30B988B5 /* PrototypeOnlineHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852D01B2D8296FADE06207F5 /* PrototypeOnlineHubView.swift */; };
 		2C21003DBA0AA9C8AF1DC485 /* kof-xv.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A242581724985FB988D7D7AC /* kof-xv.jpg */; };
 		325534CA85C8265901A14D62 /* PersonalitySliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B933F6BA8FD1C58A126428B5 /* PersonalitySliderView.swift */; };
@@ -60,7 +56,6 @@
 		63F06595BC4C0E6DE421A0F5 /* Intimacy.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE8B237E5FF1F15DDA1CDB08 /* Intimacy.swift */; };
 		66041116ED82D1DDA750C223 /* movie-bouquet.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9D1BC2BDF4B37868D9C9102E /* movie-bouquet.jpg */; };
 		664C6D0C59CA0764C4E95D64 /* unsplash-1516321318423-f06f85e504b3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B8FB32B7775A55F7DE5FA17E /* unsplash-1516321318423-f06f85e504b3.jpg */; };
-		6745E21BC56ECD1036BDC731 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E932245EF0778C1BA093AF3 /* MessageBubble.swift */; };
 		685123B7160A134586FDFA95 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 05DE97E274D0EFDBE2C53628 /* Localizable.xcstrings */; };
 		6955F1914280FC1E67806625 /* EmotionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79B22DF731C8B966287C3D04 /* EmotionService.swift */; };
 		6FA2F342B55A32777A548216 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B429FC2EBD6AC8FF1E2D67A /* User.swift */; };
@@ -126,7 +121,6 @@
 		DE0B48C5CE1351E3A8146FDD /* UserPortraitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F438A5DE4F29FDCEC9A17C2 /* UserPortraitView.swift */; };
 		DE90F791FEC51681B85C6887 /* adventurequest-3d.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B066BAD414529DA5EF5CECA3 /* adventurequest-3d.jpg */; };
 		DEB9F3A0DC346A5ADC659E5B /* NameInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18EC90C936481A6CCB4C698 /* NameInputView.swift */; };
-		DF0356E75BE2ECD7FCC905A2 /* GradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF91456D7244526DA27A71 /* GradientBackground.swift */; };
 		DF14948552ADFE986CEDB818 /* MemoryTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815794C803F3C13D9B8ED2BC /* MemoryTimelineView.swift */; };
 		E0215DDBAEC0AC411C3557B7 /* unsplash-1481277542470-605612bd2d61.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7BF4339ADA7B27B727BCCB65 /* unsplash-1481277542470-605612bd2d61.jpg */; };
 		E0B1AA3093CFC39003A09276 /* MemoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32E022FA560A1B3BCAB9267 /* MemoryViewModel.swift */; };
@@ -171,7 +165,6 @@
 		2CB395A86A87DEBA0CF444A0 /* PrototypeChatDrawer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeChatDrawer.swift; sourceTree = "<group>"; };
 		2D138DEA323CD756F59CE88B /* movie-project-hail-mary.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "movie-project-hail-mary.jpg"; sourceTree = "<group>"; };
 		2DF53C005F2437989DCDB1F7 /* unsplash-1519681393784-d120267933ba.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "unsplash-1519681393784-d120267933ba.jpg"; sourceTree = "<group>"; };
-		2F235E753560E3E9A1156F7A /* GlassCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassCard.swift; sourceTree = "<group>"; };
 		2F438A5DE4F29FDCEC9A17C2 /* UserPortraitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPortraitView.swift; sourceTree = "<group>"; };
 		329A1A75488DC4809E0F98C5 /* category-treasure-hero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "category-treasure-hero.jpg"; sourceTree = "<group>"; };
 		36414276E38CC47E92F1E87C /* unsplash-1518005020951-eccb494ad742.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "unsplash-1518005020951-eccb494ad742.jpg"; sourceTree = "<group>"; };
@@ -202,7 +195,6 @@
 		656B4781828668ED976C555E /* category-coop-hero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "category-coop-hero.jpg"; sourceTree = "<group>"; };
 		68E4DA3DE39DE4C839EEB518 /* PrototypeMessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeMessageBubble.swift; sourceTree = "<group>"; };
 		6BF530CBD3F20F0D8C8149B7 /* category-versus-hero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "category-versus-hero.jpg"; sourceTree = "<group>"; };
-		6D8858A8621A9CD9EB67A49D /* ShimmerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerView.swift; sourceTree = "<group>"; };
 		6E064D22C3569A1A6C479326 /* unsplash-1512621776951-a57141f2eefd-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "unsplash-1512621776951-a57141f2eefd-2.jpg"; sourceTree = "<group>"; };
 		6E43BFD61A1C98B7C726E019 /* unsplash-1499750310107-5fef28a66643.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "unsplash-1499750310107-5fef28a66643.jpg"; sourceTree = "<group>"; };
 		7530284727CAA33299714C4D /* agent-avatar.svg */ = {isa = PBXFileReference; path = "agent-avatar.svg"; sourceTree = "<group>"; };
@@ -211,7 +203,6 @@
 		787B7F1C745A93BCB30A9FF4 /* BoundaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundaryService.swift; sourceTree = "<group>"; };
 		79B22DF731C8B966287C3D04 /* EmotionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionService.swift; sourceTree = "<group>"; };
 		7BF4339ADA7B27B727BCCB65 /* unsplash-1481277542470-605612bd2d61.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "unsplash-1481277542470-605612bd2d61.jpg"; sourceTree = "<group>"; };
-		7E932245EF0778C1BA093AF3 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
 		7F1821E77B9A9343A1E7F562 /* music-cover-04.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "music-cover-04.jpg"; sourceTree = "<group>"; };
 		7F5AD1D036019DEA7895FFDC /* forza-horizon-5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "forza-horizon-5.jpg"; sourceTree = "<group>"; };
 		815794C803F3C13D9B8ED2BC /* MemoryTimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryTimelineView.swift; sourceTree = "<group>"; };
@@ -230,7 +221,6 @@
 		977536FBC142E2FD5E45C0BF /* music-cover-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "music-cover-02.jpg"; sourceTree = "<group>"; };
 		98F9E5B96074A707C39EA9B9 /* metal-slug-tactics.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "metal-slug-tactics.jpg"; sourceTree = "<group>"; };
 		99917628D1BEDA812320C2D6 /* PrototypeMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeMovieView.swift; sourceTree = "<group>"; };
-		99DF91456D7244526DA27A71 /* GradientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackground.swift; sourceTree = "<group>"; };
 		9AB67F6C38B9CB0A352E36D5 /* vinyl-record.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "vinyl-record.jpg"; sourceTree = "<group>"; };
 		9B429FC2EBD6AC8FF1E2D67A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		9D1BC2BDF4B37868D9C9102E /* movie-bouquet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "movie-bouquet.jpg"; sourceTree = "<group>"; };
@@ -241,7 +231,6 @@
 		A89C7DE00D67F72E19AED200 /* movie-the-bride-2026.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "movie-the-bride-2026.jpg"; sourceTree = "<group>"; };
 		A8EB53E4104A8B8FD5014742 /* PrototypeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeData.swift; sourceTree = "<group>"; };
 		A952B7E8BBA90752E8F3750C /* daily-journal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "daily-journal.jpg"; sourceTree = "<group>"; };
-		AAECCE0F60B7D01C5B071C3F /* TypingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicator.swift; sourceTree = "<group>"; };
 		AB3DCD5A38E21EE4EADBC987 /* MemoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDetailView.swift; sourceTree = "<group>"; };
 		AE4D83E0BDD94A632F10830C /* movie-metropolis.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "movie-metropolis.jpg"; sourceTree = "<group>"; };
 		B066BAD414529DA5EF5CECA3 /* adventurequest-3d.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "adventurequest-3d.jpg"; sourceTree = "<group>"; };
@@ -279,7 +268,6 @@
 		E340CC9EAFFC63B89803287B /* IntimacyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntimacyService.swift; sourceTree = "<group>"; };
 		E6D932DD8D2072DF3A4CA99C /* MemoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryService.swift; sourceTree = "<group>"; };
 		E8A72FECBF5CA8DBEC6A68A0 /* music-cover-01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "music-cover-01.jpg"; sourceTree = "<group>"; };
-		E93E076B219F0057E9145D30 /* EmptyStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		EA66B1284989FB84537DFF4F /* chinese-chess.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "chinese-chess.jpg"; sourceTree = "<group>"; };
 		EA878A351D5C69CFA1C77C47 /* ScheduleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleService.swift; sourceTree = "<group>"; };
 		EE3FDB62D7E298FB0C68A470 /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
@@ -362,13 +350,11 @@
 			isa = PBXGroup;
 			children = (
 				1BD1498E5863590636625824 /* ChatView.swift */,
-				7E932245EF0778C1BA093AF3 /* MessageBubble.swift */,
 				10E46CBF81D6102690DFBDC3 /* PrototypeChatComposer.swift */,
 				2CB395A86A87DEBA0CF444A0 /* PrototypeChatDrawer.swift */,
 				41C670366B68CC8AF5A08787 /* PrototypeChatHeader.swift */,
 				68E4DA3DE39DE4C839EEB518 /* PrototypeMessageBubble.swift */,
 				3940ED4E51577E21284EF054 /* PrototypeMessageList.swift */,
-				AAECCE0F60B7D01C5B071C3F /* TypingIndicator.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -377,10 +363,6 @@
 			isa = PBXGroup;
 			children = (
 				1CEE4D0571082B4C0D28A6F9 /* DateFormatting.swift */,
-				E93E076B219F0057E9145D30 /* EmptyStateView.swift */,
-				2F235E753560E3E9A1156F7A /* GlassCard.swift */,
-				99DF91456D7244526DA27A71 /* GradientBackground.swift */,
-				6D8858A8621A9CD9EB67A49D /* ShimmerView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -783,10 +765,7 @@
 				6955F1914280FC1E67806625 /* EmotionService.swift in Sources */,
 				BD2C126FCD35D83EB1C9A7AF /* EmotionTimelineView.swift in Sources */,
 				A64E4BF27C1C319A58E451E5 /* EmotionViewModel.swift in Sources */,
-				269A229044A269935594E78A /* EmptyStateView.swift in Sources */,
 				EF0308852381D21065F2BC85 /* GenderSelectionView.swift in Sources */,
-				29BD5E814B8AADDB64FE58F3 /* GlassCard.swift in Sources */,
-				DF0356E75BE2ECD7FCC905A2 /* GradientBackground.swift in Sources */,
 				63F06595BC4C0E6DE421A0F5 /* Intimacy.swift in Sources */,
 				E746FAF7351A06D5F38429D4 /* IntimacyService.swift in Sources */,
 				EE3D7BB8934D00F4EFA1B462 /* Memory.swift in Sources */,
@@ -795,7 +774,6 @@
 				DF14948552ADFE986CEDB818 /* MemoryTimelineView.swift in Sources */,
 				E0B1AA3093CFC39003A09276 /* MemoryViewModel.swift in Sources */,
 				E0E3A6AAEBA1A2C53DA09661 /* Message.swift in Sources */,
-				6745E21BC56ECD1036BDC731 /* MessageBubble.swift in Sources */,
 				DEB9F3A0DC346A5ADC659E5B /* NameInputView.swift in Sources */,
 				07E7CDC4BE46DC0844B4A4BD /* OnboardingView.swift in Sources */,
 				FBECD194583B8A9CC1A235E6 /* OnboardingViewModel.swift in Sources */,
@@ -820,8 +798,6 @@
 				CD28625B46A9E62DE211B9A0 /* ScheduleHistoryView.swift in Sources */,
 				3EB8AD8C2AC50EEDFE4898DB /* ScheduleService.swift in Sources */,
 				72A3B180AEA411FB82BE2C30 /* SettingsView.swift in Sources */,
-				099E0B687C8392031E0D7BB3 /* ShimmerView.swift in Sources */,
-				159D1C8610B3BB2C8A92A504 /* TypingIndicator.swift in Sources */,
 				6FA2F342B55A32777A548216 /* User.swift in Sources */,
 				DE0B48C5CE1351E3A8146FDD /* UserPortraitView.swift in Sources */,
 				D3B7678A07C2801F5587F05D /* UserService.swift in Sources */,

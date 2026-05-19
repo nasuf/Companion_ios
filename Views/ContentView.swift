@@ -6,10 +6,12 @@ struct ContentView: View {
     var body: some View {
         Group {
             if !appViewModel.isInitialized {
-                ProgressView()
-                    .scaleEffect(1.5)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .gradientBackground()
+                ZStack {
+                    PrototypeBackground()
+                    ProgressView()
+                        .scaleEffect(1.25)
+                }
+                .environment(\.prototypeTheme, .blue)
             } else if let conversationId = appViewModel.conversationId,
                       let agentId = appViewModel.agentId {
                 PrototypeRootView(
