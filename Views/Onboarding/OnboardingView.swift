@@ -119,12 +119,12 @@ struct CreateAgentFormView: View {
                 } label: {
                     Text("随机生成")
                         .font(.system(size: 11, weight: .heavy))
-                        .foregroundStyle(CreationPalette.accentInk)
+                        .foregroundStyle(CreationPalette.actionInk)
                         .padding(.horizontal, 13)
                         .frame(height: 32)
-                        .background(Color.white.opacity(0.54))
+                        .background(CreationPalette.actionSoft.opacity(0.86))
                         .clipShape(Capsule())
-                        .overlay(Capsule().stroke(CreationPalette.hairline, lineWidth: 1))
+                        .overlay(Capsule().stroke(CreationPalette.action.opacity(0.14), lineWidth: 1))
                 }
                 .buttonStyle(.plain)
             }
@@ -174,10 +174,10 @@ private struct GenderSegmentedPicker: View {
                 } label: {
                     Text(gender.label)
                         .font(.system(size: 12, weight: .heavy))
-                        .foregroundStyle(selection == gender ? CreationPalette.fg : CreationPalette.body)
+                        .foregroundStyle(selection == gender ? CreationPalette.actionInk : CreationPalette.body)
                         .frame(maxWidth: .infinity)
                         .frame(height: 30)
-                        .background(selection == gender ? Color.white.opacity(0.84) : Color.clear)
+                        .background(selection == gender ? CreationPalette.actionSoft.opacity(0.96) : Color.clear)
                         .clipShape(Capsule())
                 }
                 .buttonStyle(.plain)
@@ -399,7 +399,16 @@ struct OnboardingPrimaryButton<Label: View>: View {
                 .foregroundStyle(Color.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 52)
-                .background(CreationPalette.fg.opacity(isDisabled ? 0.26 : 1))
+                .background {
+                    if isDisabled {
+                        Capsule()
+                            .fill(CreationPalette.action.opacity(0.22))
+                    } else {
+                        Capsule()
+                            .fill(CreationPalette.actionGradient)
+                    }
+                }
+                .shadow(color: CreationPalette.action.opacity(isDisabled ? 0 : 0.24), radius: 24, y: 12)
                 .clipShape(Capsule())
         }
         .disabled(isDisabled)

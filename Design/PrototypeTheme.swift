@@ -130,9 +130,21 @@ enum CreationPalette {
     static let accentInk = Color(hex: 0x143137)
     static let blue = Color(hex: 0x1F6FFF)
     static let purple = Color(hex: 0x7C3CFF)
+    static let action = Color(hex: 0x1F6FFF)
+    static let actionAlt = Color(hex: 0x18C6C0)
+    static let actionInk = Color(hex: 0x123F86)
+    static let actionSoft = Color(hex: 0xEAF5FF)
     static let card = Color.white.opacity(0.78)
     static let cardStrong = Color.white.opacity(0.88)
     static let track = Color(hex: 0x182026).opacity(0.08)
+
+    static var actionGradient: LinearGradient {
+        LinearGradient(
+            colors: [actionAlt, action],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
 
     static let traitColors = [
         Color(hex: 0x18C6C0),
