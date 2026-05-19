@@ -7,7 +7,7 @@ struct PrototypeProfileShellView: View {
     let resetAgent: () -> Void
 
     var body: some View {
-        PrototypeScreen {
+        PrototypeScreen(backgroundStyle: .onboarding) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     hero

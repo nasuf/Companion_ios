@@ -20,7 +20,7 @@ struct AgentProvisioningView: View {
 
     var body: some View {
         ZStack {
-            PrototypeBackground()
+            PrototypeBackground(style: .onboarding)
 
             VStack(spacing: 22) {
                 statusGlyph

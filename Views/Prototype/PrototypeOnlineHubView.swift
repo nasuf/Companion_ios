@@ -5,7 +5,7 @@ struct PrototypeOnlineHubView: View {
     let openRoute: (PrototypeRoute) -> Void
 
     var body: some View {
-        PrototypeScreen {
+        PrototypeScreen(backgroundStyle: .online) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     hero
@@ -27,9 +27,11 @@ struct PrototypeOnlineHubView: View {
         .padding(.horizontal, 18)
         .frame(maxWidth: .infinity, alignment: .leading)
         .overlay(alignment: .trailing) {
-            RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .fill(.linearGradient(colors: [palette.accent.opacity(0.36), .white.opacity(0.32)], startPoint: .topLeading, endPoint: .bottomTrailing))
-                .frame(width: 104, height: 104)
+            PrototypeFloatingGlassTile(
+                size: CGSize(width: 112, height: 112),
+                colors: [Color(hex: 0x1F6FFF), Color(hex: 0x18C6C0)],
+                opacity: 0.70
+            )
                 .padding(.trailing, 26)
                 .padding(.top, 88)
         }

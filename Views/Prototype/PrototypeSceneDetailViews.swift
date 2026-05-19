@@ -5,7 +5,7 @@ struct PrototypeOfflineInviteView: View {
     @State private var ticketFlipped = false
 
     var body: some View {
-        PrototypeScreen(showsBottomPadding: false) {
+        PrototypeScreen(showsBottomPadding: false, backgroundStyle: .scene) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     PrototypeDetailActions()
@@ -205,7 +205,7 @@ struct PrototypeProgressView: View {
     @Environment(\.prototypePalette) private var palette
 
     var body: some View {
-        PrototypeScreen(showsBottomPadding: false) {
+        PrototypeScreen(showsBottomPadding: false, backgroundStyle: .scene) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     PrototypeDetailActions()

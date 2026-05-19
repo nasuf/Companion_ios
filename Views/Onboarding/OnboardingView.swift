@@ -5,7 +5,7 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack {
-            PrototypeBackground()
+            PrototypeBackground(style: .onboarding)
             TabView(selection: $viewModel.currentStep) {
                 GenderSelectionView(viewModel: viewModel)
                     .tag(0)
@@ -38,6 +38,14 @@ struct OnboardingHero: View {
                 .foregroundStyle(palette.muted)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .overlay(alignment: .topTrailing) {
+            PrototypeFloatingGlassTile(
+                size: CGSize(width: 96, height: 88),
+                colors: [Color(hex: 0x18C6C0), Color(hex: 0x1F6FFF)],
+                opacity: 0.42
+            )
+            .offset(x: 8, y: -4)
+        }
     }
 }
 

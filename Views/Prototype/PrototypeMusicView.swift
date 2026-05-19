@@ -19,7 +19,7 @@ struct PrototypeMusicView: View {
     }
 
     var body: some View {
-        PrototypeScreen(showsBottomPadding: false) {
+        PrototypeScreen(showsBottomPadding: false, backgroundStyle: .music) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     PrototypeDetailActions()

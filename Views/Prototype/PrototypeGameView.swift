@@ -5,7 +5,7 @@ struct PrototypeGameView: View {
     @State private var activeGroupID = PrototypeFixtures.gameGroups.first?.id ?? "board"
 
     var body: some View {
-        PrototypeScreen(showsBottomPadding: false) {
+        PrototypeScreen(showsBottomPadding: false, backgroundStyle: .game) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     PrototypeDetailActions()

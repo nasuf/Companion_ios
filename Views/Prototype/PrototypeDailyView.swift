@@ -9,7 +9,7 @@ struct PrototypeDailyView: View {
     }
 
     var body: some View {
-        PrototypeScreen(showsBottomPadding: false) {
+        PrototypeScreen(showsBottomPadding: false, backgroundStyle: .daily) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     PrototypeDetailActions()

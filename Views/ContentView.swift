@@ -7,7 +7,7 @@ struct ContentView: View {
         Group {
             if !appViewModel.isInitialized {
                 ZStack {
-                    PrototypeBackground()
+                    PrototypeBackground(style: .onboarding)
                     ProgressView()
                         .scaleEffect(1.25)
                 }

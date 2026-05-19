@@ -8,7 +8,7 @@ struct PrototypeMovieView: View {
     private var movie: PrototypeMovie { PrototypeFixtures.movies[selectedIndex] }
 
     var body: some View {
-        PrototypeScreen(showsBottomPadding: false) {
+        PrototypeScreen(showsBottomPadding: false, backgroundStyle: .movie) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     PrototypeDetailActions()
