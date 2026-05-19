@@ -11,6 +11,7 @@ enum UserService {
                 password: UUID().uuidString + UUID().uuidString
             )
         )
+        UserDefaults.standard.set(response.token, forKey: "authToken")
         return AppUser(
             id: response.userId,
             name: response.username,

@@ -14,6 +14,9 @@ final class AppViewModel {
     var conversationId: String? {
         didSet { UserDefaults.standard.set(conversationId, forKey: "conversationId") }
     }
+    var authToken: String? {
+        didSet { UserDefaults.standard.set(authToken, forKey: "authToken") }
+    }
 
     var themeMode: ThemeMode {
         didSet { UserDefaults.standard.set(themeMode.rawValue, forKey: "themeMode") }
@@ -38,6 +41,7 @@ final class AppViewModel {
         self.agentId = UserDefaults.standard.string(forKey: "agentId")
         self.agentName = UserDefaults.standard.string(forKey: "agentName")
         self.conversationId = UserDefaults.standard.string(forKey: "conversationId")
+        self.authToken = UserDefaults.standard.string(forKey: "authToken")
         self.themeMode = ThemeMode(rawValue: UserDefaults.standard.string(forKey: "themeMode") ?? "") ?? .system
         self.locale = AppLocale(rawValue: UserDefaults.standard.string(forKey: "appLocale") ?? "") ?? .chinese
     }
@@ -61,21 +65,23 @@ final class AppViewModel {
 
     @discardableResult
     func ensureUser() async -> Bool {
+        if !userId.isEmpty, (authToken ?? "").isEmpty {
+            clearSession()
+        }
+
         if !userId.isEmpty {
             do {
                 let _ = try await UserService.get(id: userId)
             } catch {
                 // User no longer exists (DB was reset), clear everything
-                userId = ""
-                agentId = nil
-                agentName = nil
-                conversationId = nil
+                clearSession()
             }
         }
         if userId.isEmpty {
             do {
                 let user = try await UserService.create(name: "User_\(Int.random(in: 1000...9999))")
                 userId = user.id
+                authToken = UserDefaults.standard.string(forKey: "authToken")
                 error = nil
                 return true
             } catch {
@@ -135,6 +141,14 @@ final class AppViewModel {
         } catch {
             // Agent may already be gone, continue cleanup
         }
+    }
+
+    private func clearSession() {
+        userId = ""
+        agentId = nil
+        agentName = nil
+        conversationId = nil
+        authToken = nil
     }
 }
 
