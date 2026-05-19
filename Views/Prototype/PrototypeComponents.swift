@@ -174,13 +174,13 @@ struct PrototypeRouteView: View {
     var body: some View {
         switch route {
         case .music:
-            PrototypePlaceholderDetail(title: "今晚随机播到这首", kicker: "shared rhythm", subtitle: "音乐房间会在下一步实现完整播放器。")
+            PrototypeMusicView()
         case .movie:
-            PrototypePlaceholderDetail(title: "你和我的共同影厅", kicker: "cinema player", subtitle: "电影房间会在下一步实现海报、片单和弹幕。")
+            PrototypeMovieView()
         case .game:
-            PrototypePlaceholderDetail(title: "在游戏里慢慢呼吸", kicker: "live mini game", subtitle: "游戏房间会在下一步实现分类和展开卡片。")
-        case .daily:
-            PrototypePlaceholderDetail(title: "你说的我都懂，你想的我都在", kicker: "daily board", subtitle: "日常分享会在下一步实现照片、书籍、影视和美食。")
+            PrototypeGameView()
+        case .daily(let tab):
+            PrototypeDailyView(initialTab: tab)
         case .offlineInvite:
             PrototypePlaceholderDetail(title: "周末一起看电影", kicker: "offline ticket", subtitle: "线下活动邀请会在场景详情阶段完整实现。")
         case .progress:

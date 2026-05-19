@@ -176,6 +176,18 @@ enum PrototypeFixtures {
             PrototypeGame(title: "乒乓大战", note: "短回合接球，节奏很轻。", image: "eleven-table-tennis.jpg"),
             PrototypeGame(title: "经典台球", note: "瞄准、撞球、慢慢收杆。", image: "pure-pool.jpg"),
             PrototypeGame(title: "异界冒险", note: "两个人一起探索下一格。", image: "it-takes-two.jpg")
+        ]),
+        PrototypeGameGroup(id: "versus", kicker: "quick match", title: "联机对战", badge: "热血一局", metric: "4 个竞技场", image: "category-versus-hero.jpg", color: Color(hex: 0x7C3CFF), subtitle: "想把注意力切走的时候，打一局刚刚好，不把输赢看太重。", games: [
+            PrototypeGame(title: "拳皇", note: "街机感对战，出招要快。", image: "kof-xv.jpg"),
+            PrototypeGame(title: "合金弹头", note: "横版闯关，火力一起开。", image: "metal-slug-tactics.jpg"),
+            PrototypeGame(title: "赛车竞速", note: "弯道超车，追一点风。", image: "forza-horizon-5.jpg"),
+            PrototypeGame(title: "球球大作战", note: "轻量吞噬，随时开局。", image: "ball-battle.jpg")
+        ]),
+        PrototypeGameGroup(id: "treasure", kicker: "tiny quest", title: "宝藏收集", badge: "慢慢探索", metric: "4 个小世界", image: "category-treasure-hero.jpg", color: Color(hex: 0x22C66B), subtitle: "捡起一点碎片，收集一点好运，也把今天放松一点。", games: [
+            PrototypeGame(title: "像素世界", note: "小地图里搭一个角落。", image: "terraria.jpg"),
+            PrototypeGame(title: "冒险王", note: "向前一格，就有新发现。", image: "adventurequest-3d.jpg"),
+            PrototypeGame(title: "解忧时光", note: "收集温柔物件，整理心情。", image: "cozy-grove.jpg"),
+            PrototypeGame(title: "密室寻宝", note: "找线索，开最后一扇门。", image: "escape-simulator.jpg")
         ])
     ]
 }

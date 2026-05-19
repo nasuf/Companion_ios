@@ -68,6 +68,7 @@
 		72A3B180AEA411FB82BE2C30 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50C5F010803220B1AC68EF7 /* SettingsView.swift */; };
 		72EDED20B9810EA0E8564173 /* category-coop-hero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 656B4781828668ED976C555E /* category-coop-hero.jpg */; };
 		7650D1B3550561A6F3BBEC4A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084C0CAA5A37E6F7AFD9F4B2 /* ContentView.swift */; };
+		79C1254EC988EE401C71F321 /* PrototypeGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC535038694355A87C934615 /* PrototypeGameView.swift */; };
 		7BE42525CE3E1E4D67137581 /* unsplash-1500530855697-b586d89ba3ee-2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 228BBD21A7D1040EB768B292 /* unsplash-1500530855697-b586d89ba3ee-2.jpg */; };
 		7D9F31807C289E91B24324EF /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C78F50E17D639FC3FD92CB9 /* APIClient.swift */; };
 		821F74A98B473C80D36AC271 /* movie-mandalorian-grogu.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3A52029E7563BB49D47099D /* movie-mandalorian-grogu.jpg */; };
@@ -86,6 +87,7 @@
 		95F071C308B702CD1E4896B0 /* metal-slug-tactics.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98F9E5B96074A707C39EA9B9 /* metal-slug-tactics.jpg */; };
 		96FE8FD441648FC3CB9D04E6 /* unsplash-1515378791036-0648a3ef77b2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3D4C5DD042791E4A328E8972 /* unsplash-1515378791036-0648a3ef77b2.jpg */; };
 		97D3B8CB94E6715B9832794E /* unsplash-1511818966892-d7d671e672a2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C7A157417788DD0F2CA29CD9 /* unsplash-1511818966892-d7d671e672a2.jpg */; };
+		9951805F6EEDDCA76179BF3D /* PrototypeMusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B20B73F1F9C73B93743126 /* PrototypeMusicView.swift */; };
 		9A52522D366D06A8A86A4AE5 /* unsplash-1546069901-ba9599a7e63c.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EEBDE206A00E36CCC0BB46C2 /* unsplash-1546069901-ba9599a7e63c.jpg */; };
 		9A6080CAB4F6CBDED6E02689 /* music-cover-07.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3EDFC0205AC0A72C9FC70D07 /* music-cover-07.jpg */; };
 		9AD75978AB45A25E5B5EED7A /* music-cover-09.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B4F048E4848E4969FC0150DD /* music-cover-09.jpg */; };
@@ -105,8 +107,10 @@
 		B8FC59C4998D15AB5160407A /* MemoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3DCD5A38E21EE4EADBC987 /* MemoryDetailView.swift */; };
 		BC795BD877F3074A66C7B00B /* music-cover-05.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 45491142E91A3118DD31F8BB /* music-cover-05.jpg */; };
 		BD2C126FCD35D83EB1C9A7AF /* EmotionTimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 646084C8136C0E7089AD02D3 /* EmotionTimelineView.swift */; };
+		BF8F5D17BC9D81226086EAF6 /* PrototypeMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99917628D1BEDA812320C2D6 /* PrototypeMovieView.swift */; };
 		C2BB30500A8F696598387F58 /* unsplash-1500530855697-b586d89ba3ee.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9083762E25EAAFDD09074DA7 /* unsplash-1500530855697-b586d89ba3ee.jpg */; };
 		C2C115E90FC7E4AD7E080225 /* terraria.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8F66FBE1E6CBCDA5CB42BF86 /* terraria.jpg */; };
+		C2DE55B1D1537B36AFAB0B79 /* PrototypeDailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54BD128417C69FC857C73293 /* PrototypeDailyView.swift */; };
 		C4D59AA8B39A648A25775E55 /* PrototypeMessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3940ED4E51577E21284EF054 /* PrototypeMessageList.swift */; };
 		C8625A289DEA8F66DE9B1FFE /* movie-safety-last.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 636DB90FA1CCF72A3A1B3940 /* movie-safety-last.jpg */; };
 		CD28625B46A9E62DE211B9A0 /* ScheduleHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B507777511ABAFF02DF0265E /* ScheduleHistoryView.swift */; };
@@ -144,6 +148,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04B20B73F1F9C73B93743126 /* PrototypeMusicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeMusicView.swift; sourceTree = "<group>"; };
 		05DE97E274D0EFDBE2C53628 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		07346A7ACE7FC8753F7FAE68 /* Companion.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Companion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		084C0CAA5A37E6F7AFD9F4B2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -179,6 +184,7 @@
 		45491142E91A3118DD31F8BB /* music-cover-05.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "music-cover-05.jpg"; sourceTree = "<group>"; };
 		4D2762DD5A81ABD1E8791703 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		4D4BB219A22427733EF47579 /* music-cover-08.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "music-cover-08.jpg"; sourceTree = "<group>"; };
+		54BD128417C69FC857C73293 /* PrototypeDailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeDailyView.swift; sourceTree = "<group>"; };
 		56141A4831E255DFD3DA5053 /* ChatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatService.swift; sourceTree = "<group>"; };
 		5626B4D2DCA4C19920A036E5 /* movie-poster.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "movie-poster.jpg"; sourceTree = "<group>"; };
 		5874AD4E778CE78EFC6AB617 /* AgentService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentService.swift; sourceTree = "<group>"; };
@@ -221,6 +227,7 @@
 		90A677B03F8278950328C961 /* unsplash-1477959858617-67f85cf4f1df.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "unsplash-1477959858617-67f85cf4f1df.jpg"; sourceTree = "<group>"; };
 		977536FBC142E2FD5E45C0BF /* music-cover-02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "music-cover-02.jpg"; sourceTree = "<group>"; };
 		98F9E5B96074A707C39EA9B9 /* metal-slug-tactics.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "metal-slug-tactics.jpg"; sourceTree = "<group>"; };
+		99917628D1BEDA812320C2D6 /* PrototypeMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeMovieView.swift; sourceTree = "<group>"; };
 		99DF91456D7244526DA27A71 /* GradientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackground.swift; sourceTree = "<group>"; };
 		9AB67F6C38B9CB0A352E36D5 /* vinyl-record.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "vinyl-record.jpg"; sourceTree = "<group>"; };
 		9B429FC2EBD6AC8FF1E2D67A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -278,6 +285,7 @@
 		EFDA5DE98DA87BFFC9A36499 /* ball-battle.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ball-battle.jpg"; sourceTree = "<group>"; };
 		F50C5F010803220B1AC68EF7 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F62C6574314667C771341EC1 /* cozy-grove.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "cozy-grove.jpg"; sourceTree = "<group>"; };
+		FC535038694355A87C934615 /* PrototypeGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeGameView.swift; sourceTree = "<group>"; };
 		FF979094DA4E5330433BA2B2 /* movie-scream-7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "movie-scream-7.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -421,6 +429,10 @@
 			isa = PBXGroup;
 			children = (
 				B3F32E42B4CA9CFE3CAD64BA /* PrototypeComponents.swift */,
+				54BD128417C69FC857C73293 /* PrototypeDailyView.swift */,
+				FC535038694355A87C934615 /* PrototypeGameView.swift */,
+				99917628D1BEDA812320C2D6 /* PrototypeMovieView.swift */,
+				04B20B73F1F9C73B93743126 /* PrototypeMusicView.swift */,
 				852D01B2D8296FADE06207F5 /* PrototypeOnlineHubView.swift */,
 				61AD09311EF7E10150E0B088 /* PrototypeProfileShellView.swift */,
 				DB41FAE2780A90DDD04BFDE4 /* PrototypeRootView.swift */,
@@ -789,9 +801,13 @@
 				214E3BC86AECB09B01C4C785 /* PrototypeChatDrawer.swift in Sources */,
 				4F607F392562FF6B637170FA /* PrototypeChatHeader.swift in Sources */,
 				F5AEA13F7BC5F3B7F3BA31B6 /* PrototypeComponents.swift in Sources */,
+				C2DE55B1D1537B36AFAB0B79 /* PrototypeDailyView.swift in Sources */,
 				FCA0604DD124990106AA8E11 /* PrototypeData.swift in Sources */,
+				79C1254EC988EE401C71F321 /* PrototypeGameView.swift in Sources */,
 				86A914676CB13D048CDE48E7 /* PrototypeMessageBubble.swift in Sources */,
 				C4D59AA8B39A648A25775E55 /* PrototypeMessageList.swift in Sources */,
+				BF8F5D17BC9D81226086EAF6 /* PrototypeMovieView.swift in Sources */,
+				9951805F6EEDDCA76179BF3D /* PrototypeMusicView.swift in Sources */,
 				2A6F1A98B07958DF30B988B5 /* PrototypeOnlineHubView.swift in Sources */,
 				9DBE18CD1D7113A61F017B55 /* PrototypeProfileShellView.swift in Sources */,
 				92F8B562E948606970777F1C /* PrototypeRootView.swift in Sources */,
