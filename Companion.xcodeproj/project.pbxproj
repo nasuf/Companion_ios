@@ -87,6 +87,7 @@
 		95F071C308B702CD1E4896B0 /* metal-slug-tactics.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98F9E5B96074A707C39EA9B9 /* metal-slug-tactics.jpg */; };
 		96FE8FD441648FC3CB9D04E6 /* unsplash-1515378791036-0648a3ef77b2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3D4C5DD042791E4A328E8972 /* unsplash-1515378791036-0648a3ef77b2.jpg */; };
 		97D3B8CB94E6715B9832794E /* unsplash-1511818966892-d7d671e672a2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C7A157417788DD0F2CA29CD9 /* unsplash-1511818966892-d7d671e672a2.jpg */; };
+		9863DCF1D543A5A6A9772C1B /* PrototypeSceneDetailViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9BDF3A5F58DF9A98A08897 /* PrototypeSceneDetailViews.swift */; };
 		9951805F6EEDDCA76179BF3D /* PrototypeMusicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B20B73F1F9C73B93743126 /* PrototypeMusicView.swift */; };
 		9A52522D366D06A8A86A4AE5 /* unsplash-1546069901-ba9599a7e63c.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EEBDE206A00E36CCC0BB46C2 /* unsplash-1546069901-ba9599a7e63c.jpg */; };
 		9A6080CAB4F6CBDED6E02689 /* music-cover-07.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3EDFC0205AC0A72C9FC70D07 /* music-cover-07.jpg */; };
@@ -160,6 +161,7 @@
 		1BD1498E5863590636625824 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		1CEE4D0571082B4C0D28A6F9 /* DateFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatting.swift; sourceTree = "<group>"; };
 		1D7F360063E2F198D542EE7C /* unsplash-1494790108377-be9c29b29330.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "unsplash-1494790108377-be9c29b29330.jpg"; sourceTree = "<group>"; };
+		1D9BDF3A5F58DF9A98A08897 /* PrototypeSceneDetailViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrototypeSceneDetailViews.swift; sourceTree = "<group>"; };
 		1EC0ADF0344AD174C67E2CDA /* category-board-hero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "category-board-hero.jpg"; sourceTree = "<group>"; };
 		218AD575273CA8D66BF4884E /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		228BBD21A7D1040EB768B292 /* unsplash-1500530855697-b586d89ba3ee-2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "unsplash-1500530855697-b586d89ba3ee-2.jpg"; sourceTree = "<group>"; };
@@ -436,6 +438,7 @@
 				852D01B2D8296FADE06207F5 /* PrototypeOnlineHubView.swift */,
 				61AD09311EF7E10150E0B088 /* PrototypeProfileShellView.swift */,
 				DB41FAE2780A90DDD04BFDE4 /* PrototypeRootView.swift */,
+				1D9BDF3A5F58DF9A98A08897 /* PrototypeSceneDetailViews.swift */,
 				D117BD38DBECEDDD17046F3F /* PrototypeSceneHubView.swift */,
 			);
 			path = Prototype;
@@ -811,6 +814,7 @@
 				2A6F1A98B07958DF30B988B5 /* PrototypeOnlineHubView.swift in Sources */,
 				9DBE18CD1D7113A61F017B55 /* PrototypeProfileShellView.swift in Sources */,
 				92F8B562E948606970777F1C /* PrototypeRootView.swift in Sources */,
+				9863DCF1D543A5A6A9772C1B /* PrototypeSceneDetailViews.swift in Sources */,
 				D149E4D476AEAEFE2D0DE338 /* PrototypeSceneHubView.swift in Sources */,
 				8A8E90DC86A8BE3A12B14B52 /* PrototypeTheme.swift in Sources */,
 				CD28625B46A9E62DE211B9A0 /* ScheduleHistoryView.swift in Sources */,

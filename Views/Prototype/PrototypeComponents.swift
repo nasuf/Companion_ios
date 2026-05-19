@@ -182,9 +182,9 @@ struct PrototypeRouteView: View {
         case .daily(let tab):
             PrototypeDailyView(initialTab: tab)
         case .offlineInvite:
-            PrototypePlaceholderDetail(title: "周末一起看电影", kicker: "offline ticket", subtitle: "线下活动邀请会在场景详情阶段完整实现。")
+            PrototypeOfflineInviteView()
         case .progress:
-            PrototypePlaceholderDetail(title: "我为你准备了小惊喜", kicker: "live route", subtitle: "动态进程会在场景详情阶段完整实现。")
+            PrototypeProgressView()
         case .memory:
             MemoryTimelineView()
         case .emotion:
