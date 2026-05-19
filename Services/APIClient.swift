@@ -46,7 +46,7 @@ actor WebSocketClient {
                 defer {
                     continuation.finish()
                 }
-                while await self.isConnected {
+                while self.isConnected {
                     do {
                         let msg = try await wsTask.receive()
                         switch msg {
@@ -98,7 +98,7 @@ actor WebSocketClient {
                             break
                         }
                     } catch {
-                        if await self.isConnected {
+                        if self.isConnected {
                             continuation.finish(throwing: error)
                         }
                         return
@@ -130,7 +130,7 @@ actor WebSocketClient {
         pingTask = Task {
             while !Task.isCancelled {
                 try? await Task.sleep(for: .seconds(30))
-                guard !Task.isCancelled, await self.isConnected else { break }
+                guard !Task.isCancelled, self.isConnected else { break }
                 let ping: [String: Any] = ["type": "ping"]
                 if let data = try? JSONSerialization.data(withJSONObject: ping) {
                     try? await self.task?.send(.string(String(data: data, encoding: .utf8)!))
