@@ -43,7 +43,24 @@ final class AppViewModel {
     }
 
     func initialize() async {
-        // Verify existing user or create new one
+        let hasUser = await ensureUser()
+
+        if hasUser, let agentId, !agentId.isEmpty {
+            do {
+                let _ = try await AgentService.get(id: agentId)
+                await ensureConversation()
+            } catch {
+                self.agentId = nil
+                self.agentName = nil
+                self.conversationId = nil
+            }
+        }
+
+        isInitialized = true
+    }
+
+    @discardableResult
+    func ensureUser() async -> Bool {
         if !userId.isEmpty {
             do {
                 let _ = try await UserService.get(id: userId)
@@ -59,24 +76,16 @@ final class AppViewModel {
             do {
                 let user = try await UserService.create(name: "User_\(Int.random(in: 1000...9999))")
                 userId = user.id
+                error = nil
+                return true
             } catch {
-                self.error = error.localizedDescription
+                self.error = "用户初始化失败：\(error.localizedDescription)。请确认后端服务已启动并可访问。"
+                return false
             }
         }
 
-        if let agentId, !agentId.isEmpty {
-            do {
-                let _ = try await AgentService.get(id: agentId)
-                // Ensure we have a conversation
-                await ensureConversation()
-            } catch {
-                self.agentId = nil
-                self.agentName = nil
-                self.conversationId = nil
-            }
-        }
-
-        isInitialized = true
+        error = nil
+        return true
     }
 
     /// Find existing conversation or create a new one for the current agent.

@@ -93,13 +93,14 @@ final class OnboardingViewModel {
             return
         }
 
-        guard !appViewModel.userId.isEmpty else {
-            error = "用户未初始化，请重启应用"
-            return
-        }
-
         isCreating = true
         error = nil
+
+        guard await appViewModel.ensureUser() else {
+            error = appViewModel.error ?? "用户初始化失败，请确认后端服务已启动"
+            isCreating = false
+            return
+        }
 
         do {
             let resolvedGender: String
