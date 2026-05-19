@@ -5,7 +5,7 @@ struct PrototypeSceneHubView: View {
     let openRoute: (PrototypeRoute) -> Void
 
     var body: some View {
-        PrototypeScreen(backgroundStyle: .scene) {
+        PrototypeScreen(showsBottomPadding: false, backgroundStyle: .scene) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     hero

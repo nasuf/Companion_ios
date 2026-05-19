@@ -12,11 +12,8 @@ struct PrototypeRootView: View {
 
     var body: some View {
         NavigationStack(path: $path) {
-            ZStack(alignment: .bottom) {
-                activeTabView
-
-                PrototypeBottomTabBar(selectedTab: $selectedTab)
-            }
+            nativeTabView
+                .tint(theme.palette.accent)
             .environment(\.prototypeTheme, theme)
             .navigationDestination(for: PrototypeRoute.self) { route in
                 PrototypeRouteView(route: route)
@@ -26,26 +23,37 @@ struct PrototypeRootView: View {
     }
 
     @ViewBuilder
-    private var activeTabView: some View {
-        switch selectedTab {
-        case .chat:
+    private var nativeTabView: some View {
+        TabView(selection: $selectedTab) {
             ChatView(
                 conversationId: conversationId,
                 agentId: agentId,
                 userId: userId,
                 openRoute: openRoute
             )
-        case .online:
+            .tag(PrototypeTab.chat)
+            .tabItem { tabLabel(.chat) }
+
             PrototypeOnlineHubView(openRoute: openRoute)
-        case .scene:
+                .tag(PrototypeTab.online)
+                .tabItem { tabLabel(.online) }
+
             PrototypeSceneHubView(openRoute: openRoute)
-        case .profile:
+                .tag(PrototypeTab.scene)
+                .tabItem { tabLabel(.scene) }
+
             PrototypeProfileShellView(
                 selectedTheme: $theme,
                 openRoute: openRoute,
                 resetAgent: resetAgent
             )
+            .tag(PrototypeTab.profile)
+            .tabItem { tabLabel(.profile) }
         }
+    }
+
+    private func tabLabel(_ tab: PrototypeTab) -> some View {
+        Label(tab.title, systemImage: tab.icon)
     }
 
     private func openRoute(_ route: PrototypeRoute) {

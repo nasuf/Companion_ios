@@ -345,61 +345,6 @@ struct PrototypeAvatar: View {
     }
 }
 
-struct PrototypeBottomTabBar: View {
-    @Environment(\.prototypePalette) private var palette
-    @Binding var selectedTab: PrototypeTab
-
-    var body: some View {
-        Group {
-            if #available(iOS 26.0, *) {
-                GlassEffectContainer(spacing: 10) {
-                    tabButtons
-                }
-            } else {
-                tabButtons
-            }
-        }
-        .padding(.horizontal, 24)
-        .padding(.top, 8)
-        .padding(.bottom, 14)
-        .background(Color.white.opacity(0.42))
-        .prototypeLiquidGlass(cornerRadius: 30, tint: Color.white.opacity(0.32))
-        .overlay(
-            RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .stroke(Color.white.opacity(0.72), lineWidth: 1)
-        )
-        .shadow(color: Color.black.opacity(0.16), radius: 24, y: 12)
-        .padding(.horizontal, 24)
-        .padding(.bottom, 12)
-    }
-
-    private var tabButtons: some View {
-        HStack {
-            ForEach(PrototypeTab.allCases) { tab in
-                Button {
-                    withAnimation(.spring(response: 0.34, dampingFraction: 0.82)) {
-                        selectedTab = tab
-                    }
-                } label: {
-                    Image(systemName: tab.icon)
-                        .font(.system(size: 18, weight: .semibold))
-                        .foregroundStyle(selectedTab == tab ? palette.accentInk : palette.subtle)
-                        .frame(width: 46, height: 46)
-                        .background(selectedTab == tab ? Color.white.opacity(0.58) : Color.clear)
-                        .clipShape(Circle())
-                        .prototypeLiquidGlass(
-                            cornerRadius: 23,
-                            tint: selectedTab == tab ? palette.accentSoft.opacity(0.46) : Color.white.opacity(0.08),
-                            interactive: true
-                        )
-                }
-                .frame(maxWidth: .infinity)
-                .accessibilityLabel(tab.title)
-            }
-        }
-    }
-}
-
 struct PrototypeDetailActions: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.prototypePalette) private var palette

@@ -5,7 +5,7 @@ struct PrototypeOnlineHubView: View {
     let openRoute: (PrototypeRoute) -> Void
 
     var body: some View {
-        PrototypeScreen(backgroundStyle: .online) {
+        PrototypeScreen(showsBottomPadding: false, backgroundStyle: .online) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
                     hero
