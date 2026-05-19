@@ -14,9 +14,15 @@ targets:
     type: application
     platform: iOS
     sources:
-      - path: .
-        excludes:
-          - project.yml
+      - path: CompanionApp.swift
+      - path: Localizable.xcstrings
+      - path: Components
+      - path: Design
+      - path: Models
+      - path: Services
+      - path: ViewModels
+      - path: Views
+      - path: assets
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.companion.app

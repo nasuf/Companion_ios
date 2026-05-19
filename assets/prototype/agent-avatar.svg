@@ -1,0 +1,59 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="136" fill="url(#bg)"/>
+  <path d="M76 346c22-128 113-216 225-200 88 13 143 82 139 177-3 80-60 132-156 146-96 14-175-23-208-123Z" fill="url(#aura)" opacity=".78"/>
+  <path d="M142 211c10-78 66-131 138-131 74 0 132 56 139 136 18 17 28 42 28 72 0 82-70 149-162 149-94 0-170-68-170-151 0-31 10-57 27-75Z" fill="url(#hair)"/>
+  <path d="M142 219c-17 3-30 21-30 44 0 24 14 43 33 45l8-2c-4-28-4-56-1-84l-10-3Z" fill="#7CD7FF"/>
+  <path d="M418 219c18 3 31 21 31 44 0 24-14 43-34 45l-8-2c4-28 4-56 1-84l10-3Z" fill="#4D91FF"/>
+  <path d="M157 248c0-75 51-136 124-136 72 0 124 61 124 136v41c0 78-55 131-124 131s-124-53-124-131v-41Z" fill="url(#face)"/>
+  <path d="M172 219c31-8 60-29 84-67 31 44 78 68 137 72-13-70-55-111-115-111-58 0-96 36-106 106Z" fill="url(#bang)"/>
+  <path d="M177 314c19 23 55 38 103 38 48 0 85-15 104-38-13 55-52 88-104 88-51 0-90-33-103-88Z" fill="url(#blush)" opacity=".42"/>
+  <ellipse cx="226" cy="269" rx="19" ry="25" fill="#101820"/>
+  <ellipse cx="337" cy="269" rx="19" ry="25" fill="#101820"/>
+  <circle cx="219" cy="260" r="6" fill="white"/>
+  <circle cx="330" cy="260" r="6" fill="white"/>
+  <path d="M250 321c18 14 44 14 62 0" stroke="#1C2B3A" stroke-width="11" stroke-linecap="round"/>
+  <ellipse cx="194" cy="309" rx="24" ry="13" fill="#FF8DB4" opacity=".28"/>
+  <ellipse cx="367" cy="309" rx="24" ry="13" fill="#FF8DB4" opacity=".28"/>
+  <path d="M119 125c32-45 83-70 144-70 57 0 106 21 141 59" stroke="white" stroke-width="22" stroke-linecap="round" opacity=".62"/>
+  <path d="M341 83c35 9 62 28 82 57" stroke="#DDF8FF" stroke-width="12" stroke-linecap="round" opacity=".75"/>
+  <circle cx="414" cy="157" r="28" fill="url(#starDot)"/>
+  <circle cx="431" cy="140" r="8" fill="#FFF9B7"/>
+  <path d="M79 386c39 43 103 70 178 70 77 0 143-28 181-73" stroke="white" stroke-width="14" stroke-linecap="round" opacity=".38"/>
+  <defs>
+    <linearGradient id="bg" x1="74" y1="42" x2="458" y2="468" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F2FDFF"/>
+      <stop offset=".38" stop-color="#8EE7FF"/>
+      <stop offset=".72" stop-color="#4D91FF"/>
+      <stop offset="1" stop-color="#7C3CFF"/>
+    </linearGradient>
+    <radialGradient id="aura" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(276 293) rotate(90) scale(186 210)">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset=".55" stop-color="#CBF7FF" stop-opacity=".68"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hair" x1="153" y1="85" x2="408" y2="432" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#16385F"/>
+      <stop offset=".46" stop-color="#1F6FFF"/>
+      <stop offset="1" stop-color="#7C3CFF"/>
+    </linearGradient>
+    <linearGradient id="face" x1="185" y1="137" x2="368" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset=".58" stop-color="#F5FDFF"/>
+      <stop offset="1" stop-color="#DDF8FF"/>
+    </linearGradient>
+    <linearGradient id="bang" x1="183" y1="105" x2="370" y2="226" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#72E5FF"/>
+      <stop offset=".5" stop-color="#1F6FFF"/>
+      <stop offset="1" stop-color="#5A54FF"/>
+    </linearGradient>
+    <linearGradient id="blush" x1="181" y1="320" x2="384" y2="398" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF74A8"/>
+      <stop offset="1" stop-color="#7C3CFF"/>
+    </linearGradient>
+    <linearGradient id="starDot" x1="391" y1="134" x2="439" y2="181" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF06A"/>
+      <stop offset=".52" stop-color="#21D3C2"/>
+      <stop offset="1" stop-color="#1F6FFF"/>
+    </linearGradient>
+  </defs>
+</svg>

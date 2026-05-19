@@ -12,9 +12,11 @@ struct ContentView: View {
                     .gradientBackground()
             } else if let conversationId = appViewModel.conversationId,
                       let agentId = appViewModel.agentId {
-                NavigationStack {
-                    ChatView(conversationId: conversationId, agentId: agentId, userId: appViewModel.userId)
-                }
+                PrototypeRootView(
+                    conversationId: conversationId,
+                    agentId: agentId,
+                    userId: appViewModel.userId
+                )
                 .id("\(agentId):\(conversationId)")
                 .transition(.opacity)
             } else {
