@@ -60,6 +60,11 @@ struct AgentCreate: Encodable {
     }
 }
 
+struct AgentDeleteResponse: Decodable, Equatable {
+    let ok: Bool
+    let stats: [String: Int]
+}
+
 struct AgentPersonalityInput: Encodable {
     let lively: Int
     let rational: Int

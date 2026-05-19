@@ -28,6 +28,8 @@ final class AppViewModel {
 
     var isInitialized = false
     var isProvisioningAgent = false
+    var isDeletingAgent = false
+    var agentDeletionStats: [String: Int]?
     var provisionProgress: AgentProvisionStatus?
     var error: String?
 
@@ -69,11 +71,7 @@ final class AppViewModel {
                     }
                 }
             } catch {
-                self.agentId = nil
-                self.agentName = nil
-                self.conversationId = nil
-                self.isProvisioningAgent = false
-                self.provisionProgress = nil
+                clearAgentState()
             }
         }
 
@@ -147,6 +145,7 @@ final class AppViewModel {
         agentId = agent.id
         agentName = agent.name
         conversationId = nil
+        agentDeletionStats = nil
         provisionProgress = AgentProvisionStatus(
             agentId: agent.id,
             status: "provisioning",
@@ -227,33 +226,40 @@ final class AppViewModel {
     }
 
     func deleteAgent() async {
-        guard let agentId else { return }
+        guard let agentId, !isDeletingAgent else { return }
         let deletingAgentId = agentId
 
-        // Clear local navigation state first so the chat view tears down
-        // and cancels any in-flight WebSocket reconnect loop immediately.
-        self.agentId = nil
-        self.agentName = nil
-        self.conversationId = nil
-        self.isProvisioningAgent = false
-        self.provisionProgress = nil
-        provisionPollingTask?.cancel()
-        provisionPollingTask = nil
+        isDeletingAgent = true
+        error = nil
+        agentDeletionStats = nil
 
         do {
-            try await AgentService.delete(id: deletingAgentId)
+            let response = try await AgentService.delete(id: deletingAgentId)
+            guard response.ok else {
+                throw APIError.httpError(500, "Agent deletion did not complete")
+            }
+            agentDeletionStats = response.stats
+            clearAgentState()
         } catch {
-            // Agent may already be gone, continue cleanup
+            self.error = "删除 agent 失败：\(error.localizedDescription)"
         }
+
+        isDeletingAgent = false
     }
 
     private func clearSession() {
         userId = ""
+        clearAgentState()
+        agentDeletionStats = nil
+        authToken = nil
+    }
+
+    private func clearAgentState() {
         agentId = nil
         agentName = nil
         conversationId = nil
-        authToken = nil
         isProvisioningAgent = false
+        isDeletingAgent = false
         provisionProgress = nil
         provisionPollingTask?.cancel()
         provisionPollingTask = nil

@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct PrototypeProfileShellView: View {
+    @Environment(AppViewModel.self) private var appViewModel
     @Environment(\.prototypePalette) private var palette
     @Binding var selectedTheme: PrototypeTheme
     let openRoute: (PrototypeRoute) -> Void
@@ -138,16 +139,17 @@ struct PrototypeProfileShellView: View {
 
             Button(role: .destructive, action: resetAgent) {
                 HStack {
-                    Image(systemName: "archivebox")
+                    Image(systemName: appViewModel.isDeletingAgent ? "hourglass" : "archivebox")
                     VStack(alignment: .leading) {
-                        Text("删除当前 agent")
+                        Text(appViewModel.isDeletingAgent ? "正在删除 agent" : "删除当前 agent")
                             .font(.system(size: 14, weight: .bold))
-                        Text("删除后才可以重新创建新的伴生对象")
+                        Text(appViewModel.isDeletingAgent ? "正在清理对话、记忆、画像和触发器" : "删除后才可以重新创建新的伴生对象")
                             .font(.system(size: 10))
                     }
                     Spacer()
                 }
             }
+            .disabled(appViewModel.isDeletingAgent)
             .padding(.top, 8)
         }
         .prototypeCard(cornerRadius: 22, padding: 15)

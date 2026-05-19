@@ -87,20 +87,29 @@ struct SettingsView: View {
                 if let agentId = appViewModel.agentId {
                     SettingsInfoRow(icon: "number", title: "ID", value: "\(agentId.prefix(8))...")
                 }
+                if appViewModel.isDeletingAgent {
+                    SettingsInfoRow(icon: "hourglass", title: "删除进度", value: "正在清理后端数据")
+                }
+                if let error = appViewModel.error, error.contains("删除 agent 失败") {
+                    Text(error)
+                        .font(.system(size: 11, weight: .semibold))
+                        .foregroundStyle(Color(hex: 0xE35B6F))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
                 Button(role: .destructive) {
                     showDeleteAlert = true
                 } label: {
                     HStack(spacing: 12) {
-                        Image(systemName: "trash")
+                        Image(systemName: appViewModel.isDeletingAgent ? "hourglass" : "trash")
                             .font(.system(size: 15, weight: .bold))
                             .foregroundStyle(Color(hex: 0xE35B6F))
                             .frame(width: 38, height: 38)
                             .background(Color(hex: 0xE35B6F).opacity(0.12))
                             .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
                         VStack(alignment: .leading, spacing: 3) {
-                            Text("清空所有数据")
+                            Text(appViewModel.isDeletingAgent ? "正在清空数据" : "清空所有数据")
                                 .font(.system(size: 14, weight: .heavy))
-                            Text("删除对话、记忆、画像及 AI 相关数据")
+                            Text(appViewModel.isDeletingAgent ? "等待后端 hard delete 完成" : "删除对话、记忆、画像及 AI 相关数据")
                                 .font(.system(size: 11))
                                 .foregroundStyle(palette.muted)
                         }
@@ -109,6 +118,7 @@ struct SettingsView: View {
                     .padding(.vertical, 4)
                 }
                 .buttonStyle(.plain)
+                .disabled(appViewModel.isDeletingAgent)
             } else {
                 Text("当前没有 agent")
                     .font(.system(size: 14, weight: .semibold))

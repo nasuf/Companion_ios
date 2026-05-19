@@ -36,8 +36,8 @@ enum AgentService {
         )
     }
 
-    static func delete(id: String) async throws {
-        try await APIClient.shared.requestVoid(
+    static func delete(id: String) async throws -> AgentDeleteResponse {
+        try await APIClient.shared.request(
             method: "DELETE",
             path: "/agents/\(id)"
         )
