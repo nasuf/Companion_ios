@@ -8,7 +8,7 @@ struct PrototypeGameView: View {
         PrototypeScreen(showsBottomPadding: false) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
-                    PrototypeDetailActions(shareAction: {})
+                    PrototypeDetailActions()
                     intro
                     groupList
                 }

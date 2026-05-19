@@ -8,7 +8,7 @@ struct PrototypeOfflineInviteView: View {
         PrototypeScreen(showsBottomPadding: false) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
-                    PrototypeDetailActions(shareAction: {})
+                    PrototypeDetailActions()
                     ticket
                     inviteQueue
                     companionSteps
@@ -208,7 +208,7 @@ struct PrototypeProgressView: View {
         PrototypeScreen(showsBottomPadding: false) {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 16) {
-                    PrototypeDetailActions(shareAction: {})
+                    PrototypeDetailActions()
                     liveRoute
                     taskList
                     nudge
