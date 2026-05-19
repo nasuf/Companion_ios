@@ -29,7 +29,12 @@ struct PrototypeRootView: View {
     private var activeTabView: some View {
         switch selectedTab {
         case .chat:
-            ChatView(conversationId: conversationId, agentId: agentId, userId: userId)
+            ChatView(
+                conversationId: conversationId,
+                agentId: agentId,
+                userId: userId,
+                openRoute: openRoute
+            )
         case .online:
             PrototypeOnlineHubView(openRoute: openRoute)
         case .scene:
