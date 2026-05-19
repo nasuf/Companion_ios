@@ -69,3 +69,26 @@ struct AgentPersonalityInput: Encodable {
     let creative: Int
     let humor: Int
 }
+
+struct AgentProvisionStatus: Codable {
+    let agentId: String
+    let status: String
+    let stage: String
+    let percent: Int
+    let message: String
+    let current: Int?
+    let total: Int?
+
+    enum CodingKeys: String, CodingKey {
+        case status, stage, percent, message, current, total
+        case agentId = "agent_id"
+    }
+
+    var isComplete: Bool {
+        stage == "complete" || status == "active"
+    }
+
+    var isFailed: Bool {
+        stage == "failed"
+    }
+}

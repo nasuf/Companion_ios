@@ -89,6 +89,7 @@ final class OnboardingViewModel {
         return min(100, max(0, rounded))
     }
 
+    @MainActor
     func createAgent(appViewModel: AppViewModel) async {
         guard !name.trimmingCharacters(in: .whitespaces).isEmpty else {
             error = String(localized: "请输入名字")
@@ -119,14 +120,7 @@ final class OnboardingViewModel {
                 gender: resolvedGender
             )
 
-            let conversation = try await ConversationService.create(
-                userId: appViewModel.userId,
-                agentId: agent.id
-            )
-
-            appViewModel.agentId = agent.id
-            appViewModel.agentName = agent.name
-            appViewModel.conversationId = conversation.id
+            appViewModel.beginAgentProvisioning(agent: agent)
         } catch {
             self.error = error.localizedDescription
         }

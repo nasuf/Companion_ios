@@ -1,5 +1,6 @@
 import SwiftUI
 
+@MainActor
 @Observable
 final class AppViewModel {
     var userId: String {
@@ -26,7 +27,11 @@ final class AppViewModel {
     }
 
     var isInitialized = false
+    var isProvisioningAgent = false
+    var provisionProgress: AgentProvisionStatus?
     var error: String?
+
+    private var provisionPollingTask: Task<Void, Never>?
 
     var colorScheme: ColorScheme? {
         switch themeMode {
@@ -52,11 +57,23 @@ final class AppViewModel {
         if hasUser, let agentId, !agentId.isEmpty {
             do {
                 let _ = try await AgentService.get(id: agentId)
-                await ensureConversation()
+                if let progress = try? await AgentService.getProvisionStatus(agentId: agentId),
+                   !progress.isComplete {
+                    provisionProgress = progress
+                    isProvisioningAgent = true
+                    startProvisionPolling()
+                } else {
+                    await ensureConversation()
+                    if conversationId == nil {
+                        markProvisionFinalizationFailed(agentId: agentId)
+                    }
+                }
             } catch {
                 self.agentId = nil
                 self.agentName = nil
                 self.conversationId = nil
+                self.isProvisioningAgent = false
+                self.provisionProgress = nil
             }
         }
 
@@ -126,6 +143,89 @@ final class AppViewModel {
         }
     }
 
+    func beginAgentProvisioning(agent: Agent) {
+        agentId = agent.id
+        agentName = agent.name
+        conversationId = nil
+        provisionProgress = AgentProvisionStatus(
+            agentId: agent.id,
+            status: "provisioning",
+            stage: "initializing",
+            percent: 0,
+            message: "正在初始化...",
+            current: nil,
+            total: nil
+        )
+        isProvisioningAgent = true
+        startProvisionPolling()
+    }
+
+    func startProvisionPolling() {
+        guard let agentId, !agentId.isEmpty else { return }
+        if provisionPollingTask != nil { return }
+
+        provisionPollingTask = Task { [weak self] in
+            while !Task.isCancelled {
+                guard let self else { return }
+                await self.pollProvisionStatus(agentId: agentId)
+
+                if Task.isCancelled { return }
+                if let progress = self.provisionProgress, progress.isComplete || progress.isFailed {
+                    return
+                }
+
+                try? await Task.sleep(for: .seconds(2))
+            }
+        }
+    }
+
+    func retryProvisionPolling() {
+        provisionPollingTask?.cancel()
+        provisionPollingTask = nil
+        isProvisioningAgent = true
+        startProvisionPolling()
+    }
+
+    private func pollProvisionStatus(agentId: String) async {
+        do {
+            let progress = try await AgentService.getProvisionStatus(agentId: agentId)
+            provisionProgress = progress
+
+            if progress.isComplete {
+                provisionPollingTask?.cancel()
+                provisionPollingTask = nil
+                await ensureConversation()
+                if conversationId != nil {
+                    isProvisioningAgent = false
+                    provisionProgress = nil
+                } else {
+                    markProvisionFinalizationFailed(agentId: agentId)
+                }
+            } else if progress.isFailed {
+                provisionPollingTask?.cancel()
+                provisionPollingTask = nil
+                isProvisioningAgent = true
+            } else {
+                isProvisioningAgent = true
+            }
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func markProvisionFinalizationFailed(agentId: String) {
+        isProvisioningAgent = true
+        provisionProgress = AgentProvisionStatus(
+            agentId: agentId,
+            status: "provisioning",
+            stage: "failed",
+            percent: 100,
+            message: "AI 伙伴已创建，但对话入口创建失败，请重试检查。",
+            current: nil,
+            total: nil
+        )
+    }
+
     func deleteAgent() async {
         guard let agentId else { return }
         let deletingAgentId = agentId
@@ -135,6 +235,10 @@ final class AppViewModel {
         self.agentId = nil
         self.agentName = nil
         self.conversationId = nil
+        self.isProvisioningAgent = false
+        self.provisionProgress = nil
+        provisionPollingTask?.cancel()
+        provisionPollingTask = nil
 
         do {
             try await AgentService.delete(id: deletingAgentId)
@@ -149,6 +253,10 @@ final class AppViewModel {
         agentName = nil
         conversationId = nil
         authToken = nil
+        isProvisioningAgent = false
+        provisionProgress = nil
+        provisionPollingTask?.cancel()
+        provisionPollingTask = nil
     }
 }
 

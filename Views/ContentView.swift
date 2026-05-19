@@ -12,6 +12,9 @@ struct ContentView: View {
                         .scaleEffect(1.25)
                 }
                 .environment(\.prototypeTheme, .blue)
+            } else if appViewModel.isProvisioningAgent, appViewModel.agentId != nil {
+                AgentProvisioningView()
+                    .transition(.opacity)
             } else if let conversationId = appViewModel.conversationId,
                       let agentId = appViewModel.agentId {
                 PrototypeRootView(
@@ -28,6 +31,7 @@ struct ContentView: View {
         }
         .animation(.easeInOut(duration: 0.5), value: appViewModel.isInitialized)
         .animation(.easeInOut(duration: 0.5), value: appViewModel.agentId)
+        .animation(.easeInOut(duration: 0.5), value: appViewModel.isProvisioningAgent)
         .task {
             await appViewModel.initialize()
         }

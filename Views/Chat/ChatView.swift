@@ -26,7 +26,7 @@ struct ChatView: View {
     }
 
     var body: some View {
-        PrototypeScreen(showsBottomPadding: false) {
+        PrototypeScreen(showsBottomPadding: true) {
             ZStack(alignment: .bottomTrailing) {
                 VStack(spacing: 0) {
                     PrototypeChatHeader(

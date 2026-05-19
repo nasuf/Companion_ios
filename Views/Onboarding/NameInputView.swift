@@ -12,7 +12,7 @@ struct NameInputView: View {
                 OnboardingHero(
                     kicker: "LET STORY BEGIN",
                     title: "给\(viewModel.pronoun)起个名字",
-                    subtitle: "最后一步会调用现有 agent 创建接口，并为你们生成第一条对话入口。"
+                    subtitle: "最后一步会创建 TA 的身份、经历和初始记忆，完成后自动进入对话。"
                 )
                 .padding(.top, 64)
 
