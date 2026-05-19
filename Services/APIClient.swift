@@ -20,7 +20,7 @@ actor WebSocketClient {
     private let baseURL: String
 
     init() {
-        self.baseURL = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "http://localhost:8000"
+        self.baseURL = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "http://127.0.0.1:8000"
     }
 
     func connect(conversationId: String) -> AsyncThrowingStream<SSEEvent, Error> {
@@ -166,7 +166,10 @@ actor APIClient {
     private let encoder: JSONEncoder
 
     private init() {
-        self.baseURL = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "http://localhost:8000"
+        self.baseURL = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "http://127.0.0.1:8000"
+#if DEBUG
+        print("[API] baseURL=\(baseURL)")
+#endif
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 30
         config.timeoutIntervalForResource = 120
