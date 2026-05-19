@@ -2,57 +2,72 @@ import SwiftUI
 
 struct ScheduleHistoryView: View {
     @Environment(AppViewModel.self) private var appViewModel
+    @Environment(\.prototypePalette) private var palette
     @State private var data: ScheduleHistoryResponse?
     @State private var isLoading = true
     @State private var selectedDate: String?
 
-    /// 有作息记录的日期集合
     private var availableDates: Set<String> {
         Set(data?.schedules.map(\.date) ?? [])
     }
 
-    /// 当前选中日期的作息
     private var selectedSchedule: DaySchedule? {
-        guard let sel = selectedDate else { return data?.schedules.first }
-        return data?.schedules.first { $0.date == sel }
+        guard let selectedDate else { return data?.schedules.first }
+        return data?.schedules.first { $0.date == selectedDate }
     }
 
     var body: some View {
-        ScrollView {
-            if isLoading {
-                ProgressView()
-                    .frame(maxWidth: .infinity, minHeight: 200)
-            } else if let data, !data.schedules.isEmpty {
-                VStack(spacing: 16) {
-                    // 日历网格
-                    CalendarGrid(
-                        dates: availableDates,
-                        selected: selectedDate ?? data.schedules.first?.date,
-                        onSelect: { selectedDate = $0 }
-                    )
-                    .glassCard(padding: 14)
-
-                    // 选中日期的作息
-                    if let day = selectedSchedule {
-                        DayScheduleCard(day: day)
-                    }
+        PrototypeScreen(showsBottomPadding: false) {
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 16) {
+                    PrototypeDetailActions()
+                    header
+                    content
                 }
-                .padding(.horizontal)
-                .padding(.vertical, 12)
-            } else {
-                EmptyStateView(
-                    icon: "calendar",
-                    title: "暂无作息记录",
-                    subtitle: "AI 每天凌晨会自动生成作息表"
-                )
-                .frame(maxWidth: .infinity, minHeight: 200)
+                .padding(.top, 18)
+                .padding(.bottom, 28)
             }
+            .refreshable { await loadData() }
         }
-        .navigationTitle("AI 作息")
-        .navigationBarTitleDisplayMode(.inline)
-        .gradientBackground()
         .task { await loadData() }
-        .refreshable { await loadData() }
+    }
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            PrototypeKicker(text: "daily rhythm")
+            Text("AI 作息轨迹")
+                .font(.system(size: 33, weight: .heavy))
+            Text("生活画像和作息记录来自后端 agent schedule history。")
+                .font(.system(size: 13))
+                .foregroundStyle(palette.muted)
+        }
+        .padding(.horizontal, 18)
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if isLoading {
+            ScheduleLoadingPanel()
+                .padding(.horizontal, 16)
+        } else if let data, !data.schedules.isEmpty {
+            VStack(spacing: 16) {
+                if let overview = data.lifeOverview, !overview.isEmpty {
+                    LifeOverviewCard(overview: overview)
+                }
+                PrototypeCalendarGrid(
+                    dates: availableDates,
+                    selected: selectedDate ?? data.schedules.first?.date,
+                    onSelect: { selectedDate = $0 }
+                )
+                if let selectedSchedule {
+                    DayScheduleCard(day: selectedSchedule)
+                }
+            }
+            .padding(.horizontal, 16)
+        } else {
+            ScheduleEmptyPanel()
+                .padding(.horizontal, 16)
+        }
     }
 
     private func loadData() async {
@@ -62,96 +77,114 @@ struct ScheduleHistoryView: View {
         }
         isLoading = data == nil
         data = try? await ScheduleService.getHistory(agentId: agentId)
+        selectedDate = selectedDate ?? data?.schedules.first?.date
         isLoading = false
     }
 }
 
-// MARK: - CalendarGrid
+private struct LifeOverviewCard: View {
+    @Environment(\.prototypePalette) private var palette
+    let overview: String
 
-private struct CalendarGrid: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("生活画像")
+                    .font(.system(size: 18, weight: .heavy))
+                Spacer()
+                Image(systemName: "sparkles")
+                    .foregroundStyle(palette.accent)
+            }
+            Text(overview)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(palette.muted)
+                .lineSpacing(4)
+        }
+        .prototypeCard(cornerRadius: 26, padding: 16)
+    }
+}
+
+private struct PrototypeCalendarGrid: View {
+    @Environment(\.prototypePalette) private var palette
     let dates: Set<String>
     let selected: String?
     let onSelect: (String) -> Void
 
-    /// 从可用日期范围生成日历天数
     private var calendarDays: [CalendarDay] {
         guard let earliest = dates.compactMap({ parseDate($0) }).min(),
-              let latest = dates.compactMap({ parseDate($0) }).max() else {
-            return []
-        }
-        let cal = Calendar.current
-        // 从 earliest 所在周的周一开始
-        let startOfWeek = cal.dateInterval(of: .weekOfYear, for: earliest)?.start ?? earliest
-        // 到 latest 所在周的周日结束
-        let endDate = cal.date(byAdding: .day, value: 6, to: cal.dateInterval(of: .weekOfYear, for: latest)?.start ?? latest)!
+              let latest = dates.compactMap({ parseDate($0) }).max()
+        else { return [] }
+
+        let calendar = Calendar.current
+        let start = calendar.dateInterval(of: .weekOfYear, for: earliest)?.start ?? earliest
+        let end = calendar.date(byAdding: .day, value: 6, to: calendar.dateInterval(of: .weekOfYear, for: latest)?.start ?? latest) ?? latest
 
         var days: [CalendarDay] = []
-        var current = startOfWeek
-        while current <= endDate {
-            let str = formatDate(current)
+        var current = start
+        while current <= end {
+            let string = formatDate(current)
             days.append(CalendarDay(
                 date: current,
-                dateString: str,
-                hasData: dates.contains(str),
-                isToday: cal.isDateInToday(current)
+                dateString: string,
+                hasData: dates.contains(string),
+                isToday: calendar.isDateInToday(current)
             ))
-            current = cal.date(byAdding: .day, value: 1, to: current)!
+            current = calendar.date(byAdding: .day, value: 1, to: current) ?? current
         }
         return days
     }
 
     var body: some View {
-        VStack(spacing: 8) {
-            // 星期头
+        VStack(alignment: .leading, spacing: 12) {
             HStack {
-                ForEach(["一", "二", "三", "四", "五", "六", "日"], id: \.self) { d in
-                    Text(d)
-                        .font(.system(size: 10, weight: .medium))
-                        .foregroundStyle(.secondary)
+                Text("日期记录")
+                    .font(.system(size: 18, weight: .heavy))
+                Spacer()
+                Text("\(dates.count) 天")
+                    .font(.system(size: 11, weight: .heavy))
+                    .foregroundStyle(palette.subtle)
+            }
+
+            HStack {
+                ForEach(["一", "二", "三", "四", "五", "六", "日"], id: \.self) { weekday in
+                    Text(weekday)
+                        .font(.system(size: 10, weight: .heavy))
+                        .foregroundStyle(palette.subtle)
                         .frame(maxWidth: .infinity)
                 }
             }
 
-            // 日期网格
-            let columns = Array(repeating: GridItem(.flexible(), spacing: 4), count: 7)
-            LazyVGrid(columns: columns, spacing: 6) {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 5), count: 7), spacing: 7) {
                 ForEach(calendarDays) { day in
                     Button {
                         if day.hasData { onSelect(day.dateString) }
                     } label: {
                         Text("\(Calendar.current.component(.day, from: day.date))")
-                            .font(.system(size: 13, weight: day.dateString == selected ? .bold : .regular))
-                            .foregroundStyle(
-                                day.dateString == selected ? .white :
-                                day.hasData ? .primary :
-                                .secondary.opacity(0.3)
-                            )
-                            .frame(width: 32, height: 32)
-                            .background(
-                                day.dateString == selected
-                                    ? AnyShapeStyle(BrandGradient.primary)
-                                    : day.isToday
-                                        ? AnyShapeStyle(Color.white.opacity(0.08))
-                                        : AnyShapeStyle(Color.clear)
-                            )
+                            .font(.system(size: 12, weight: day.dateString == selected ? .heavy : .semibold))
+                            .foregroundStyle(day.dateString == selected ? palette.bg : day.hasData ? palette.fg : palette.subtle.opacity(0.36))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 34)
+                            .background(day.dateString == selected ? palette.fg : day.isToday ? palette.accentSoft : Color.white.opacity(day.hasData ? 0.46 : 0.18))
                             .clipShape(Circle())
                     }
+                    .buttonStyle(.plain)
                     .disabled(!day.hasData)
                 }
             }
         }
+        .prototypeCard(cornerRadius: 26, padding: 16)
     }
 
-    private func parseDate(_ str: String) -> Date? {
-        let f = DateFormatter()
-        f.dateFormat = "yyyy-MM-dd"
-        return f.date(from: str)
+    private func parseDate(_ string: String) -> Date? {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.date(from: string)
     }
 
     private func formatDate(_ date: Date) -> String {
-        let f = DateFormatter()
-        f.dateFormat = "yyyy-MM-dd"
-        return f.string(from: date)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: date)
     }
 }
 
@@ -163,82 +196,119 @@ private struct CalendarDay: Identifiable {
     var id: String { dateString }
 }
 
-// MARK: - DayScheduleCard
-
 private struct DayScheduleCard: View {
+    @Environment(\.prototypePalette) private var palette
     let day: DaySchedule
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 14) {
             HStack {
-                Image(systemName: "calendar")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                Text(day.date)
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(.secondary)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(day.date)
+                        .font(.system(size: 19, weight: .heavy))
+                    Text("当天作息")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(palette.subtle)
+                }
+                Spacer()
+                Image(systemName: "calendar.badge.clock")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundStyle(palette.accent)
             }
 
-            VStack(spacing: 0) {
-                ForEach(Array(day.schedule.enumerated()), id: \.offset) { index, slot in
+            VStack(spacing: 10) {
+                ForEach(Array(day.schedule.enumerated()), id: \.offset) { _, slot in
                     SlotRow(slot: slot)
-                    if index < day.schedule.count - 1 {
-                        Divider().opacity(0.3)
-                    }
                 }
             }
         }
-        .glassCard(padding: 14)
+        .prototypeCard(cornerRadius: 26, padding: 16)
     }
 }
 
-// MARK: - SlotRow
-
 private struct SlotRow: View {
+    @Environment(\.prototypePalette) private var palette
     let slot: ScheduleSlot
 
     private var statusColor: Color {
         switch slot.type {
-        case "sleep": return .indigo
-        case "work": return .orange
-        case "routine": return .yellow
-        default: return .green
+        case "sleep": Color(hex: 0x7C3CFF)
+        case "work": Color(hex: 0xFF7A3D)
+        case "routine": Color(hex: 0xFFC936)
+        case "rest": Color(hex: 0x4D8870)
+        case "social": Color(hex: 0x1F6FFF)
+        default: Color(hex: 0x18C6C0)
         }
     }
 
     private var statusText: String {
         switch slot.type {
-        case "sleep": return "睡眠"
-        case "work": return "忙碌"
-        case "routine": return "日常"
-        case "rest": return "休息"
-        case "social": return "社交"
-        default: return "空闲"
+        case "sleep": "睡眠"
+        case "work": "忙碌"
+        case "routine": "日常"
+        case "rest": "休息"
+        case "social": "社交"
+        default: "空闲"
         }
     }
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 12) {
             Text("\(slot.start)-\(slot.end)")
-                .font(.system(size: 11, weight: .medium, design: .monospaced))
-                .foregroundStyle(.secondary)
-                .frame(width: 90, alignment: .leading)
+                .font(.system(size: 11, weight: .heavy, design: .monospaced))
+                .foregroundStyle(palette.subtle)
+                .frame(width: 94, alignment: .leading)
 
-            Text(slot.activity)
-                .font(.subheadline)
-                .lineLimit(1)
-
-            Spacer()
-
-            HStack(spacing: 4) {
-                Circle()
-                    .fill(statusColor)
-                    .frame(width: 6, height: 6)
-                Text(statusText)
-                    .font(.system(size: 10))
-                    .foregroundStyle(.secondary)
+            VStack(alignment: .leading, spacing: 4) {
+                Text(slot.activity)
+                    .font(.system(size: 14, weight: .heavy))
+                    .foregroundStyle(palette.fg)
+                    .lineLimit(1)
+                HStack(spacing: 5) {
+                    Circle().fill(statusColor).frame(width: 6, height: 6)
+                    Text(statusText)
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundStyle(palette.muted)
+                }
             }
+            Spacer()
         }
-        .padding(.vertical, 6)
+        .padding(12)
+        .background(statusColor.opacity(0.10))
+        .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+    }
+}
+
+private struct ScheduleLoadingPanel: View {
+    @Environment(\.prototypePalette) private var palette
+
+    var body: some View {
+        HStack(spacing: 12) {
+            ProgressView()
+            Text("正在读取作息")
+                .font(.system(size: 14, weight: .heavy))
+                .foregroundStyle(palette.muted)
+        }
+        .frame(maxWidth: .infinity, minHeight: 170)
+        .prototypeCard(cornerRadius: 26, padding: 16)
+    }
+}
+
+private struct ScheduleEmptyPanel: View {
+    @Environment(\.prototypePalette) private var palette
+
+    var body: some View {
+        VStack(spacing: 10) {
+            Image(systemName: "calendar")
+                .font(.system(size: 24, weight: .bold))
+                .foregroundStyle(palette.accent)
+            Text("暂无作息记录")
+                .font(.system(size: 18, weight: .heavy))
+            Text("AI 每天凌晨会自动生成作息表")
+                .font(.system(size: 12))
+                .foregroundStyle(palette.muted)
+        }
+        .frame(maxWidth: .infinity, minHeight: 190)
+        .prototypeCard(cornerRadius: 26, padding: 16)
     }
 }
