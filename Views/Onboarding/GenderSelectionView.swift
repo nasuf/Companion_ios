@@ -1,90 +1,76 @@
 import SwiftUI
 
 struct GenderSelectionView: View {
+    @Environment(\.prototypePalette) private var palette
     @Bindable var viewModel: OnboardingViewModel
 
     var body: some View {
-        VStack(spacing: 32) {
-            Spacer()
+        VStack(alignment: .leading, spacing: 22) {
+            Spacer(minLength: 44)
 
-            Text("选择性别")
-                .font(.largeTitle.bold())
-                .foregroundStyle(.primary)
+            OnboardingHero(
+                kicker: "FIRST PROFILE",
+                title: "从一句话开始",
+                subtitle: "在没有终点的路上，我们慢慢走，慢慢说。先为你的 AI 伙伴选择一个起点。"
+            )
 
-            Text("为你的 AI 伙伴选择性别")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-
-            HStack(spacing: 16) {
+            HStack(spacing: 12) {
                 ForEach(Gender.allCases, id: \.self) { gender in
                     GenderCard(
                         gender: gender,
                         isSelected: viewModel.gender == gender
                     ) {
-                        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                        withAnimation(.spring(response: 0.34, dampingFraction: 0.82)) {
                             viewModel.gender = gender
                         }
                     }
                 }
             }
-            .padding(.horizontal)
 
             Spacer()
 
-            Button {
-                withAnimation {
+            OnboardingPrimaryButton {
+                withAnimation(.spring(response: 0.34, dampingFraction: 0.84)) {
                     viewModel.currentStep = 1
                 }
             } label: {
                 Text("下一步")
-                    .font(.headline)
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(BrandGradient.primary)
-                    .clipShape(RoundedRectangle(cornerRadius: 14))
             }
-            .padding(.horizontal, 24)
-            .padding(.bottom, 40)
+            .padding(.bottom, 30)
         }
+        .padding(.horizontal, 22)
     }
 }
 
 private struct GenderCard: View {
+    @Environment(\.prototypePalette) private var palette
     let gender: Gender
     let isSelected: Bool
     let action: () -> Void
 
     var body: some View {
         Button(action: action) {
-            VStack(spacing: 12) {
+            VStack(spacing: 13) {
                 Image(systemName: gender.icon)
-                    .font(.system(size: 36))
-                    .foregroundStyle(isSelected ? .white : .secondary)
+                    .font(.system(size: 29, weight: .bold))
+                    .foregroundStyle(isSelected ? palette.bg : palette.accent)
+                    .frame(width: 58, height: 58)
+                    .background(isSelected ? palette.fg : palette.accentSoft)
+                    .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
 
                 Text(gender.label)
-                    .font(.headline)
-                    .foregroundStyle(isSelected ? .white : .primary)
+                    .font(.system(size: 14, weight: .heavy))
+                    .foregroundStyle(palette.fg)
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 28)
-            .background(
-                Group {
-                    if isSelected {
-                        BrandGradient.primary
-                    } else {
-                        Color.clear
-                    }
-                }
-            )
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
+            .padding(.vertical, 20)
+            .background(isSelected ? Color.white.opacity(0.76) : Color.white.opacity(0.44))
+            .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+            .prototypeLiquidGlass(cornerRadius: 26, tint: Color.white.opacity(0.24), interactive: true)
             .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .stroke(isSelected ? .white.opacity(0.4) : .white.opacity(0.15), lineWidth: 1)
+                RoundedRectangle(cornerRadius: 26, style: .continuous)
+                    .stroke(isSelected ? palette.accent.opacity(0.40) : palette.hairline, lineWidth: 1)
             )
-            .scaleEffect(isSelected ? 1.05 : 1.0)
-            .shadow(color: isSelected ? .purple.opacity(0.4) : .clear, radius: 12)
         }
         .buttonStyle(.plain)
         .sensoryFeedback(.selection, trigger: isSelected)

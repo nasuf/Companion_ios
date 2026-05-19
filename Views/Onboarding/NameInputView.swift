@@ -2,89 +2,93 @@ import SwiftUI
 
 struct NameInputView: View {
     @Environment(AppViewModel.self) private var appViewModel
+    @Environment(\.prototypePalette) private var palette
     @Bindable var viewModel: OnboardingViewModel
     @FocusState private var isFocused: Bool
 
     var body: some View {
-        VStack(spacing: 32) {
-            Spacer()
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 18) {
+                OnboardingHero(
+                    kicker: "LET STORY BEGIN",
+                    title: "给\(viewModel.pronoun)起个名字",
+                    subtitle: "最后一步会调用现有 agent 创建接口，并为你们生成第一条对话入口。"
+                )
+                .padding(.top, 64)
 
-            Text("给\(viewModel.pronoun)起个名字")
-                .font(.largeTitle.bold())
+                TextField("输入名字", text: $viewModel.name)
+                    .font(.system(size: 24, weight: .heavy))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 18)
+                    .frame(height: 66)
+                    .background(Color.white.opacity(0.60))
+                    .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
+                    .prototypeLiquidGlass(cornerRadius: 24, tint: Color.white.opacity(0.24), interactive: true)
+                    .focused($isFocused)
+                    .onSubmit(createAgent)
 
-            Text("你可以随时在设置中修改")
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-
-            TextField("输入名字", text: $viewModel.name)
-                .font(.title2)
-                .multilineTextAlignment(.center)
-                .padding()
-                .background(.ultraThinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 14))
-                .padding(.horizontal, 40)
-                .focused($isFocused)
-                .onSubmit {
-                    createAgent()
+                if let error = viewModel.error {
+                    Text(error)
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(Color(hex: 0xE35B6F))
                 }
 
-            if let error = viewModel.error {
-                Text(error)
-                    .font(.caption)
-                    .foregroundStyle(.red)
-            }
+                previewCard
 
-            // Preview card
-            GlassCard {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Image(systemName: viewModel.gender.icon)
-                            .foregroundStyle(.purple)
-                        Text(viewModel.name.isEmpty ? "..." : viewModel.name)
-                            .font(.headline)
-                    }
-                    ForEach(viewModel.dimensions) { dim in
-                        HStack {
-                            Text(dim.name)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                            ProgressView(value: dim.value)
-                                .tint(.purple)
-                        }
-                    }
-                }
-            }
-            .padding(.horizontal, 24)
-
-            Spacer()
-
-            Button {
-                createAgent()
-            } label: {
-                Group {
+                OnboardingPrimaryButton(isDisabled: isButtonDisabled, createAgent) {
                     if viewModel.isCreating {
                         ProgressView()
-                            .tint(.white)
+                            .tint(palette.bg)
                     } else {
-                        Text("创建 AI 伙伴")
+                        Text("让故事开始")
                     }
                 }
-                .font(.headline)
-                .foregroundStyle(.white)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .clipShape(RoundedRectangle(cornerRadius: 14))
-                .background(
-                    RoundedRectangle(cornerRadius: 14)
-                        .fill(BrandGradient.primary)
-                        .opacity(isButtonDisabled ? 0.3 : 1.0)
-                )
+                .padding(.top, 8)
+                .padding(.bottom, 36)
             }
-            .disabled(isButtonDisabled)
-            .padding(.horizontal, 24)
-            .padding(.bottom, 40)
-            .sensoryFeedback(.success, trigger: appViewModel.agentId)
+            .padding(.horizontal, 22)
         }
+        .sensoryFeedback(.success, trigger: appViewModel.agentId)
+    }
+
+    private var previewCard: some View {
+        VStack(alignment: .leading, spacing: 13) {
+            HStack(spacing: 12) {
+                Image(systemName: viewModel.gender.icon)
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundStyle(palette.accent)
+                    .frame(width: 48, height: 48)
+                    .background(palette.accentSoft)
+                    .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(viewModel.name.isEmpty ? "未命名" : viewModel.name)
+                        .font(.system(size: 22, weight: .heavy))
+                    Text("唯一伴生对象 · \(viewModel.gender.label)")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(palette.muted)
+                }
+            }
+
+            ForEach(viewModel.dimensions) { dimension in
+                HStack(spacing: 10) {
+                    Text(dimension.name)
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(palette.muted)
+                        .frame(width: 58, alignment: .leading)
+                    GeometryReader { proxy in
+                        Capsule()
+                            .fill(palette.hairline)
+                            .overlay(alignment: .leading) {
+                                Capsule()
+                                    .fill(palette.accent)
+                                    .frame(width: max(8, proxy.size.width * dimension.value))
+                            }
+                    }
+                    .frame(height: 7)
+                }
+            }
+        }
+        .prototypeCard(cornerRadius: 28, padding: 16)
     }
 
     private var isButtonDisabled: Bool {
