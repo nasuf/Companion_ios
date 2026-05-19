@@ -47,26 +47,28 @@ struct PrototypeBackground: View {
             let time = timeline.date.timeIntervalSinceReferenceDate
 
             ZStack {
-                palette.bg
+                baseFill
 
                 LinearGradient(
                     colors: [
-                        Color.white.opacity(style == .movie ? 0.38 : 0.62),
-                        Color.white.opacity(0.16),
+                        Color.white.opacity(style == .movie ? 0.38 : style == .onboarding ? 0.34 : 0.62),
+                        Color.white.opacity(style == .onboarding ? 0.08 : 0.16),
                         Color.clear
                     ],
                     startPoint: .top,
                     endPoint: UnitPoint(x: 0.5, y: 0.42)
                 )
 
-                LinearGradient(
-                    colors: [
-                        Color.black.opacity(0.0),
-                        Color.black.opacity(0.035)
-                    ],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
+                if style != .onboarding {
+                    LinearGradient(
+                        colors: [
+                            Color.black.opacity(0.0),
+                            Color.black.opacity(0.035)
+                        ],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                }
 
                 ForEach(Array(ambientFields.enumerated()), id: \.offset) { index, field in
                     RoundedRectangle(cornerRadius: field.cornerRadius, style: .continuous)
@@ -96,6 +98,24 @@ struct PrototypeBackground: View {
         }
     }
 
+    private var baseFill: some View {
+        Group {
+            if style == .onboarding {
+                LinearGradient(
+                    colors: [
+                        Color(hex: 0xFBFEFD),
+                        Color(hex: 0xF7FCFB),
+                        Color(hex: 0xF6FBFA)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            } else {
+                palette.bg
+            }
+        }
+    }
+
     private var ambientFields: [PrototypeAmbientField] {
         switch style {
         case .base:
@@ -106,9 +126,9 @@ struct PrototypeBackground: View {
             ]
         case .onboarding:
             return [
-                PrototypeAmbientField.topAccent(palette, width: 390, height: 264, x: 130, y: -92),
-                PrototypeAmbientField.sideAccent(palette, width: 240, height: 190, x: -106, y: 238, opacity: 0.24),
-                PrototypeAmbientField.rose(width: 210, height: 170, x: 192, y: 594, opacity: 0.12)
+                PrototypeAmbientField.custom(colors: [Color(hex: 0x18C6C0).opacity(0.22), Color(hex: 0x1F6FFF).opacity(0.12)], width: 330, height: 260, x: 142, y: -58, opacity: 0.92),
+                PrototypeAmbientField.custom(colors: [Color(hex: 0x7C3CFF).opacity(0.12), Color(hex: 0x18C6C0).opacity(0.08)], width: 270, height: 224, x: -112, y: 300, opacity: 0.80),
+                PrototypeAmbientField.custom(colors: [Color(hex: 0x1F6FFF).opacity(0.10), Color(hex: 0x18C6C0).opacity(0.10)], width: 310, height: 240, x: 162, y: 560, opacity: 0.72)
             ]
         case .online:
             return [

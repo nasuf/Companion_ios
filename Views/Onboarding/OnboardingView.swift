@@ -6,22 +6,354 @@ struct OnboardingView: View {
     var body: some View {
         ZStack {
             PrototypeBackground(style: .onboarding)
-            TabView(selection: $viewModel.currentStep) {
-                GenderSelectionView(viewModel: viewModel)
-                    .tag(0)
-                PersonalitySliderView(viewModel: viewModel)
-                    .tag(1)
-                NameInputView(viewModel: viewModel)
-                    .tag(2)
-            }
-            .tabViewStyle(.page(indexDisplayMode: .always))
+            CreateAgentFormView(viewModel: viewModel)
         }
         .environment(\.prototypeTheme, .blue)
     }
 }
 
+struct CreateAgentFormView: View {
+    @Environment(AppViewModel.self) private var appViewModel
+    @Bindable var viewModel: OnboardingViewModel
+    @FocusState private var isFocused: Bool
+
+    var body: some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 0) {
+                OnboardingHero(
+                    kicker: "FIRST PROFILE",
+                    title: "没有偶然的相遇\n只有灵魂与灵魂的呼应",
+                    subtitle: "在这里，你设定的每一笔，都是找寻的起点"
+                )
+                .padding(.top, 34)
+                .padding(.bottom, 22)
+
+                soulProfileIntro
+                    .padding(.bottom, 8)
+
+                basicFields
+
+                traitStudio
+                    .padding(.top, 20)
+
+                if let error = viewModel.error {
+                    Text(error)
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(Color(hex: 0xE35B6F))
+                        .padding(.top, 12)
+                }
+
+                OnboardingPrimaryButton(isDisabled: isButtonDisabled, createAgent) {
+                    if viewModel.isCreating {
+                        ProgressView()
+                            .tint(Color.white)
+                    } else {
+                        Text("让故事开始")
+                    }
+                }
+                .padding(.top, 22)
+                .padding(.bottom, 36)
+            }
+            .padding(.horizontal, 22)
+            .padding(.top, 34)
+        }
+        .sensoryFeedback(.success, trigger: appViewModel.agentId)
+    }
+
+    private var soulProfileIntro: some View {
+        VStack(alignment: .leading, spacing: 7) {
+            PrototypeKicker(text: "SOUL PROFILE")
+            Text("灵魂印记")
+                .font(.system(size: 23, weight: .heavy))
+                .foregroundStyle(CreationPalette.fg)
+            Text("设定你的轮廓，让同频的TA找到你")
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundStyle(CreationPalette.body)
+        }
+        .padding(.horizontal, 4)
+    }
+
+    private var basicFields: some View {
+        VStack(spacing: 0) {
+            HStack(spacing: 14) {
+                Text("名字")
+                    .creationFieldLabel()
+                TextField(
+                    "",
+                    text: $viewModel.name,
+                    prompt: Text("输入名字").foregroundStyle(CreationPalette.subtle)
+                )
+                    .font(.system(size: 17, weight: .heavy))
+                    .foregroundStyle(CreationPalette.fg)
+                    .focused($isFocused)
+                    .onSubmit(createAgent)
+            }
+            .frame(minHeight: 54)
+            .overlay(alignment: .bottom) {
+                CreationDivider()
+            }
+
+            HStack(spacing: 14) {
+                Text("性别")
+                    .creationFieldLabel()
+                GenderSegmentedPicker(selection: $viewModel.gender)
+            }
+            .frame(minHeight: 54)
+            .overlay(alignment: .bottom) {
+                CreationDivider()
+            }
+        }
+        .padding(.horizontal, 4)
+    }
+
+    private var traitStudio: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            HStack {
+                Text("灵魂倾向")
+                    .creationFieldLabel()
+                Spacer()
+                Button {
+                    withAnimation(.easeInOut(duration: 0.28)) {
+                        viewModel.randomizeAll()
+                    }
+                } label: {
+                    Text("随机生成")
+                        .font(.system(size: 11, weight: .heavy))
+                        .foregroundStyle(CreationPalette.accentInk)
+                        .padding(.horizontal, 13)
+                        .frame(height: 32)
+                        .background(Color.white.opacity(0.54))
+                        .clipShape(Capsule())
+                        .overlay(Capsule().stroke(CreationPalette.hairline, lineWidth: 1))
+                }
+                .buttonStyle(.plain)
+            }
+            .frame(minHeight: 54)
+
+            CreationTraitMap(dimensions: viewModel.dimensions)
+                .frame(height: 138)
+                .padding(.top, 2)
+
+            VStack(spacing: 0) {
+                ForEach(viewModel.dimensions.indices, id: \.self) { index in
+                    CreationDimensionRow(
+                        dimension: $viewModel.dimensions[index],
+                        accent: CreationPalette.traitColors[index % CreationPalette.traitColors.count],
+                        isFirst: index == viewModel.dimensions.startIndex,
+                        isLast: index == viewModel.dimensions.index(before: viewModel.dimensions.endIndex)
+                    )
+                }
+            }
+            .padding(.horizontal, 8)
+        }
+        .padding(.horizontal, 4)
+    }
+
+    private var isButtonDisabled: Bool {
+        viewModel.isCreating || viewModel.name.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+
+    private func createAgent() {
+        isFocused = false
+        Task {
+            await viewModel.createAgent(appViewModel: appViewModel)
+        }
+    }
+}
+
+private struct GenderSegmentedPicker: View {
+    @Binding var selection: Gender
+
+    var body: some View {
+        HStack(spacing: 3) {
+            ForEach(Gender.allCases, id: \.self) { gender in
+                Button {
+                    withAnimation(.spring(response: 0.28, dampingFraction: 0.86)) {
+                        selection = gender
+                    }
+                } label: {
+                    Text(gender.label)
+                        .font(.system(size: 12, weight: .heavy))
+                        .foregroundStyle(selection == gender ? CreationPalette.fg : CreationPalette.body)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 30)
+                        .background(selection == gender ? Color.white.opacity(0.84) : Color.clear)
+                        .clipShape(Capsule())
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .padding(2)
+        .background(
+            LinearGradient(
+                colors: [Color.white.opacity(0.52), Color.white.opacity(0.20)],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
+        .clipShape(Capsule())
+        .overlay(Capsule().stroke(CreationPalette.hairline, lineWidth: 1))
+    }
+}
+
+private struct CreationTraitMap: View {
+    let dimensions: [PersonalityDimension]
+
+    var body: some View {
+        GeometryReader { proxy in
+            ZStack {
+                CreationTraitGrid()
+                    .opacity(0.92)
+
+                Path { path in
+                    let midY = proxy.size.height * 0.50
+                    path.move(to: CGPoint(x: 28, y: midY))
+                    path.addLine(to: CGPoint(x: proxy.size.width - 28, y: midY))
+                }
+                .stroke(CreationPalette.fg.opacity(0.12), lineWidth: 1)
+
+                ForEach(Array(dimensions.enumerated()), id: \.element.id) { index, dimension in
+                    Circle()
+                        .fill(CreationPalette.traitColors[index % CreationPalette.traitColors.count])
+                        .frame(width: 13, height: 13)
+                        .position(
+                            x: proxy.size.width * (0.18 + Double(index) * 0.105),
+                            y: proxy.size.height * (0.10 + (1 - dimension.value) * 0.80)
+                        )
+                        .shadow(color: CreationPalette.traitColors[index % CreationPalette.traitColors.count].opacity(0.22), radius: 14, y: 8)
+                }
+            }
+        }
+        .mask(
+            LinearGradient(
+                stops: [
+                    .init(color: .clear, location: 0),
+                    .init(color: .black, location: 0.10),
+                    .init(color: .black, location: 0.90),
+                    .init(color: .clear, location: 1)
+                ],
+                startPoint: .leading,
+                endPoint: .trailing
+            )
+        )
+    }
+}
+
+private struct CreationTraitGrid: View {
+    var body: some View {
+        Canvas { context, size in
+            let grid = Color(hex: 0x15181C).opacity(0.045)
+            var path = Path()
+            let xStep: CGFloat = 34
+            let yStep: CGFloat = 34
+            var x: CGFloat = 0
+            while x <= size.width {
+                path.move(to: CGPoint(x: x, y: 0))
+                path.addLine(to: CGPoint(x: x, y: size.height))
+                x += xStep
+            }
+            var y: CGFloat = 0
+            while y <= size.height {
+                path.move(to: CGPoint(x: 0, y: y))
+                path.addLine(to: CGPoint(x: size.width, y: y))
+                y += yStep
+            }
+            context.stroke(path, with: .color(grid), lineWidth: 1)
+
+            context.fill(
+                Path(ellipseIn: CGRect(x: size.width * 0.62, y: -10, width: 190, height: 118)),
+                with: .color(CreationPalette.blue.opacity(0.10))
+            )
+            context.fill(
+                Path(ellipseIn: CGRect(x: size.width * 0.04, y: size.height * 0.54, width: 170, height: 110)),
+                with: .color(CreationPalette.accent.opacity(0.10))
+            )
+        }
+    }
+}
+
+private struct CreationDimensionRow: View {
+    @Binding var dimension: PersonalityDimension
+    let accent: Color
+    let isFirst: Bool
+    let isLast: Bool
+
+    var body: some View {
+        HStack(alignment: .center, spacing: 9) {
+            Circle()
+                .fill(accent)
+                .frame(width: 8, height: 8)
+                .shadow(color: accent.opacity(0.18), radius: 12, y: 6)
+                .overlay(alignment: .top) {
+                    if !isFirst {
+                        Rectangle()
+                            .fill(.linearGradient(colors: [.clear, accent.opacity(0.28)], startPoint: .top, endPoint: .bottom))
+                            .frame(width: 1, height: 30)
+                            .offset(y: -31)
+                    }
+                }
+                .overlay(alignment: .bottom) {
+                    if !isLast {
+                        Rectangle()
+                            .fill(.linearGradient(colors: [accent.opacity(0.28), .clear], startPoint: .top, endPoint: .bottom))
+                            .frame(width: 1, height: 30)
+                            .offset(y: 31)
+                    }
+                }
+
+            VStack(alignment: .leading, spacing: 7) {
+                HStack {
+                    Text(dimension.name)
+                        .font(.system(size: 14, weight: .heavy))
+                        .foregroundStyle(CreationPalette.fg)
+                    Spacer()
+                    Text("\(Int(dimension.value * 100))")
+                        .font(.system(size: 12, weight: .heavy, design: .monospaced))
+                        .foregroundStyle(CreationPalette.fg)
+                        .monospacedDigit()
+                }
+
+                Slider(value: $dimension.value, in: 0...1, step: 0.01)
+                    .tint(accent)
+
+                HStack {
+                    Text(dimension.lowLabel)
+                    Spacer()
+                    Text(dimension.highLabel)
+                }
+                .font(.system(size: 10, weight: .bold))
+                .foregroundStyle(CreationPalette.subtle)
+            }
+            .padding(.vertical, 8)
+            .overlay(alignment: .bottom) {
+                CreationDivider()
+            }
+        }
+        .frame(minHeight: 58)
+    }
+}
+
+private struct CreationDivider: View {
+    var body: some View {
+        LinearGradient(
+            colors: [.clear, CreationPalette.hairline, CreationPalette.hairline, .clear],
+            startPoint: .leading,
+            endPoint: .trailing
+        )
+        .frame(height: 1)
+    }
+}
+
+private extension Text {
+    func creationFieldLabel() -> some View {
+        self
+            .font(.system(size: 12, weight: .heavy))
+            .foregroundStyle(CreationPalette.label)
+            .frame(width: 54, alignment: .leading)
+    }
+}
+
 struct OnboardingHero: View {
-    @Environment(\.prototypePalette) private var palette
     let kicker: String
     let title: String
     let subtitle: String
@@ -31,26 +363,25 @@ struct OnboardingHero: View {
             PrototypeKicker(text: kicker)
             Text(title)
                 .font(.system(size: 34, weight: .heavy))
-                .foregroundStyle(palette.fg)
+                .foregroundStyle(CreationPalette.fg)
                 .fixedSize(horizontal: false, vertical: true)
             Text(subtitle)
                 .font(.system(size: 13, weight: .semibold))
-                .foregroundStyle(palette.muted)
+                .foregroundStyle(CreationPalette.body)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .overlay(alignment: .topTrailing) {
             PrototypeFloatingGlassTile(
                 size: CGSize(width: 96, height: 88),
-                colors: [Color(hex: 0x18C6C0), Color(hex: 0x1F6FFF)],
-                opacity: 0.42
+                colors: [CreationPalette.accent, CreationPalette.blue],
+                opacity: 0.62
             )
-            .offset(x: 8, y: -4)
+            .offset(x: 8, y: -8)
         }
     }
 }
 
 struct OnboardingPrimaryButton<Label: View>: View {
-    @Environment(\.prototypePalette) private var palette
     let isDisabled: Bool
     let action: () -> Void
     @ViewBuilder var label: () -> Label
@@ -65,10 +396,10 @@ struct OnboardingPrimaryButton<Label: View>: View {
         Button(action: action) {
             label()
                 .font(.system(size: 15, weight: .heavy))
-                .foregroundStyle(palette.bg)
+                .foregroundStyle(Color.white)
                 .frame(maxWidth: .infinity)
                 .frame(height: 52)
-                .background(palette.fg.opacity(isDisabled ? 0.35 : 1))
+                .background(CreationPalette.fg.opacity(isDisabled ? 0.26 : 1))
                 .clipShape(Capsule())
         }
         .disabled(isDisabled)

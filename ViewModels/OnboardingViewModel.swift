@@ -5,8 +5,8 @@ enum Gender: String, CaseIterable {
 
     var label: String {
         switch self {
-        case .male: return String(localized: "男生")
-        case .female: return String(localized: "女生")
+        case .male: return String(localized: "男")
+        case .female: return String(localized: "女")
         case .random: return String(localized: "随机")
         }
     }

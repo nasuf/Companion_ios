@@ -120,6 +120,31 @@ struct PrototypePalette {
     let tab: Color
 }
 
+enum CreationPalette {
+    static let fg = Color(hex: 0x10161A)
+    static let body = Color(hex: 0x182026).opacity(0.58)
+    static let label = Color(hex: 0x182026).opacity(0.50)
+    static let subtle = Color(hex: 0x182026).opacity(0.34)
+    static let hairline = Color(hex: 0x182026).opacity(0.075)
+    static let accent = Color(hex: 0x18C6C0)
+    static let accentInk = Color(hex: 0x143137)
+    static let blue = Color(hex: 0x1F6FFF)
+    static let purple = Color(hex: 0x7C3CFF)
+    static let card = Color.white.opacity(0.78)
+    static let cardStrong = Color.white.opacity(0.88)
+    static let track = Color(hex: 0x182026).opacity(0.08)
+
+    static let traitColors = [
+        Color(hex: 0x18C6C0),
+        Color(hex: 0x1F6FFF),
+        Color(hex: 0x7C3CFF),
+        Color(hex: 0xFF6A3D),
+        Color(hex: 0x22C66B),
+        Color(hex: 0xFFC936),
+        Color(hex: 0xE35B6F)
+    ]
+}
+
 private struct PrototypeThemeKey: EnvironmentKey {
     static let defaultValue: PrototypeTheme = .blue
 }
