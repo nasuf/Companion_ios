@@ -1,11 +1,23 @@
 import Foundation
 
 enum AgentService {
-    static func create(name: String, userId: String, personality: [String: Double], values: [String: String]? = nil) async throws -> Agent {
+    static func create(
+        name: String,
+        userId: String,
+        personality: AgentPersonalityInput,
+        gender: String?,
+        values: [String: String]? = nil
+    ) async throws -> Agent {
         try await APIClient.shared.request(
             method: "POST",
             path: "/agents",
-            body: AgentCreate(name: name, userId: userId, personality: personality, values: values)
+            body: AgentCreate(
+                name: name,
+                userId: userId,
+                personality: personality,
+                gender: gender,
+                values: values
+            )
         )
     }
 

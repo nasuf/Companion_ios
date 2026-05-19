@@ -294,9 +294,15 @@ actor APIClient {
         guard let httpResponse = response as? HTTPURLResponse else { return }
         guard (200...299).contains(httpResponse.statusCode) else {
             var message = "Unknown error"
-            if let data, let body = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-               let detail = body["detail"] as? String {
-                message = detail
+            if let data,
+               let body = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+               let detail = body["detail"] {
+                if let detailString = detail as? String {
+                    message = detailString
+                } else if let detailData = try? JSONSerialization.data(withJSONObject: detail),
+                          let detailJSON = String(data: detailData, encoding: .utf8) {
+                    message = detailJSON
+                }
             }
             throw APIError.httpError(httpResponse.statusCode, message)
         }

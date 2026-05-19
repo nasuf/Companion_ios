@@ -72,19 +72,21 @@ final class OnboardingViewModel {
         dimensions.first(where: { $0.id == id })?.value ?? 0.5
     }
 
-    var bigFivePersonality: [String: Double] {
-        let openness = (dimValue("imagination") + dimValue("spontaneity")) / 2
-        let conscientiousness = dimValue("planning")
-        let extraversion = (dimValue("liveliness") + dimValue("humor")) / 2
-        let agreeableness = dimValue("empathy")
-        let neuroticism = 1.0 - dimValue("rationality")
-        return [
-            "openness": openness,
-            "conscientiousness": conscientiousness,
-            "extraversion": extraversion,
-            "agreeableness": agreeableness,
-            "neuroticism": neuroticism,
-        ]
+    var backendPersonality: AgentPersonalityInput {
+        AgentPersonalityInput(
+            lively: percentageValue("liveliness"),
+            rational: percentageValue("rationality"),
+            emotional: percentageValue("empathy"),
+            planned: percentageValue("planning"),
+            spontaneous: percentageValue("spontaneity"),
+            creative: percentageValue("imagination"),
+            humor: percentageValue("humor")
+        )
+    }
+
+    private func percentageValue(_ id: String) -> Int {
+        let rounded = Int((dimValue(id) * 100).rounded())
+        return min(100, max(0, rounded))
     }
 
     func createAgent(appViewModel: AppViewModel) async {
@@ -113,8 +115,8 @@ final class OnboardingViewModel {
             let agent = try await AgentService.create(
                 name: name.trimmingCharacters(in: .whitespaces),
                 userId: appViewModel.userId,
-                personality: bigFivePersonality,
-                values: ["gender": resolvedGender]
+                personality: backendPersonality,
+                gender: resolvedGender
             )
 
             let conversation = try await ConversationService.create(

@@ -50,11 +50,22 @@ struct AgentStatus: Decodable {
 struct AgentCreate: Encodable {
     let name: String
     let userId: String
-    let personality: [String: Double]?
+    let personality: AgentPersonalityInput
+    let gender: String?
     let values: [String: String]?
 
     enum CodingKeys: String, CodingKey {
-        case name, personality, values
+        case name, personality, gender, values
         case userId = "user_id"
     }
+}
+
+struct AgentPersonalityInput: Encodable {
+    let lively: Int
+    let rational: Int
+    let emotional: Int
+    let planned: Int
+    let spontaneous: Int
+    let creative: Int
+    let humor: Int
 }
