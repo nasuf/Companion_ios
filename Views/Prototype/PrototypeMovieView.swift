@@ -75,7 +75,7 @@ struct PrototypeMovieView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
                 .prototypeLiquidGlass(cornerRadius: 32, tint: Color.white.opacity(0.14), interactive: true)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.prototypeGlassPress)
 
             movieRail
         }
@@ -140,7 +140,7 @@ struct PrototypeMovieView: View {
                                     .stroke(index == selectedIndex ? Color.white : Color.clear, lineWidth: 3)
                             )
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.prototypeGlassPress)
                 }
             }
             .padding(.vertical, 4)

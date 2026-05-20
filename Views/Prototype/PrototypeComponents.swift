@@ -380,6 +380,7 @@ struct PrototypeDetailActions: View {
                     .frame(width: 38, height: 38)
                     .prototypeLiquidGlass(cornerRadius: 19, tint: Color.white.opacity(0.24), interactive: true)
             }
+            .buttonStyle(.prototypeGlassProminentPress)
 
             Spacer()
 
@@ -394,6 +395,7 @@ struct PrototypeDetailActions: View {
                         .clipShape(Capsule())
                         .prototypeLiquidGlass(cornerRadius: 18, tint: Color.white.opacity(0.28), interactive: true)
                 }
+                .buttonStyle(.prototypeGlassProminentPress)
             }
         }
         .foregroundStyle(palette.fg)

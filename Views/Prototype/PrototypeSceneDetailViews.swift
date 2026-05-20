@@ -42,7 +42,7 @@ struct PrototypeOfflineInviteView: View {
             .prototypeLiquidGlass(cornerRadius: 34, tint: Color.white.opacity(0.16), interactive: true)
             .shadow(color: Color(hex: 0xFF7A3D).opacity(0.26), radius: 28, y: 18)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.prototypeGlassPress)
         .padding(.horizontal, 16)
     }
 

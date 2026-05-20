@@ -206,6 +206,224 @@ extension View {
     }
 }
 
+struct PrototypeGlassPressButtonStyle: ButtonStyle {
+    var scale: CGFloat = 0.965
+    var pressedOpacity: Double = 0.86
+    var pressedBrightness: Double = 0.018
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .scaleEffect(configuration.isPressed ? scale : 1)
+            .opacity(configuration.isPressed ? pressedOpacity : 1)
+            .brightness(configuration.isPressed ? pressedBrightness : 0)
+            .animation(.spring(response: 0.22, dampingFraction: 0.74), value: configuration.isPressed)
+    }
+}
+
+extension ButtonStyle where Self == PrototypeGlassPressButtonStyle {
+    static var prototypeGlassPress: PrototypeGlassPressButtonStyle {
+        PrototypeGlassPressButtonStyle()
+    }
+
+    static var prototypeGlassProminentPress: PrototypeGlassPressButtonStyle {
+        PrototypeGlassPressButtonStyle(scale: 0.975, pressedOpacity: 0.92, pressedBrightness: 0.026)
+    }
+}
+
+struct PrototypeGlassSegmentedControl<Option: Hashable>: View {
+    @Environment(\.prototypePalette) private var palette
+    @Binding var selection: Option
+    let options: [Option]
+    let title: (Option) -> String
+    var activeTint: Color?
+    var activeForeground: Color?
+    var inactiveForeground: Color?
+    var trackTint: Color = Color.white.opacity(0.28)
+    var height: CGFloat = 38
+
+    @Namespace private var selectionNamespace
+
+    init(
+        options: [Option],
+        selection: Binding<Option>,
+        title: @escaping (Option) -> String,
+        activeTint: Color? = nil,
+        activeForeground: Color? = nil,
+        inactiveForeground: Color? = nil,
+        trackTint: Color = Color.white.opacity(0.28),
+        height: CGFloat = 38
+    ) {
+        self.options = options
+        _selection = selection
+        self.title = title
+        self.activeTint = activeTint
+        self.activeForeground = activeForeground
+        self.inactiveForeground = inactiveForeground
+        self.trackTint = trackTint
+        self.height = height
+    }
+
+    var body: some View {
+        GeometryReader { proxy in
+            let padding: CGFloat = 3
+            let spacing: CGFloat = 3
+            let width = max(0, (proxy.size.width - padding * 2 - spacing * CGFloat(max(0, options.count - 1))) / CGFloat(max(1, options.count)))
+
+            ZStack(alignment: .leading) {
+                glassLayer(width: width, padding: padding, spacing: spacing)
+
+                HStack(spacing: spacing) {
+                    ForEach(options, id: \.self) { option in
+                        Button {
+                            withAnimation(.spring(response: 0.34, dampingFraction: 0.78)) {
+                                selection = option
+                            }
+                        } label: {
+                            Text(title(option))
+                                .font(.system(size: 12, weight: .heavy))
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.72)
+                                .foregroundStyle(selection == option ? selectedForeground : unselectedForeground)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: height - padding * 2)
+                                .contentShape(Capsule())
+                        }
+                        .buttonStyle(.prototypeGlassProminentPress)
+                    }
+                }
+                .padding(padding)
+            }
+            .contentShape(Capsule())
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { value in
+                        updateSelection(
+                            at: value.location.x,
+                            totalWidth: proxy.size.width,
+                            padding: padding,
+                            spacing: spacing
+                        )
+                    }
+            )
+        }
+        .frame(height: height)
+        .sensoryFeedback(.selection, trigger: selection)
+        .animation(.spring(response: 0.34, dampingFraction: 0.78), value: selection)
+    }
+
+    private var selectedForeground: Color {
+        activeForeground ?? activeTint ?? palette.accentInk
+    }
+
+    private var unselectedForeground: Color {
+        inactiveForeground ?? palette.muted
+    }
+
+    private var selectedTint: Color {
+        activeTint ?? palette.accent
+    }
+
+    private var selectionIndex: Int {
+        options.firstIndex(of: selection) ?? 0
+    }
+
+    private func updateSelection(
+        at locationX: CGFloat,
+        totalWidth: CGFloat,
+        padding: CGFloat,
+        spacing: CGFloat
+    ) {
+        guard !options.isEmpty else { return }
+
+        let usableWidth = max(1, totalWidth - padding * 2 - spacing * CGFloat(max(0, options.count - 1)))
+        let segmentWidth = usableWidth / CGFloat(options.count)
+        let clampedX = min(max(locationX - padding, 0), usableWidth - 1)
+        let rawIndex = Int((clampedX / segmentWidth).rounded(.down))
+        let index = min(max(rawIndex, 0), options.count - 1)
+        let next = options[index]
+
+        guard next != selection else { return }
+        withAnimation(.spring(response: 0.30, dampingFraction: 0.76)) {
+            selection = next
+        }
+    }
+
+    @ViewBuilder
+    private func glassLayer(width: CGFloat, padding: CGFloat, spacing: CGFloat) -> some View {
+        if #available(iOS 26.0, *) {
+            GlassEffectContainer(spacing: 8) {
+                ZStack(alignment: .leading) {
+                    track
+
+                    selectedPill
+                        .frame(width: width, height: height - padding * 2)
+                        .offset(x: padding + CGFloat(selectionIndex) * (width + spacing))
+                }
+            }
+        } else {
+            ZStack(alignment: .leading) {
+                track
+
+                selectedPill
+                    .frame(width: width, height: height - padding * 2)
+                    .offset(x: padding + CGFloat(selectionIndex) * (width + spacing))
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var track: some View {
+        if #available(iOS 26.0, *) {
+            Capsule()
+                .fill(Color.white.opacity(0.08))
+                .glassEffect(.regular.tint(trackTint).interactive(), in: .rect(cornerRadius: height / 2))
+                .overlay(
+                    Capsule()
+                        .stroke(Color.white.opacity(0.60), lineWidth: 1)
+                )
+        } else {
+            Capsule()
+                .fill(.ultraThinMaterial)
+                .overlay(Capsule().stroke(Color.white.opacity(0.52), lineWidth: 1))
+        }
+    }
+
+    @ViewBuilder
+    private var selectedPill: some View {
+        if #available(iOS 26.0, *) {
+            Capsule()
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color.white.opacity(0.58),
+                            selectedTint.opacity(0.16),
+                            Color.white.opacity(0.38)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+                .overlay(
+                    Capsule()
+                        .stroke(Color.white.opacity(0.78), lineWidth: 1)
+                )
+                .overlay(
+                    Capsule()
+                        .stroke(selectedTint.opacity(0.28), lineWidth: 1)
+                        .blur(radius: 1.2)
+                        .padding(1)
+                )
+                .shadow(color: selectedTint.opacity(0.16), radius: 13, y: 6)
+                .glassEffect(.regular.tint(Color.white.opacity(0.36)).interactive(), in: .rect(cornerRadius: height / 2 - 3))
+                .glassEffectID("prototype-segmented-selection", in: selectionNamespace)
+        } else {
+            Capsule()
+                .fill(Color.white.opacity(0.62))
+                .overlay(Capsule().stroke(selectedTint.opacity(0.28), lineWidth: 1))
+        }
+    }
+}
+
 private struct PrototypeCardModifier: ViewModifier {
     @Environment(\.prototypePalette) private var palette
     let cornerRadius: CGFloat

@@ -37,23 +37,15 @@ struct PrototypeDailyView: View {
     }
 
     private var tabs: some View {
-        HStack(spacing: 8) {
-            ForEach(PrototypeDailyTab.allCases) { tab in
-                Button {
-                    activeTab = tab
-                } label: {
-                    Text(tab.title)
-                        .font(.system(size: 13, weight: .heavy))
-                        .foregroundStyle(activeTab == tab ? .white : palette.fg)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 40)
-                        .background(activeTab == tab ? dailyAccent : Color.white.opacity(0.54))
-                        .clipShape(Capsule())
-                        .prototypeLiquidGlass(cornerRadius: 20, tint: Color.white.opacity(0.16), interactive: true)
-                }
-                .buttonStyle(.plain)
-            }
-        }
+        PrototypeGlassSegmentedControl(
+            options: PrototypeDailyTab.allCases,
+            selection: $activeTab,
+            title: { $0.title },
+            activeTint: dailyAccent,
+            activeForeground: dailyAccent,
+            inactiveForeground: palette.muted,
+            height: 42
+        )
         .padding(.horizontal, 16)
     }
 

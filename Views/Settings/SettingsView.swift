@@ -54,24 +54,30 @@ struct SettingsView: View {
                 title: "主题",
                 subtitle: themeMode.wrappedValue.label
             ) {
-                Picker("主题", selection: themeMode) {
-                    ForEach(ThemeMode.allCases, id: \.self) { mode in
-                        Text(mode.label).tag(mode)
-                    }
-                }
-                .pickerStyle(.segmented)
+                PrototypeGlassSegmentedControl(
+                    options: ThemeMode.allCases,
+                    selection: themeMode,
+                    title: { $0.label },
+                    activeTint: palette.accent,
+                    activeForeground: palette.accentInk,
+                    inactiveForeground: palette.muted,
+                    height: 38
+                )
             }
             PrototypePickerRow(
                 icon: "character.bubble",
                 title: "语言",
                 subtitle: locale.wrappedValue.label
             ) {
-                Picker("语言", selection: locale) {
-                    ForEach(AppLocale.allCases, id: \.self) { locale in
-                        Text(locale.label).tag(locale)
-                    }
-                }
-                .pickerStyle(.segmented)
+                PrototypeGlassSegmentedControl(
+                    options: AppLocale.allCases,
+                    selection: locale,
+                    title: { $0.label },
+                    activeTint: palette.accent,
+                    activeForeground: palette.accentInk,
+                    inactiveForeground: palette.muted,
+                    height: 38
+                )
             }
         }
         .prototypeCard(cornerRadius: 28, padding: 16)
@@ -117,7 +123,7 @@ struct SettingsView: View {
                     }
                     .padding(.vertical, 4)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.prototypeGlassPress)
                 .disabled(appViewModel.isDeletingAgent)
             } else {
                 Text("当前没有 agent")

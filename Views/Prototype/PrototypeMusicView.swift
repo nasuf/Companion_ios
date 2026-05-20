@@ -99,7 +99,7 @@ struct PrototypeMusicView: View {
                 }
                 .frame(height: 168)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.prototypeGlassPress)
 
             HStack(spacing: 14) {
                 Button {
@@ -112,7 +112,7 @@ struct PrototypeMusicView: View {
                         .background(palette.fg)
                         .clipShape(Circle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.prototypeGlassProminentPress)
 
                 VStack(spacing: 7) {
                     HStack {
@@ -140,23 +140,15 @@ struct PrototypeMusicView: View {
     }
 
     private var tabs: some View {
-        HStack(spacing: 8) {
-            ForEach(MusicTab.allCases) { tab in
-                Button {
-                    selectedTab = tab
-                } label: {
-                    Text(tab.title)
-                        .font(.system(size: 13, weight: .heavy))
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 42)
-                        .background(selectedTab == tab ? palette.fg : Color.white.opacity(0.52))
-                        .foregroundStyle(selectedTab == tab ? palette.bg : palette.fg)
-                        .clipShape(Capsule())
-                        .prototypeLiquidGlass(cornerRadius: 21, tint: Color.white.opacity(0.18), interactive: true)
-                }
-                .buttonStyle(.plain)
-            }
-        }
+        PrototypeGlassSegmentedControl(
+            options: MusicTab.allCases,
+            selection: $selectedTab,
+            title: { $0.title },
+            activeTint: palette.accent,
+            activeForeground: palette.accentInk,
+            inactiveForeground: palette.muted,
+            height: 42
+        )
         .padding(.horizontal, 16)
     }
 

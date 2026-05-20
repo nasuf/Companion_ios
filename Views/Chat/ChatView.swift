@@ -95,6 +95,7 @@ struct ChatView: View {
                             .prototypeLiquidGlass(cornerRadius: 17, tint: .white.opacity(0.28), interactive: true)
                     }
                     .padding(.bottom, 10)
+                    .buttonStyle(.prototypeGlassProminentPress)
                 }
             }
             .onChange(of: viewModel.scrollToBottom) {

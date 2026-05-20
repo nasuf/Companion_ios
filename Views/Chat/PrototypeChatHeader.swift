@@ -12,7 +12,7 @@ struct PrototypeChatHeader: View {
             Button(action: onProfile) {
                 PrototypeAvatar(name: agentName, size: 38)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.prototypeGlassPress)
 
             VStack(alignment: .leading, spacing: 3) {
                 Text(agentName)
@@ -39,7 +39,7 @@ struct PrototypeChatHeader: View {
                     .frame(width: 36, height: 36)
                     .prototypeLiquidGlass(cornerRadius: 18, tint: Color.white.opacity(0.26), interactive: true)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.prototypeGlassProminentPress)
         }
         .padding(.horizontal, 16)
         .padding(.top, 8)

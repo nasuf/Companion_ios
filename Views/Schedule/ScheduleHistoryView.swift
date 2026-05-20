@@ -167,7 +167,7 @@ private struct PrototypeCalendarGrid: View {
                             .background(day.dateString == selected ? palette.fg : day.isToday ? palette.accentSoft : Color.white.opacity(day.hasData ? 0.46 : 0.18))
                             .clipShape(Circle())
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.prototypeGlassPress)
                     .disabled(!day.hasData)
                 }
             }

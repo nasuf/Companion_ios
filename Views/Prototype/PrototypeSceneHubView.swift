@@ -40,7 +40,7 @@ struct PrototypeSceneHubView: View {
                 } label: {
                     PrototypeSceneModuleCard(module: module)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.prototypeGlassPress)
             }
         }
     }

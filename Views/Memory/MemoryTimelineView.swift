@@ -1,5 +1,10 @@
 import SwiftUI
 
+private struct MemoryLevelFilter: Hashable {
+    let title: String
+    let level: Int?
+}
+
 struct MemoryTimelineView: View {
     @Environment(AppViewModel.self) private var appViewModel
     @Environment(\.prototypePalette) private var palette
@@ -69,30 +74,27 @@ struct MemoryTimelineView: View {
     }
 
     private func levelFilters(_ viewModel: MemoryViewModel) -> some View {
-        HStack(spacing: 8) {
-            levelButton("全部", level: nil, viewModel: viewModel)
-            levelButton("L1 核心", level: 1, viewModel: viewModel)
-            levelButton("L2 重要", level: 2, viewModel: viewModel)
-            levelButton("L3 模糊", level: 3, viewModel: viewModel)
-        }
+        PrototypeGlassSegmentedControl(
+            options: Self.levelFilterOptions,
+            selection: Binding(
+                get: { Self.levelFilterOptions.first { $0.level == viewModel.selectedLevel } ?? Self.levelFilterOptions[0] },
+                set: { option in Task { await viewModel.filterByLevel(option.level) } }
+            ),
+            title: { $0.title },
+            activeTint: palette.accent,
+            activeForeground: palette.accentInk,
+            inactiveForeground: palette.muted,
+            height: 38
+        )
         .padding(.horizontal, 16)
     }
 
-    private func levelButton(_ title: String, level: Int?, viewModel: MemoryViewModel) -> some View {
-        Button {
-            Task { await viewModel.filterByLevel(level) }
-        } label: {
-            Text(title)
-                .font(.system(size: 11, weight: .heavy))
-                .foregroundStyle(viewModel.selectedLevel == level ? palette.bg : palette.fg)
-                .frame(maxWidth: .infinity)
-                .frame(height: 36)
-                .background(viewModel.selectedLevel == level ? palette.fg : Color.white.opacity(0.52))
-                .clipShape(Capsule())
-                .prototypeLiquidGlass(cornerRadius: 18, tint: Color.white.opacity(0.20), interactive: true)
-        }
-        .buttonStyle(.plain)
-    }
+    private static let levelFilterOptions = [
+        MemoryLevelFilter(title: "全部", level: nil),
+        MemoryLevelFilter(title: "L1 核心", level: 1),
+        MemoryLevelFilter(title: "L2 重要", level: 2),
+        MemoryLevelFilter(title: "L3 模糊", level: 3)
+    ]
 
     @ViewBuilder
     private func memoryContent(_ viewModel: MemoryViewModel) -> some View {
@@ -112,7 +114,7 @@ struct MemoryTimelineView: View {
                         } label: {
                             PrototypeMemoryCard(memory: memory)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.prototypeGlassPress)
                     }
                 }
             }

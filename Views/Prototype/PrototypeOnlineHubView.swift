@@ -45,7 +45,7 @@ struct PrototypeOnlineHubView: View {
                 } label: {
                     PrototypePortalCard(portal: portal)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.prototypeGlassPress)
             }
         }
         .padding(.horizontal, 16)

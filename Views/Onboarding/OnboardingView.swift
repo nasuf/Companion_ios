@@ -122,11 +122,12 @@ struct CreateAgentFormView: View {
                         .foregroundStyle(CreationPalette.actionInk)
                         .padding(.horizontal, 13)
                         .frame(height: 32)
-                        .background(CreationPalette.actionSoft.opacity(0.86))
+                        .background(CreationPalette.actionSoft.opacity(0.58))
                         .clipShape(Capsule())
-                        .overlay(Capsule().stroke(CreationPalette.action.opacity(0.14), lineWidth: 1))
+                        .prototypeLiquidGlass(cornerRadius: 16, tint: CreationPalette.actionSoft.opacity(0.50), interactive: true)
+                        .overlay(Capsule().stroke(Color.white.opacity(0.66), lineWidth: 1))
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.prototypeGlassProminentPress)
             }
             .frame(minHeight: 54)
 
@@ -163,105 +164,18 @@ struct CreateAgentFormView: View {
 
 private struct GenderSegmentedPicker: View {
     @Binding var selection: Gender
-    @Namespace private var selectionNamespace
 
     var body: some View {
-        GeometryReader { proxy in
-            let padding: CGFloat = 3
-            let spacing: CGFloat = 3
-            let width = max(0, (proxy.size.width - padding * 2 - spacing * 2) / CGFloat(Gender.allCases.count))
-
-            ZStack(alignment: .leading) {
-                glassLayer(width: width, padding: padding, spacing: spacing)
-
-                segmentButtons
-                    .padding(padding)
-            }
-        }
-        .frame(height: 38)
-        .animation(.spring(response: 0.34, dampingFraction: 0.78), value: selection)
-    }
-
-    private var segmentButtons: some View {
-        HStack(spacing: 3) {
-            ForEach(Gender.allCases, id: \.self) { gender in
-                Button {
-                    withAnimation(.spring(response: 0.28, dampingFraction: 0.86)) {
-                        selection = gender
-                    }
-                } label: {
-                    Text(gender.label)
-                        .font(.system(size: 12, weight: .heavy))
-                        .foregroundStyle(selection == gender ? CreationPalette.actionInk : CreationPalette.body)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 32)
-                        .contentShape(Capsule())
-                }
-                .buttonStyle(.plain)
-            }
-        }
-    }
-
-    private var selectionIndex: Int {
-        Gender.allCases.firstIndex(of: selection) ?? 0
-    }
-
-    @ViewBuilder
-    private func glassLayer(width: CGFloat, padding: CGFloat, spacing: CGFloat) -> some View {
-        if #available(iOS 26.0, *) {
-            GlassEffectContainer(spacing: 8) {
-                ZStack(alignment: .leading) {
-                    track
-
-                    selectedPill
-                        .frame(width: width, height: 32)
-                        .offset(x: padding + CGFloat(selectionIndex) * (width + spacing))
-                }
-            }
-        } else {
-            ZStack(alignment: .leading) {
-                track
-
-                selectedPill
-                    .frame(width: width, height: 32)
-                    .offset(x: padding + CGFloat(selectionIndex) * (width + spacing))
-            }
-        }
-    }
-
-    @ViewBuilder
-    private var track: some View {
-        if #available(iOS 26.0, *) {
-            Capsule()
-                .fill(Color.white.opacity(0.08))
-                .glassEffect(.regular.tint(Color.white.opacity(0.28)).interactive(), in: .rect(cornerRadius: 19))
-                .overlay(
-                    Capsule()
-                        .stroke(Color.white.opacity(0.60), lineWidth: 1)
-                )
-        } else {
-            Capsule()
-                .fill(.ultraThinMaterial)
-                .overlay(Capsule().stroke(Color.white.opacity(0.52), lineWidth: 1))
-        }
-    }
-
-    @ViewBuilder
-    private var selectedPill: some View {
-        if #available(iOS 26.0, *) {
-            Capsule()
-                .fill(CreationPalette.actionSoft.opacity(0.36))
-                .overlay(
-                    Capsule()
-                        .stroke(Color.white.opacity(0.72), lineWidth: 1)
-                )
-                .shadow(color: CreationPalette.action.opacity(0.10), radius: 10, y: 4)
-                .glassEffect(.regular.tint(CreationPalette.actionSoft.opacity(0.62)).interactive(), in: .rect(cornerRadius: 16))
-                .glassEffectID("gender-selection-pill", in: selectionNamespace)
-        } else {
-            Capsule()
-                .fill(CreationPalette.actionSoft.opacity(0.62))
-        }
+        PrototypeGlassSegmentedControl(
+            options: Gender.allCases,
+            selection: $selection,
+            title: { $0.label },
+            activeTint: CreationPalette.action,
+            activeForeground: CreationPalette.actionInk,
+            inactiveForeground: CreationPalette.body,
+            trackTint: Color.white.opacity(0.28),
+            height: 38
+        )
     }
 }
 
@@ -481,6 +395,6 @@ struct OnboardingPrimaryButton<Label: View>: View {
                 .clipShape(Capsule())
         }
         .disabled(isDisabled)
-        .buttonStyle(.plain)
+        .buttonStyle(.prototypeGlassProminentPress)
     }
 }

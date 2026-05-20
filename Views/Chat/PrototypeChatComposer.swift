@@ -47,7 +47,7 @@ struct PrototypeChatComposer: View {
                         Image(systemName: "face.smiling")
                             .font(.system(size: 15, weight: .semibold))
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.prototypeGlassPress)
                 }
                 .foregroundStyle(palette.muted)
                 .padding(.horizontal, 13)
@@ -68,7 +68,7 @@ struct PrototypeChatComposer: View {
                         .frame(width: 40, height: 40)
                         .prototypeLiquidGlass(cornerRadius: 20, tint: Color.white.opacity(0.25), interactive: true)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.prototypeGlassProminentPress)
 
                 Button(action: onSend) {
                     Image(systemName: isWaitingReply ? "stop.fill" : "arrow.up")
@@ -78,7 +78,7 @@ struct PrototypeChatComposer: View {
                         .background(sendButtonColor)
                         .clipShape(Circle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.prototypeGlassProminentPress)
                 .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isWaitingReply)
             }
             .padding(.horizontal, 13)
@@ -129,6 +129,7 @@ private struct PrototypeEmojiPanel: View {
                 Button("关闭", action: close)
                     .font(.system(size: 12, weight: .heavy))
                     .foregroundStyle(palette.accent)
+                    .buttonStyle(.prototypeGlassPress)
             }
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 8) {
                 ForEach(emojis, id: \.self) { emoji in
@@ -142,7 +143,7 @@ private struct PrototypeEmojiPanel: View {
                             .background(palette.surface2)
                             .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.prototypeGlassPress)
                 }
             }
         }

@@ -185,7 +185,7 @@ struct AgentProvisioningView: View {
                     .frame(height: 46)
                     .prototypeLiquidGlass(cornerRadius: 23, tint: Color.white.opacity(0.26), interactive: true)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.prototypeGlassProminentPress)
 
             Button {
                 Task {
@@ -200,7 +200,7 @@ struct AgentProvisioningView: View {
                     .background(Color(hex: 0xE35B6F))
                     .clipShape(Capsule())
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.prototypeGlassProminentPress)
         }
     }
 

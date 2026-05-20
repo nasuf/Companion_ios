@@ -56,7 +56,7 @@ struct PrototypeGameView: View {
                 } label: {
                     GameGroupCard(group: group, isOpen: activeGroupID == group.id)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.prototypeGlassPress)
             }
         }
         .padding(.horizontal, 16)

@@ -78,27 +78,15 @@ struct PrototypeProfileShellView: View {
                 Spacer()
                 Text(selectedTheme.name).font(.system(size: 11)).foregroundStyle(palette.muted)
             }
-            HStack(spacing: 8) {
-                ForEach(PrototypeTheme.allCases) { theme in
-                    Button {
-                        selectedTheme = theme
-                    } label: {
-                        VStack(spacing: 6) {
-                            Circle()
-                                .fill(theme.palette.accent)
-                                .frame(width: 16, height: 16)
-                            Text(theme.name)
-                                .font(.system(size: 10, weight: .semibold))
-                                .foregroundStyle(palette.muted)
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 8)
-                        .background(selectedTheme == theme ? theme.palette.accentSoft : Color.clear)
-                        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
+            PrototypeGlassSegmentedControl(
+                options: PrototypeTheme.allCases,
+                selection: $selectedTheme,
+                title: { $0.name },
+                activeTint: selectedTheme.palette.accent,
+                activeForeground: selectedTheme.palette.accentInk,
+                inactiveForeground: palette.muted,
+                height: 40
+            )
         }
         .prototypeCard(cornerRadius: 22, padding: 15)
     }
@@ -134,7 +122,7 @@ struct PrototypeProfileShellView: View {
                     }
                     .padding(.vertical, 4)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.prototypeGlassPress)
             }
 
             Button(role: .destructive, action: resetAgent) {
@@ -150,6 +138,7 @@ struct PrototypeProfileShellView: View {
                 }
             }
             .disabled(appViewModel.isDeletingAgent)
+            .buttonStyle(.prototypeGlassPress)
             .padding(.top, 8)
         }
         .prototypeCard(cornerRadius: 22, padding: 15)

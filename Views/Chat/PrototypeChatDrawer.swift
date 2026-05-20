@@ -47,7 +47,7 @@ struct PrototypeChatDrawer: View {
                 .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
                 .accessibilityLabel(entry.title)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.prototypeGlassProminentPress)
     }
 
     @ViewBuilder
