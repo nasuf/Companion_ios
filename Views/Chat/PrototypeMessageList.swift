@@ -87,7 +87,7 @@ private struct PrototypeTypingBubble: View {
     @Environment(\.prototypePalette) private var palette
 
     var body: some View {
-        HStack(alignment: .top, spacing: 14) {
+        HStack(alignment: .top, spacing: 10) {
             PrototypeAvatar(name: PrototypeFixtures.agentName, size: 36)
             HStack(spacing: 4) {
                 ForEach(0..<3, id: \.self) { index in
@@ -102,6 +102,6 @@ private struct PrototypeTypingBubble: View {
             .prototypeLiquidGlass(cornerRadius: 18, tint: Color.white.opacity(0.24))
             Spacer()
         }
-        .padding(.horizontal, 28)
+        .padding(.horizontal, 20)
     }
 }

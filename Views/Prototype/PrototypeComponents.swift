@@ -9,6 +9,7 @@ enum PrototypeBackgroundStyle {
     case music
     case daily
     case movie
+    case profile
 }
 
 struct PrototypeScreen<Content: View>: View {
@@ -96,10 +97,10 @@ struct PrototypeBackground: View {
                     .opacity(field.opacity)
             }
 
-            if style == .game {
+            if style == .game || style == .scene || style == .profile {
                 PrototypeFineGrid()
-                    .opacity(0.16)
-                    .offset(y: sin(time / 8) * 5)
+                    .opacity(style == .game ? 0.16 : 0.10)
+                    .offset(y: style == .game ? sin(time / 8) * 5 : 0)
             }
 
             if style == .music {
@@ -118,6 +119,16 @@ struct PrototypeBackground: View {
                         Color(hex: 0xFBFEFD),
                         Color(hex: 0xF7FCFB),
                         Color(hex: 0xF6FBFA)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            } else if style == .profile {
+                LinearGradient(
+                    colors: [
+                        Color(hex: 0xFFFAF4).opacity(0.92),
+                        Color(hex: 0xF9FBFF).opacity(0.98),
+                        Color(hex: 0xEEF9F8).opacity(0.98)
                     ],
                     startPoint: .top,
                     endPoint: .bottom
@@ -173,6 +184,12 @@ struct PrototypeBackground: View {
             return [
                 PrototypeAmbientField.custom(colors: [Color(hex: 0x202724).opacity(0.22), Color(hex: 0x947C66).opacity(0.13)], width: 310, height: 230, x: 146, y: 96, opacity: 0.70),
                 PrototypeAmbientField.custom(colors: [Color(hex: 0xE35B6F).opacity(0.09), Color(hex: 0x1F6FFF).opacity(0.08)], width: 226, height: 176, x: -102, y: 560, opacity: 0.62)
+            ]
+        case .profile:
+            return [
+                PrototypeAmbientField.custom(colors: [Color(hex: 0x1F6FFF).opacity(0.22), Color(hex: 0x18C6C0).opacity(0.12)], width: 300, height: 230, x: 162, y: 48, opacity: 0.80),
+                PrototypeAmbientField.custom(colors: [Color(hex: 0xFF8A3D).opacity(0.15), Color(hex: 0xFFC936).opacity(0.08)], width: 230, height: 190, x: -120, y: 206, opacity: 0.74),
+                PrototypeAmbientField.custom(colors: [Color(hex: 0x7C3CFF).opacity(0.12), Color(hex: 0x1F6FFF).opacity(0.08)], width: 260, height: 218, x: 156, y: 620, opacity: 0.70)
             ]
         }
     }

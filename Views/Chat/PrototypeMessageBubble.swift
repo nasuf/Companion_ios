@@ -7,7 +7,7 @@ struct PrototypeMessageBubble: View {
     private var isUser: Bool { message.role == .user }
 
     var body: some View {
-        HStack(alignment: .top, spacing: 14) {
+        HStack(alignment: .top, spacing: 10) {
             if isUser {
                 Spacer(minLength: 6)
                 bubble
@@ -25,7 +25,7 @@ struct PrototypeMessageBubble: View {
                 Spacer(minLength: 6)
             }
         }
-        .padding(.horizontal, 28)
+        .padding(.horizontal, 20)
     }
 
     private var bubble: some View {
@@ -50,7 +50,7 @@ private struct PrototypeCornerBubbleShape: Shape {
 
     func path(in rect: CGRect) -> Path {
         let radius: CGFloat = 22
-        let sharpRadius: CGFloat = 5
+        let sharpRadius: CGFloat = 2
         let topLeading = isUser ? radius : sharpRadius
         let topTrailing = isUser ? sharpRadius : radius
         let bottomLeading = radius

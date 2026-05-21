@@ -38,58 +38,73 @@ struct PrototypeOnlineHubView: View {
     }
 
     private var portalGrid: some View {
-        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 14) {
-            ForEach(PrototypeFixtures.portals) { portal in
+        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
+            ForEach(Array(PrototypeFixtures.portals.enumerated()), id: \.element.id) { index, portal in
                 Button {
                     openRoute(portal.route)
                 } label: {
                     PrototypePortalCard(portal: portal)
                 }
                 .buttonStyle(.prototypeGlassPress)
+                .offset(y: index == 1 || index == 3 ? 12 : 0)
             }
         }
         .padding(.horizontal, 16)
+        .padding(.top, -4)
     }
 }
 
 private struct PrototypePortalCard: View {
-    @Environment(\.prototypePalette) private var palette
     let portal: PrototypePortal
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            PrototypeAssetImage(name: portal.image)
-                .frame(height: 112)
-                .clipped()
-                .overlay(.linearGradient(colors: [.clear, Color.white.opacity(0.82)], startPoint: .top, endPoint: .bottom))
+        GeometryReader { proxy in
+            ZStack(alignment: .bottomLeading) {
+                PrototypeAssetImage(name: portal.image)
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+                    .clipped()
+                    .overlay(.linearGradient(colors: [.clear, Color.white.opacity(0.40), Color.white.opacity(0.86)], startPoint: .top, endPoint: .bottom))
 
-            VStack(alignment: .leading, spacing: 6) {
-                Text(portal.title)
-                    .font(.system(size: 18, weight: .heavy))
-                    .foregroundStyle(palette.fg)
-                Text(portal.subtitle)
-                    .font(.system(size: 10.5))
-                    .lineLimit(3)
-                    .foregroundStyle(palette.muted)
-                HStack {
-                    Text(portal.metric)
-                    Spacer()
-                    Image(systemName: "chevron.right")
+                VStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 7) {
+                        Text(portal.title)
+                            .font(.system(size: 18, weight: .heavy))
+                            .foregroundStyle(Color(hex: 0x11161A))
+                        Text(portal.subtitle)
+                            .font(.system(size: 10.4, weight: .regular))
+                            .lineSpacing(1.5)
+                            .lineLimit(2)
+                            .foregroundStyle(Color(hex: 0x182026).opacity(0.62))
+                        HStack {
+                            Text(portal.metric)
+                                .foregroundStyle(Color(hex: 0x11161A))
+                            Spacer()
+                            Text("›")
+                                .font(.system(size: 17, weight: .heavy))
+                        }
+                        .font(.system(size: 10.5, weight: .heavy))
+                        .foregroundStyle(Color(hex: 0x13191E).opacity(0.58))
+                        .padding(.top, 7)
+                    }
+                    .padding(.horizontal, 20)
+                    .padding(.top, 15)
+                    .padding(.bottom, 15)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.white.opacity(0.54))
+                    .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+                    .prototypeLiquidGlass(cornerRadius: 26, tint: Color.white.opacity(0.26))
                 }
-                .font(.system(size: 11, weight: .bold))
-                .foregroundStyle(palette.fg.opacity(0.66))
-                .padding(.top, 8)
+                .padding(10)
             }
-            .padding(14)
+            .background(Color.white.opacity(0.34))
+            .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
+            .prototypeLiquidGlass(cornerRadius: 32, tint: Color.white.opacity(0.20), interactive: true)
+            .overlay(
+                RoundedRectangle(cornerRadius: 32, style: .continuous)
+                    .stroke(Color.white.opacity(0.86), lineWidth: 1)
+            )
+            .shadow(color: Color.black.opacity(0.12), radius: 28, y: 16)
         }
-        .frame(height: 220)
-        .background(Color.white.opacity(0.52))
-        .clipShape(RoundedRectangle(cornerRadius: 32, style: .continuous))
-        .prototypeLiquidGlass(cornerRadius: 32, tint: Color.white.opacity(0.32), interactive: true)
-        .overlay(
-            RoundedRectangle(cornerRadius: 32, style: .continuous)
-                .stroke(Color.white.opacity(0.86), lineWidth: 1)
-        )
-        .shadow(color: Color.black.opacity(0.12), radius: 24, y: 14)
+        .frame(height: 198)
     }
 }
