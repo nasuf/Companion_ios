@@ -71,10 +71,13 @@ private struct GameGroupCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 13) {
             ZStack(alignment: .bottomLeading) {
-                PrototypeAssetImage(name: group.image)
-                    .frame(height: isOpen ? 184 : 116)
-                    .clipped()
-                    .overlay(.linearGradient(colors: [.clear, Color.black.opacity(0.72)], startPoint: .top, endPoint: .bottom))
+                GeometryReader { proxy in
+                    PrototypeAssetImage(name: group.image)
+                        .frame(width: proxy.size.width, height: proxy.size.height)
+                        .clipped()
+                        .overlay(.linearGradient(colors: [.clear, Color.black.opacity(0.72)], startPoint: .top, endPoint: .bottom))
+                }
+                .frame(height: isOpen ? 184 : 116)
 
                 VStack(alignment: .leading, spacing: 7) {
                     Text(group.kicker)
@@ -100,10 +103,14 @@ private struct GameGroupCard: View {
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
                     ForEach(group.games) { game in
                         ZStack(alignment: .bottomLeading) {
-                            PrototypeAssetImage(name: game.image)
-                                .frame(height: 118)
-                                .clipped()
-                                .overlay(.linearGradient(colors: [.clear, Color.black.opacity(0.70)], startPoint: .top, endPoint: .bottom))
+                            GeometryReader { proxy in
+                                PrototypeAssetImage(name: game.image)
+                                    .frame(width: proxy.size.width, height: proxy.size.height)
+                                    .clipped()
+                                    .overlay(.linearGradient(colors: [.clear, Color.black.opacity(0.70)], startPoint: .top, endPoint: .bottom))
+                            }
+                            .frame(height: 118)
+
                             VStack(alignment: .leading, spacing: 4) {
                                 Text(game.title)
                                     .font(.system(size: 14, weight: .heavy))
