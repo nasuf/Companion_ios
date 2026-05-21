@@ -97,9 +97,9 @@ struct PrototypeBackground: View {
                     .opacity(field.opacity)
             }
 
-            if style == .game || style == .scene || style == .profile {
+            if style == .game || style == .scene || style == .profile || style == .online {
                 PrototypeFineGrid()
-                    .opacity(style == .game ? 0.16 : 0.10)
+                    .opacity(style == .game ? 0.16 : style == .online ? 0.16 : 0.10)
                     .offset(y: style == .game ? sin(time / 8) * 5 : 0)
             }
 
@@ -119,6 +119,16 @@ struct PrototypeBackground: View {
                         Color(hex: 0xFBFEFD),
                         Color(hex: 0xF7FCFB),
                         Color(hex: 0xF6FBFA)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+            } else if style == .online {
+                LinearGradient(
+                    colors: [
+                        Color(hex: 0xFFFAF4).opacity(0.88),
+                        Color(hex: 0xF9FAFF).opacity(0.96),
+                        Color(hex: 0xEEF9F8).opacity(0.96)
                     ],
                     startPoint: .top,
                     endPoint: .bottom
@@ -155,9 +165,9 @@ struct PrototypeBackground: View {
             ]
         case .online:
             return [
-                PrototypeAmbientField.custom(colors: [Color(hex: 0x1F6FFF).opacity(0.22), Color(hex: 0x18C6C0).opacity(0.14)], width: 280, height: 220, x: 162, y: 88, opacity: 0.76),
-                PrototypeAmbientField.custom(colors: [Color(hex: 0xFF7A3D).opacity(0.12), Color(hex: 0xFFC936).opacity(0.09)], width: 230, height: 170, x: -112, y: 456, opacity: 0.72),
-                PrototypeAmbientField.topAccent(palette, width: 320, height: 220, x: 124, y: -120)
+                PrototypeAmbientField.custom(colors: [Color(hex: 0x7BBEFF).opacity(0.28), Color(hex: 0x18C6C0).opacity(0.12)], width: 290, height: 240, x: 164, y: 80, opacity: 0.76),
+                PrototypeAmbientField.custom(colors: [Color(hex: 0xFFBE8C).opacity(0.20), Color(hex: 0xFFFAF4).opacity(0.12)], width: 240, height: 210, x: -120, y: 176, opacity: 0.70),
+                PrototypeAmbientField.custom(colors: [Color(hex: 0xBA9DFF).opacity(0.17), Color(hex: 0x1F6FFF).opacity(0.08)], width: 320, height: 270, x: 156, y: 590, opacity: 0.72)
             ]
         case .scene:
             return [
