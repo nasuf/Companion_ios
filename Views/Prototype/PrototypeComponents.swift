@@ -133,6 +133,16 @@ struct PrototypeBackground: View {
                     startPoint: .top,
                     endPoint: .bottom
                 )
+            } else if style == .daily {
+                LinearGradient(
+                    colors: [
+                        Color(hex: 0xFFFAF4).opacity(0.94),
+                        Color(hex: 0xFBFBFF).opacity(0.98),
+                        Color(hex: 0xEEF9F8).opacity(0.96)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
             } else if style == .profile {
                 LinearGradient(
                     colors: [
@@ -187,8 +197,8 @@ struct PrototypeBackground: View {
             ]
         case .daily:
             return [
-                PrototypeAmbientField.custom(colors: [Color(hex: 0x1F6FFF).opacity(0.16), Color(hex: 0x7C3CFF).opacity(0.10)], width: 260, height: 202, x: 150, y: 82, opacity: 0.72),
-                PrototypeAmbientField.custom(colors: [Color(hex: 0x22C66B).opacity(0.12), Color(hex: 0xFF6A3D).opacity(0.09)], width: 230, height: 180, x: -112, y: 540, opacity: 0.70)
+                PrototypeAmbientField.custom(colors: [Color(hex: 0xFF7940).opacity(0.18), Color(hex: 0x7C3CFF).opacity(0.12), Color(hex: 0x1F6FFF).opacity(0.10)], width: 260, height: 236, x: 146, y: 94, opacity: 0.76),
+                PrototypeAmbientField.custom(colors: [Color(hex: 0x1F6FFF).opacity(0.10), Color(hex: 0x18C6C0).opacity(0.10)], width: 280, height: 230, x: -126, y: 576, opacity: 0.70)
             ]
         case .movie:
             return [
