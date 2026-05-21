@@ -7,7 +7,7 @@ struct ChatView: View {
     @State private var showDrawer = false
     @State private var showEmojiPanel = false
     @State private var showMorePanel = false
-    @State private var lastVisibleIndex = 0
+    @State private var lastVisibleIndex = -1
 
     private let openRoute: ((PrototypeRoute) -> Void)?
 
@@ -26,7 +26,7 @@ struct ChatView: View {
     }
 
     var body: some View {
-        PrototypeScreen(showsBottomPadding: false) {
+        PrototypeScreen(showsBottomPadding: false, animatesBackground: false) {
             ZStack(alignment: .bottomTrailing) {
                 VStack(spacing: 0) {
                     PrototypeChatHeader(
@@ -42,9 +42,7 @@ struct ChatView: View {
                     PrototypeChatComposer(
                         text: $viewModel.inputText,
                         isFocused: $isInputFocused,
-                        isConnected: viewModel.isConnected,
                         isWaitingReply: viewModel.isWaitingReply,
-                        deliveryHint: viewModel.deliveryHint,
                         showEmojiPanel: $showEmojiPanel,
                         showMorePanel: $showMorePanel,
                         onSend: sendMessage
@@ -75,7 +73,10 @@ struct ChatView: View {
                     showEmojiPanel: showEmojiPanel,
                     showMorePanel: showMorePanel,
                     loadMoreHistory: { Task { await viewModel.loadMoreHistory() } },
-                    onMessageVisible: { index in lastVisibleIndex = max(lastVisibleIndex, index) }
+                    onMessageVisible: { index in
+                        guard index > lastVisibleIndex else { return }
+                        lastVisibleIndex = index
+                    }
                 )
                 .onTapGesture {
                     isInputFocused = false
@@ -114,6 +115,12 @@ struct ChatView: View {
                     scrollToBottom(proxy)
                     viewModel.hasUnreadReply = false
                 }
+            }
+            .onChange(of: showMorePanel) { _, isOpen in
+                scrollToBottomAfterComposerChange(proxy, isOpen: isOpen)
+            }
+            .onChange(of: showEmojiPanel) { _, isOpen in
+                scrollToBottomAfterComposerChange(proxy, isOpen: isOpen)
             }
         }
     }
@@ -191,6 +198,14 @@ struct ChatView: View {
     private func scrollToBottom(_ proxy: ScrollViewProxy) {
         withAnimation(.easeOut(duration: 0.2)) {
             proxy.scrollTo(PrototypeMessageList.bottomID, anchor: .bottom)
+        }
+    }
+
+    private func scrollToBottomAfterComposerChange(_ proxy: ScrollViewProxy, isOpen: Bool) {
+        guard isOpen, lastVisibleIndex >= viewModel.messages.count - 3 else { return }
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(90))
+            scrollToBottom(proxy)
         }
     }
 }

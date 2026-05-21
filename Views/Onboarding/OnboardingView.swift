@@ -31,6 +31,8 @@ struct CreateAgentFormView: View {
                 soulProfileIntro
                     .padding(.bottom, 8)
 
+                appNotice
+
                 basicFields
 
                 traitStudio
@@ -58,6 +60,30 @@ struct CreateAgentFormView: View {
             .padding(.top, 34)
         }
         .sensoryFeedback(.success, trigger: appViewModel.agentId)
+    }
+
+    @ViewBuilder
+    private var appNotice: some View {
+        if let error = appViewModel.error, !error.isEmpty {
+            HStack(alignment: .top, spacing: 10) {
+                Image(systemName: "info.circle.fill")
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundStyle(CreationPalette.action)
+                    .padding(.top, 1)
+                Text(error)
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(CreationPalette.body)
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.horizontal, 13)
+            .padding(.vertical, 12)
+            .background(Color.white.opacity(0.52))
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .prototypeLiquidGlass(cornerRadius: 18, tint: Color.white.opacity(0.22))
+            .padding(.horizontal, 4)
+            .padding(.bottom, 10)
+        }
     }
 
     private var soulProfileIntro: some View {

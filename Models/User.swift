@@ -33,21 +33,29 @@ struct AuthRegisterRequest: Encodable {
     let password: String
 }
 
+struct AuthLoginRequest: Encodable {
+    let username: String
+    let password: String
+}
+
 struct AuthResponse: Decodable {
     let token: String
     let userId: String
     let username: String
+    let role: String
     let hasAgent: Bool
     let agentId: String?
     let agentName: String?
+    let workspaceId: String?
     let conversationId: String?
 
     enum CodingKeys: String, CodingKey {
-        case token, username
+        case token, username, role
         case userId = "user_id"
         case hasAgent = "has_agent"
         case agentId = "agent_id"
         case agentName = "agent_name"
+        case workspaceId = "workspace_id"
         case conversationId = "conversation_id"
     }
 }

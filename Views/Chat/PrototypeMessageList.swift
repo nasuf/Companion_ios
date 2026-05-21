@@ -16,7 +16,7 @@ struct PrototypeMessageList: View {
 
     var body: some View {
         ScrollView {
-            LazyVStack(spacing: 8) {
+            LazyVStack(spacing: 13) {
                 topHistoryTrigger
 
                 if isLoading && messages.isEmpty {
@@ -30,7 +30,6 @@ struct PrototypeMessageList: View {
                 ForEach(Array(messages.enumerated()), id: \.element.id) { index, message in
                     PrototypeMessageBubble(message: message)
                         .id(message.id)
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
                         .onAppear { onMessageVisible(index) }
                 }
 
@@ -42,7 +41,7 @@ struct PrototypeMessageList: View {
                     .frame(height: bottomSpacerHeight)
                     .id(Self.bottomID)
             }
-            .padding(.top, 14)
+            .padding(.top, 22)
         }
         .scrollIndicators(.hidden)
     }
@@ -61,9 +60,8 @@ struct PrototypeMessageList: View {
     }
 
     private var bottomSpacerHeight: CGFloat {
-        if showMorePanel { return 300 }
-        if showEmojiPanel { return 292 }
-        return 148
+        if showMorePanel || showEmojiPanel { return 18 }
+        return 20
     }
 }
 
@@ -89,8 +87,8 @@ private struct PrototypeTypingBubble: View {
     @Environment(\.prototypePalette) private var palette
 
     var body: some View {
-        HStack(alignment: .top, spacing: 8) {
-            PrototypeAvatar(name: PrototypeFixtures.agentName, size: 24)
+        HStack(alignment: .top, spacing: 14) {
+            PrototypeAvatar(name: PrototypeFixtures.agentName, size: 36)
             HStack(spacing: 4) {
                 ForEach(0..<3, id: \.self) { index in
                     Circle()
@@ -104,6 +102,6 @@ private struct PrototypeTypingBubble: View {
             .prototypeLiquidGlass(cornerRadius: 18, tint: Color.white.opacity(0.24))
             Spacer()
         }
-        .padding(.horizontal, 12)
+        .padding(.horizontal, 28)
     }
 }

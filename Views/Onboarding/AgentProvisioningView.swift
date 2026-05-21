@@ -42,6 +42,7 @@ struct AgentProvisioningView: View {
                 progressCard
 
                 if progress?.isFailed == true {
+                    failureHelp
                     failedActions
                 }
             }
@@ -79,7 +80,7 @@ struct AgentProvisioningView: View {
 
     private var subtitle: String {
         if progress?.isFailed == true {
-            return "TA 的初始化没有完成。可以返回重建，或稍后再重试进度检查。"
+            return "这次初始化中断了。你的数据没有完成写入，可以重试检查，或清理后重新创建。"
         }
         if progress?.isComplete == true {
             return "创建完成，即将进入聊天。"
@@ -93,6 +94,9 @@ struct AgentProvisioningView: View {
     }
 
     private var displayMessage: String {
+        if progress?.isFailed == true {
+            return "初始化被中断，TA 的身份、经历和初始记忆还没有准备好。"
+        }
         if progress?.stage == "llm_generating" {
             return localMessage
         }
@@ -174,6 +178,33 @@ struct AgentProvisioningView: View {
         .padding(.top, 2)
     }
 
+    private var failureHelp: some View {
+        VStack(alignment: .leading, spacing: 9) {
+            HStack(spacing: 8) {
+                Image(systemName: "exclamationmark.circle.fill")
+                    .foregroundStyle(Color(hex: 0xE35B6F))
+                Text("可以这样处理")
+                    .font(.system(size: 14, weight: .heavy))
+            }
+
+            Text("如果只是后端临时中断，先点“重试检查”。如果仍然失败，点“删除重建”清理这次未完成的创建记录。")
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundStyle(palette.muted)
+                .lineSpacing(3)
+
+            if let error = appViewModel.error, !error.isEmpty {
+                Text(error)
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(Color(hex: 0xE35B6F))
+                    .lineSpacing(2)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 2)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .prototypeCard(cornerRadius: 24, padding: 15)
+    }
+
     private var failedActions: some View {
         HStack(spacing: 12) {
             Button {
@@ -192,15 +223,22 @@ struct AgentProvisioningView: View {
                     await appViewModel.deleteAgent()
                 }
             } label: {
-                Text("删除重建")
-                    .font(.system(size: 13, weight: .heavy))
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 46)
-                    .background(Color(hex: 0xE35B6F))
-                    .clipShape(Capsule())
+                HStack(spacing: 8) {
+                    if appViewModel.isDeletingAgent {
+                        ProgressView()
+                            .tint(Color.white)
+                    }
+                    Text(appViewModel.isDeletingAgent ? "正在清理" : "删除重建")
+                }
+                .font(.system(size: 13, weight: .heavy))
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+                .frame(height: 46)
+                .background(Color(hex: 0xE35B6F))
+                .clipShape(Capsule())
             }
             .buttonStyle(.prototypeGlassProminentPress)
+            .disabled(appViewModel.isDeletingAgent)
         }
     }
 

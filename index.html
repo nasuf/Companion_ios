@@ -5866,6 +5866,917 @@ button:active,.paper-card:active,.card-msg:active,.drawer-btn:active,.round:acti
 :root[data-theme="dark"] .music-track-art-v7{
   box-shadow:0 12px 26px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.20);
 }
+
+/* Online hub light room + liquid glass system nav */
+.screen[data-page="online"]{
+  background:
+    radial-gradient(290px 250px at 86% 2%,rgba(151,208,255,.34),transparent 70%),
+    radial-gradient(280px 250px at 0% 20%,rgba(255,214,185,.30),transparent 70%),
+    radial-gradient(300px 260px at 76% 62%,rgba(217,207,255,.24),transparent 72%),
+    linear-gradient(180deg,#fffaf4 0%,#fbfbff 44%,#eef9f8 100%);
+}
+.screen[data-page="online"] .status{color:#14191e}
+.online-hub-v5{
+  color:#13171b;
+  background:
+    radial-gradient(290px 240px at 86% 8%,rgba(123,190,255,.28),transparent 70%),
+    radial-gradient(240px 210px at 12% 18%,rgba(255,190,140,.20),transparent 72%),
+    radial-gradient(320px 270px at 78% 72%,rgba(186,157,255,.17),transparent 72%),
+    linear-gradient(180deg,rgba(255,250,244,.88) 0%,rgba(249,250,255,.96) 52%,rgba(238,249,248,.96) 100%);
+}
+.online-hub-v5:before{
+  inset:0;
+  background:
+    linear-gradient(90deg,rgba(32,45,58,.045) 1px,transparent 1px) 0 0/36px 100%,
+    linear-gradient(180deg,rgba(32,45,58,.045) 1px,transparent 1px) 0 0/100% 36px,
+    radial-gradient(260px 220px at 84% 20%,rgba(255,255,255,.62),transparent 72%);
+  opacity:.72;
+}
+.online-hub-v5 .pro-scroll{
+  padding:74px 16px 126px;
+}
+.online-hub-v5 .online-hero-v4{
+  min-height:302px;
+  margin:0 0 8px;
+  padding:58px 18px 24px;
+  color:#12171b;
+  border-radius:0 0 38px 38px;
+  background:transparent;
+}
+.online-hub-v5 .online-hero-v4:before{
+  right:-32px;
+  top:16px;
+  width:204px;
+  height:172px;
+  border-radius:56px;
+  background:
+    radial-gradient(circle at 35% 24%,rgba(255,255,255,.80),transparent 18%),
+    linear-gradient(135deg,rgba(61,158,255,.56),rgba(24,198,192,.20) 72%);
+  opacity:.72;
+  filter:blur(.1px);
+}
+.online-hub-v5 .online-hero-v4:after{
+  right:28px;
+  bottom:30px;
+  width:84px;
+  height:84px;
+  border-radius:28px;
+  background:
+    radial-gradient(circle at 32% 22%,rgba(255,255,255,.95),rgba(255,255,255,.38) 22%,transparent 23%),
+    linear-gradient(145deg,rgba(255,255,255,.56),rgba(255,255,255,.22));
+  border:1px solid rgba(255,255,255,.72);
+  box-shadow:
+    0 24px 54px rgba(81,132,190,.20),
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 -1px 0 rgba(75,112,143,.08);
+}
+.online-hub-v5 .online-hero-v4 .pro-kicker{
+  margin-top:0;
+  color:#1f6fff;
+  text-shadow:none;
+}
+.online-hub-v5 .online-hero-v4 h2{
+  max-width:292px;
+  margin-top:16px;
+  color:#11161a;
+  font-size:34px;
+  line-height:1.04;
+  letter-spacing:0;
+  text-shadow:none;
+}
+.online-hub-v5 .online-hero-v4 p{
+  max-width:278px;
+  margin-top:14px;
+  color:rgba(24,32,38,.58);
+  font-size:13.4px;
+  line-height:1.72;
+}
+.online-hub-v5 .online-hero-v4 .online-orbit{
+  right:34px;
+  bottom:70px;
+  width:104px;
+  height:104px;
+  border-radius:36px;
+  background:
+    radial-gradient(circle at 32% 24%,rgba(255,255,255,.85),rgba(255,255,255,.26) 23%,transparent 24%),
+    linear-gradient(145deg,rgba(255,255,255,.48),rgba(255,255,255,.20));
+  border:1px solid rgba(255,255,255,.68);
+  box-shadow:0 26px 58px rgba(84,139,196,.18),inset 0 1px 0 rgba(255,255,255,.84);
+}
+.online-hub-v5 .online-orbit:before{border-color:rgba(255,255,255,.64)}
+.online-hub-v5 .online-orbit i{
+  background:#e8feff;
+  box-shadow:0 0 24px rgba(31,111,255,.28);
+}
+.online-hub-v5 .portal-grid{
+  gap:14px;
+  margin-top:2px;
+}
+.online-hub-v5 .portal-card{
+  min-height:220px;
+  border-radius:32px;
+  color:#11161a;
+  border:1px solid rgba(255,255,255,.86);
+  background:linear-gradient(145deg,rgba(255,255,255,.70),rgba(255,255,255,.42));
+  box-shadow:
+    0 28px 64px rgba(64,84,106,.14),
+    0 14px 30px color-mix(in srgb,var(--portal),transparent 88%),
+    inset 0 1px 0 rgba(255,255,255,.96),
+    inset 0 -1px 0 rgba(37,57,70,.06);
+  backdrop-filter:blur(28px) saturate(1.24);
+  -webkit-mask-image:none;
+  mask-image:none;
+}
+.online-hub-v5 .portal-card:nth-child(2),
+.online-hub-v5 .portal-card:nth-child(4){transform:translateY(12px)}
+.online-hub-v5 .portal-card:active{transform:scale(.985) translateY(12px)}
+.online-hub-v5 .portal-card:nth-child(1):active,
+.online-hub-v5 .portal-card:nth-child(3):active{transform:scale(.985) translateY(1px)}
+.online-hub-v5 .portal-card:before{
+  background:
+    radial-gradient(120px 96px at 72% 18%,rgba(255,255,255,.45),transparent 58%),
+    linear-gradient(180deg,rgba(255,255,255,.06) 0%,rgba(255,255,255,.04) 38%,rgba(255,255,255,.58) 76%,rgba(255,255,255,.84) 100%);
+}
+.online-hub-v5 .portal-card:after{
+  left:10px;
+  right:10px;
+  bottom:10px;
+  height:112px;
+  border-radius:26px;
+  background:linear-gradient(180deg,rgba(255,255,255,.68),rgba(255,255,255,.48));
+  border:1px solid rgba(255,255,255,.62);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 14px 32px rgba(48,63,75,.10);
+  backdrop-filter:blur(18px) saturate(1.16);
+  -webkit-mask-image:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.38) 22%,#000 56%);
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.38) 22%,#000 56%);
+}
+.online-hub-v5 .portal-art{
+  inset:-10px;
+  filter:saturate(.96) contrast(.98) brightness(1.05);
+  opacity:.94;
+}
+.online-hub-v5 .portal-art:after{
+  height:56%;
+  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.40) 42%,rgba(255,255,255,.86) 100%);
+  backdrop-filter:blur(7px);
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.08) 20%,rgba(0,0,0,.42) 52%,#000 100%);
+  mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.08) 20%,rgba(0,0,0,.42) 52%,#000 100%);
+}
+.online-hub-v5 .portal-card.movie .portal-art{
+  background-image:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,245,238,.32)),url("assets/prototype/movie-bouquet.jpg");
+  background-position:center 26%;
+}
+.online-hub-v5 .portal-card.game .portal-art{
+  background-image:linear-gradient(145deg,rgba(229,255,246,.20),rgba(203,226,255,.36)),url("assets/prototype/game-pieces.jpg");
+}
+.online-hub-v5 .portal-card.daily .portal-art{
+  background-image:linear-gradient(145deg,rgba(255,255,255,.10),rgba(226,210,255,.30)),url("assets/prototype/daily-journal.jpg");
+}
+.online-hub-v5 .portal-card.music .portal-art{
+  background-image:linear-gradient(145deg,rgba(235,245,255,.22),rgba(31,111,255,.18)),url("assets/prototype/vinyl-record.jpg");
+}
+.online-hub-v5 .portal-card h3{
+  margin:0 20px;
+  color:#11161a;
+  font-size:18px;
+  line-height:1.12;
+  text-shadow:none;
+}
+.online-hub-v5 .portal-card p{
+  margin:7px 20px 35px;
+  color:rgba(24,32,38,.62);
+  font-size:10.4px;
+  line-height:1.38;
+  text-shadow:none;
+}
+.online-hub-v5 .portal-card footer{
+  left:20px;
+  right:20px;
+  bottom:17px;
+  color:rgba(19,25,30,.58);
+  text-shadow:none;
+}
+.online-hub-v5 .portal-card footer span:first-child{color:#11161a}
+.tabbar,
+.tabbar.online-tabbar,
+.tabbar.scene-tabbar,
+.tabbar.chat-tabbar,
+.tabbar.profile-tabbar{
+  --nav-accent:#1f6fff;
+  left:24px;
+  right:24px;
+  bottom:13px;
+  height:70px;
+  padding:8px 24px 14px;
+  border:1px solid rgba(255,255,255,.70);
+  border-radius:30px;
+  overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.74),rgba(255,255,255,.48));
+  box-shadow:
+    0 22px 52px rgba(28,38,52,.18),
+    0 6px 20px rgba(255,255,255,.38) inset,
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 -1px 0 rgba(30,44,58,.06);
+  backdrop-filter:blur(30px) saturate(1.35);
+}
+.tabbar:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(90px 54px at 50% 10%,rgba(255,255,255,.74),transparent 64%),
+    linear-gradient(90deg,rgba(255,255,255,.18),transparent 24%,transparent 76%,rgba(255,255,255,.18));
+  opacity:.86;
+}
+.tabbar.chat-tabbar{--nav-accent:#18a9c7}
+.tabbar.online-tabbar{--nav-accent:#246dff}
+.tabbar.scene-tabbar{--nav-accent:#22a675}
+.tabbar.profile-tabbar{--nav-accent:#9b6070}
+.tabbar .tab{
+  position:relative;
+  z-index:1;
+  width:44px;
+  height:44px;
+  color:rgba(25,32,40,.46);
+}
+.tabbar .tab svg{
+  width:21px;
+  height:21px;
+  stroke-width:1.85;
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.58));
+}
+.tabbar .tab.on{
+  color:#10161c;
+  background:linear-gradient(180deg,rgba(255,255,255,.94),rgba(255,255,255,.58));
+  box-shadow:
+    0 14px 30px rgba(36,67,98,.16),
+    0 0 0 1px rgba(255,255,255,.72) inset,
+    inset 0 -1px 0 rgba(22,38,54,.08);
+}
+.tabbar .tab.on svg{
+  color:var(--nav-accent);
+  stroke-width:2;
+}
+.tabbar .tab.on:after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:5px;
+  width:4px;
+  height:4px;
+  border-radius:50%;
+  background:var(--nav-accent);
+  transform:translateX(-50%);
+  box-shadow:0 0 12px color-mix(in srgb,var(--nav-accent),transparent 35%);
+}
+:root[data-theme="dark"] .tabbar,
+:root[data-theme="dark"] .tabbar.online-tabbar,
+:root[data-theme="dark"] .tabbar.scene-tabbar,
+:root[data-theme="dark"] .tabbar.chat-tabbar,
+:root[data-theme="dark"] .tabbar.profile-tabbar{
+  background:linear-gradient(180deg,rgba(255,255,255,.70),rgba(255,255,255,.42));
+  border-color:rgba(255,255,255,.62);
+}
+.tabbar,
+.tabbar.online-tabbar,
+.tabbar.scene-tabbar,
+.tabbar.chat-tabbar,
+.tabbar.profile-tabbar{
+  left:28px;
+  right:28px;
+  bottom:14px;
+  height:58px;
+  padding:6px 20px 9px;
+  border-radius:25px;
+}
+.tabbar .tab{
+  width:38px;
+  height:38px;
+}
+.tabbar .tab svg{
+  width:19px;
+  height:19px;
+}
+.tabbar .tab.on:after{
+  bottom:3px;
+  width:3.5px;
+  height:3.5px;
+}
+.composer{bottom:80px}
+.chat-scroll{padding-bottom:142px}
+.online-hub-v5 .portal-card:after{
+  inset:0;
+  height:100%;
+  border:0;
+  border-radius:inherit;
+  box-shadow:none;
+  backdrop-filter:none;
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.12) 36%,rgba(255,255,255,.68) 73%,rgba(255,255,255,.92) 100%),
+    radial-gradient(170px 120px at 16% 86%,color-mix(in srgb,var(--portal),transparent 84%),transparent 72%);
+  -webkit-mask-image:none;
+  mask-image:none;
+}
+.online-hub-v5 .portal-art:after{
+  content:none;
+}
+.online-hub-v5 .portal-card h3,
+.online-hub-v5 .portal-card p,
+.online-hub-v5 .portal-card footer{
+  z-index:3;
+}
+.online-hub-v5 .portal-card h3{
+  text-shadow:0 1px 0 rgba(255,255,255,.76);
+}
+.online-hub-v5 .portal-card p,
+.online-hub-v5 .portal-card footer{
+  text-shadow:0 1px 0 rgba(255,255,255,.56);
+}
+.msg .bubble{
+  position:relative;
+  border-radius:20px 20px 20px 8px;
+}
+.msg:not(.user) .bubble:before{
+  content:"";
+  position:absolute;
+  left:-6px;
+  top:14px;
+  width:12px;
+  height:12px;
+  background:inherit;
+  border-left:1px solid rgba(24,31,42,.06);
+  border-bottom:1px solid rgba(24,31,42,.06);
+  transform:rotate(45deg);
+}
+.msg.user{
+  align-items:flex-start;
+  gap:8px;
+}
+.msg.user .mini-av{
+  display:grid;
+}
+.msg.user .bubble{
+  border-radius:20px 20px 8px 20px;
+  max-width:244px;
+}
+.msg.user .bubble:after{
+  content:"";
+  position:absolute;
+  right:-6px;
+  top:14px;
+  width:12px;
+  height:12px;
+  background:inherit;
+  border-right:1px solid color-mix(in srgb,var(--accent),transparent 20%);
+  border-top:1px solid color-mix(in srgb,var(--accent),transparent 20%);
+  transform:rotate(45deg);
+}
+.avatar.image-avatar,
+.mini-av.image-avatar{
+  background:#eef7f6;
+  border-color:rgba(24,198,192,.24);
+  box-shadow:0 10px 22px rgba(30,68,84,.10);
+}
+.chat-page .msg{
+  --avatar-size:28px;
+  --tail-w:17px;
+  --tail-h:16px;
+  --tail-top:12px;
+  align-items:flex-start;
+  gap:9px;
+}
+.chat-page .msg .mini-av.image-avatar{
+  width:var(--avatar-size);
+  height:var(--avatar-size);
+  flex:0 0 var(--avatar-size);
+}
+.chat-page .msg .bubble,
+.chat-page .msg .card-msg{
+  position:relative;
+}
+.chat-page .msg:not(.user) .bubble,
+.chat-page .msg:not(.user) .card-msg{
+  margin-left:3px;
+}
+.chat-page .msg.user .bubble{
+  margin-right:3px;
+}
+.chat-page .msg:not(.user) .bubble:before,
+.chat-page .msg:not(.user) .card-msg:before{
+  content:"";
+  position:absolute;
+  left:-8px;
+  top:var(--tail-top);
+  width:var(--tail-w);
+  height:var(--tail-h);
+  background:var(--tail-bg,var(--surface));
+  border:0;
+  transform:rotate(-12deg) skewX(-18deg);
+  transform-origin:right center;
+  border-radius:2px 0 13px 13px;
+  -webkit-clip-path:polygon(100% 0,0 58%,100% 100%);
+  clip-path:polygon(100% 0,0 58%,100% 100%);
+  filter:drop-shadow(-3px 5px 4px rgba(31,48,72,.055));
+}
+.chat-page .msg:not(.user) .bubble{
+  --tail-bg:var(--surface);
+  background:#fff;
+  border:0;
+  border-radius:18px 18px 18px 7px;
+  box-shadow:0 15px 34px rgba(29,44,68,.10),0 5px 12px rgba(29,44,68,.05);
+}
+.chat-page .msg:not(.user) .card-msg{
+  --tail-bg:rgba(255,255,255,.92);
+  border:0;
+  border-radius:20px 24px 24px 8px;
+  box-shadow:0 18px 38px rgba(29,44,68,.11),0 6px 14px rgba(29,44,68,.045);
+}
+.chat-page .msg.user .bubble{
+  --tail-bg:linear-gradient(135deg,#168dff 0%,#087df4 100%);
+  background:var(--tail-bg);
+  border:0;
+  box-shadow:0 18px 34px rgba(8,125,244,.24),0 7px 14px rgba(8,125,244,.14);
+  color:#fff;
+  border-radius:18px 18px 7px 18px;
+}
+.chat-page .msg.user .bubble:after{
+  content:"";
+  position:absolute;
+  right:-8px;
+  top:var(--tail-top);
+  width:var(--tail-w);
+  height:var(--tail-h);
+  background:var(--tail-bg);
+  border:0;
+  transform:rotate(12deg) skewX(18deg);
+  transform-origin:left center;
+  border-radius:0 2px 13px 13px;
+  -webkit-clip-path:polygon(0 0,100% 58%,0 100%);
+  clip-path:polygon(0 0,100% 58%,0 100%);
+  filter:drop-shadow(4px 6px 4px rgba(8,125,244,.14));
+}
+:root[data-theme="dark"] .chat-page .msg:not(.user) .bubble{
+  --tail-bg:var(--surface);
+}
+:root[data-theme="dark"] .chat-page .msg:not(.user) .card-msg{
+  --tail-bg:rgba(32,38,38,.92);
+}
+.chat-page{
+  --chat-paper:#fbfcfb;
+}
+.chat-page .chat-scroll{
+  background:var(--chat-paper);
+}
+.chat-page .msg .bubble,
+.chat-page .msg .card-msg{
+  overflow:visible;
+}
+.chat-page .msg:not(.user) .bubble,
+.chat-page .msg:not(.user) .card-msg{
+  --tail-bg:#fff;
+  margin-left:4px;
+  border:0;
+  background:#fff;
+  border-radius:18px 18px 18px 6px;
+  box-shadow:
+    0 16px 34px rgba(36,52,74,.10),
+    0 5px 13px rgba(36,52,74,.055);
+}
+.chat-page .msg:not(.user) .card-msg{
+  border-radius:20px 22px 22px 7px;
+}
+.chat-page .msg:not(.user) .bubble:before,
+.chat-page .msg:not(.user) .card-msg:before{
+  left:-7px;
+  top:auto;
+  bottom:0;
+  width:20px;
+  height:20px;
+  background:var(--tail-bg);
+  transform:none;
+  clip-path:none;
+  -webkit-clip-path:none;
+  border-radius:0 0 16px 0;
+  filter:none;
+}
+.chat-page .msg:not(.user) .bubble:after,
+.chat-page .msg:not(.user) .card-msg:after{
+  content:"";
+  position:absolute;
+  left:-26px;
+  bottom:0;
+  width:26px;
+  height:20px;
+  background:var(--chat-paper);
+  border-radius:0 0 16px 0;
+}
+.chat-page .msg.user .bubble{
+  --tail-bg:#0a84ff;
+  margin-right:4px;
+  background:#0a84ff;
+  border:0;
+  border-radius:18px 18px 6px 18px;
+  box-shadow:
+    0 18px 34px rgba(10,132,255,.28),
+    0 7px 16px rgba(10,132,255,.16);
+}
+.chat-page .msg.user .bubble:before{
+  content:"";
+  position:absolute;
+  right:-7px;
+  bottom:0;
+  width:20px;
+  height:20px;
+  background:#0a84ff;
+  border-radius:0 0 0 16px;
+}
+.chat-page .msg.user .bubble:after{
+  right:-26px;
+  top:auto;
+  bottom:0;
+  width:26px;
+  height:20px;
+  background:var(--chat-paper);
+  transform:none;
+  clip-path:none;
+  -webkit-clip-path:none;
+  border-radius:0 0 0 16px;
+  filter:none;
+}
+:root[data-theme="dark"] .chat-page{
+  --chat-paper:#101614;
+}
+:root[data-theme="dark"] .chat-page .msg:not(.user) .bubble,
+:root[data-theme="dark"] .chat-page .msg:not(.user) .card-msg{
+  --tail-bg:#202626;
+  background:#202626;
+}
+.chat-page .msg{
+  gap:10px;
+}
+.chat-page .msg .bubble,
+.chat-page .msg .card-msg{
+  overflow:hidden;
+}
+.chat-page .msg:not(.user) .bubble:before,
+.chat-page .msg:not(.user) .bubble:after,
+.chat-page .msg:not(.user) .card-msg:before,
+.chat-page .msg:not(.user) .card-msg:after,
+.chat-page .msg.user .bubble:before,
+.chat-page .msg.user .bubble:after{
+  content:none;
+}
+.chat-page .msg:not(.user) .bubble{
+  margin-left:0;
+  border-radius:5px 15px 15px 15px;
+  background:#fff;
+  border:0;
+  box-shadow:0 14px 30px rgba(36,52,74,.105),0 4px 10px rgba(36,52,74,.05);
+}
+.chat-page .msg:not(.user) .card-msg{
+  margin-left:0;
+  border-radius:5px 17px 17px 17px;
+  background:#fff;
+  border:0;
+  box-shadow:0 16px 34px rgba(36,52,74,.11),0 5px 12px rgba(36,52,74,.05);
+}
+.chat-page .msg.user .bubble{
+  margin-right:0;
+  background:#0a84ff;
+  border:0;
+  border-radius:15px 5px 15px 15px;
+  color:#fff;
+  box-shadow:0 16px 32px rgba(10,132,255,.28),0 5px 12px rgba(10,132,255,.16);
+}
+:root[data-theme="dark"] .chat-page .msg:not(.user) .bubble,
+:root[data-theme="dark"] .chat-page .msg:not(.user) .card-msg{
+  background:#202626;
+}
+.chat-page .msg:not(.user) .bubble{
+  border-radius:2px 15px 15px 15px;
+}
+.chat-page .msg:not(.user) .card-msg{
+  border-radius:2px 17px 17px 17px;
+}
+.chat-page .msg.user .bubble{
+  border-radius:15px 2px 15px 15px;
+}
+.chat-page .composer{
+  left:22px;
+  right:22px;
+  bottom:86px;
+  height:46px;
+  padding:0;
+  gap:8px;
+  background:transparent;
+  border-top:0;
+  box-shadow:none;
+  backdrop-filter:none;
+}
+.chat-page.keyboard-open .composer{
+  bottom:300px;
+}
+.chat-page.emoji-open .composer{
+  bottom:228px;
+}
+.chat-page .composer-field{
+  height:46px;
+  padding:0 7px 0 17px;
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(28,38,52,.075);
+  box-shadow:0 16px 34px rgba(34,52,74,.12),0 3px 9px rgba(34,52,74,.04);
+}
+.chat-page .round{
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+  background:rgba(255,255,255,.92);
+  border:1px solid rgba(28,38,52,.075);
+  box-shadow:0 14px 30px rgba(34,52,74,.105),0 3px 9px rgba(34,52,74,.04);
+}
+:root[data-theme="dark"] .chat-page .composer{
+  background:transparent;
+  border-top:0;
+}
+:root[data-theme="dark"] .chat-page .composer-field,
+:root[data-theme="dark"] .chat-page .round{
+  background:rgba(32,38,38,.92);
+  border-color:rgba(255,255,255,.10);
+}
+.login-v3{
+  padding:78px 24px 30px;
+  gap:18px;
+  justify-content:flex-start;
+  background:
+    radial-gradient(300px 230px at 86% 8%,rgba(127,196,255,.28),transparent 72%),
+    radial-gradient(260px 210px at 2% 58%,rgba(255,213,185,.28),transparent 75%),
+    linear-gradient(180deg,#fbfdff 0%,#f7fbff 48%,#f4fbf8 100%);
+}
+.login-logo-v3{
+  width:92px;
+  height:92px;
+  border-radius:18px;
+  overflow:hidden;
+  box-shadow:0 22px 54px rgba(31,111,255,.16);
+}
+.login-logo-v3 svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+.login-hero-v3{
+  position:relative;
+  min-height:292px;
+  margin-top:54px;
+  padding:30px 20px 20px;
+  border-radius:34px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.82);
+  background:
+    radial-gradient(190px 170px at 88% 22%,rgba(31,111,255,.18),transparent 72%),
+    radial-gradient(170px 140px at 12% 86%,rgba(24,198,192,.14),transparent 72%),
+    linear-gradient(145deg,rgba(255,255,255,.82),rgba(255,255,255,.48));
+  box-shadow:0 30px 72px rgba(64,84,106,.14),inset 0 1px 0 rgba(255,255,255,.96);
+  backdrop-filter:blur(26px) saturate(1.18);
+}
+.login-hero-v3 h1{
+  position:relative;
+  z-index:2;
+  margin-top:24px;
+  font-size:36px;
+  line-height:1.08;
+  letter-spacing:0;
+  font-weight:880;
+  color:#11161a;
+}
+.login-hero-v3 p{
+  position:relative;
+  z-index:2;
+  max-width:282px;
+  margin-top:14px;
+  font-size:13.6px;
+  line-height:1.72;
+  color:rgba(24,32,38,.58);
+}
+.login-metrics-v3{
+  position:absolute;
+  z-index:2;
+  left:20px;
+  right:20px;
+  bottom:20px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
+}
+.login-metrics-v3 span{
+  min-height:58px;
+  padding:10px 12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.58);
+  border:1px solid rgba(255,255,255,.70);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.82);
+}
+.login-metrics-v3 b{display:block;font-size:22px;line-height:1}
+.login-metrics-v3 small{display:block;margin-top:5px;font-size:10px;color:rgba(24,32,38,.48)}
+.login-glass-orb{
+  position:absolute;
+  right:-14px;
+  bottom:30px;
+  width:128px;
+  height:118px;
+  border-radius:36px;
+  background:
+    radial-gradient(circle at 34% 22%,rgba(255,255,255,.92),rgba(255,255,255,.28) 25%,transparent 26%),
+    linear-gradient(135deg,rgba(24,198,192,.78),rgba(31,111,255,.80));
+  transform:rotate(8deg);
+  box-shadow:0 24px 60px rgba(31,111,255,.18);
+}
+.login-glass-orb:before{
+  content:"";
+  position:absolute;
+  inset:24px;
+  border-radius:26px;
+  border:1px solid rgba(255,255,255,.46);
+}
+.login-glass-orb i{
+  position:absolute;
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  background:rgba(232,255,255,.86);
+}
+.login-glass-orb i:nth-child(1){left:32px;top:28px}
+.login-glass-orb i:nth-child(2){right:28px;top:54px}
+.login-glass-orb i:nth-child(3){left:58px;bottom:24px}
+.login-preview-v3{
+  display:grid;
+  grid-template-columns:52px 1fr;
+  gap:12px;
+  align-items:center;
+  min-height:86px;
+  padding:13px;
+  border-radius:28px;
+  border:1px solid rgba(255,255,255,.76);
+  background:rgba(255,255,255,.72);
+  box-shadow:0 18px 42px rgba(64,84,106,.10);
+  backdrop-filter:blur(22px);
+}
+.preview-av{
+  width:52px;
+  height:52px;
+  border-radius:18px;
+  overflow:hidden;
+}
+.preview-av img{width:100%;height:100%;object-fit:cover}
+.login-preview-v3 b{font-size:17px}
+.login-preview-v3 p{margin-top:3px;font-size:12px;line-height:1.45;color:rgba(24,32,38,.56)}
+.login-v3 .wechat-btn,
+.wechat-btn{
+  background:#1aad19;
+  border-color:#1aad19;
+  color:#fff;
+  box-shadow:0 16px 34px rgba(26,173,25,.20);
+}
+.create-v3 .pro-scroll{
+  padding:14px 16px 110px;
+  background:
+    radial-gradient(260px 220px at 84% 16%,rgba(24,198,192,.18),transparent 72%),
+    radial-gradient(260px 220px at 0% 44%,rgba(124,60,255,.10),transparent 74%),
+    linear-gradient(180deg,#fbfefd 0%,#f6fbfa 100%);
+}
+.create-hero-v3{
+  position:relative;
+  min-height:248px;
+  padding:26px 20px;
+  overflow:hidden;
+  border-radius:34px;
+  border:1px solid rgba(255,255,255,.78);
+  background:
+    radial-gradient(210px 170px at 88% 20%,rgba(24,198,192,.18),transparent 72%),
+    radial-gradient(160px 130px at 8% 92%,rgba(124,60,255,.12),transparent 72%),
+    linear-gradient(145deg,rgba(255,255,255,.82),rgba(255,255,255,.50));
+  box-shadow:0 26px 64px rgba(58,86,91,.12),inset 0 1px 0 rgba(255,255,255,.94);
+  backdrop-filter:blur(26px) saturate(1.14);
+}
+.create-hero-v3 h2{
+  position:relative;
+  z-index:2;
+  max-width:260px;
+  margin-top:18px;
+  color:#11161a;
+  font-size:32px;
+  line-height:1.06;
+}
+.create-hero-v3 p{
+  position:relative;
+  z-index:2;
+  max-width:275px;
+  margin-top:12px;
+  color:rgba(24,32,38,.58);
+  font-size:13px;
+  line-height:1.68;
+}
+.create-hero-v3 .login-glass-orb{
+  right:-22px;
+  bottom:12px;
+  width:142px;
+  height:132px;
+}
+.identity-card-v3,
+.gender-card-v3,
+.trait-studio-v3{
+  border-radius:28px;
+  border-color:rgba(255,255,255,.72);
+  background:rgba(255,255,255,.72);
+  box-shadow:0 20px 48px rgba(56,82,88,.10);
+}
+.trait-studio-v3{
+  padding:16px;
+}
+.trait-map-v3{
+  position:relative;
+  height:128px;
+  margin:12px 0 14px;
+  border-radius:26px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.74);
+  background:
+    linear-gradient(90deg,rgba(21,24,28,.045) 1px,transparent 1px) 0 0/34px 100%,
+    linear-gradient(180deg,rgba(21,24,28,.045) 1px,transparent 1px) 0 0/100% 32px,
+    radial-gradient(190px 120px at 85% 18%,rgba(31,111,255,.16),transparent 70%),
+    radial-gradient(170px 110px at 16% 84%,rgba(24,198,192,.16),transparent 70%),
+    rgba(255,255,255,.62);
+}
+.trait-map-v3:before{
+  content:"";
+  position:absolute;
+  left:28px;
+  right:28px;
+  top:50%;
+  height:1px;
+  background:rgba(24,32,38,.12);
+}
+.trait-map-v3 i{
+  position:absolute;
+  left:var(--x);
+  top:var(--y);
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:var(--c);
+  box-shadow:0 0 0 6px color-mix(in srgb,var(--c),transparent 86%),0 12px 22px color-mix(in srgb,var(--c),transparent 76%);
+  transform:translate(-50%,-50%);
+  transition:top 160ms ease;
+}
+.trait-grid-v3{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.trait-card-v3{
+  min-height:112px;
+  padding:12px;
+  border-radius:22px;
+  border:1px solid rgba(255,255,255,.76);
+  background:
+    radial-gradient(80px 62px at 86% 10%,color-mix(in srgb,var(--accent),transparent 84%),transparent 70%),
+    rgba(255,255,255,.64);
+  box-shadow:0 12px 30px rgba(56,82,88,.08),inset 0 1px 0 rgba(255,255,255,.86);
+}
+.trait-card-v3 .dimension-top{
+  font-size:12.5px;
+}
+.trait-card-v3 .dimension-top small{
+  min-width:32px;
+  height:24px;
+  display:grid;
+  place-items:center;
+  border-radius:999px;
+  color:#10161a;
+  background:rgba(255,255,255,.72);
+}
+.trait-axis-labels{
+  display:flex;
+  justify-content:space-between;
+  margin:7px 1px 4px;
+  font-size:9.5px;
+  color:rgba(24,32,38,.42);
+}
+.trait-card-v3 .range-line{
+  height:28px;
+}
+.trait-card-v3 .range-line::-webkit-slider-runnable-track{
+  height:6px;
+  background:
+    linear-gradient(90deg,color-mix(in srgb,var(--accent),white 46%) 0 var(--v),rgba(24,32,38,.08) var(--v) 100%);
+}
+.trait-card-v3 .range-line::-webkit-slider-thumb{
+  width:20px;
+  height:20px;
+  margin-top:-7px;
+  border:5px solid color-mix(in srgb,var(--accent),#1b2b31 8%);
+}
 </style>
 </head>
 <body>
@@ -5976,10 +6887,10 @@ function uiIcon(name){
 }
 function tabIcon(name){
   const icons={
-    chat:`<svg viewBox="0 0 24 24"><path d="M5 6.8C5 4.7 6.7 3 8.8 3h6.4C17.3 3 19 4.7 19 6.8v4.4c0 2.1-1.7 3.8-3.8 3.8h-3.8L7 19v-4.2c-1.2-.6-2-1.9-2-3.4V6.8Z"/><path d="M9 8h6M9 11h4"/></svg>`,
-    online:`<svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>`,
-    scene:`<svg viewBox="0 0 24 24"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z"/><circle cx="12" cy="10" r="2.2"/></svg>`,
-    profile:`<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2"/><path d="M5.5 20c.8-3.6 3.1-5.4 6.5-5.4s5.7 1.8 6.5 5.4"/></svg>`
+    chat:`<svg viewBox="0 0 24 24"><path d="M5.2 7.2c0-2.1 1.7-3.8 3.9-3.8h5.8c2.2 0 3.9 1.7 3.9 3.8v3.7c0 2.2-1.7 3.9-3.9 3.9h-3.2L7.4 19v-4.4c-1.3-.6-2.2-2-2.2-3.7V7.2Z"/><path d="M9 8.2h6M9 11.2h3.7"/><circle cx="16.8" cy="15.8" r="1.15"/></svg>`,
+    online:`<svg viewBox="0 0 24 24"><path d="M9 17.4V6.3l9-1.9v10.9"/><circle cx="6.7" cy="17.5" r="2.45"/><circle cx="15.7" cy="15.4" r="2.45"/><path d="M9 8.6 18 6.7"/><circle cx="18.4" cy="4.2" r=".9"/></svg>`,
+    scene:`<svg viewBox="0 0 24 24"><path d="M12 20.7s5.8-5 5.8-10.5A5.8 5.8 0 0 0 6.2 10c0 5.7 5.8 10.7 5.8 10.7Z"/><circle cx="12" cy="10.1" r="2.05"/><path d="M7.6 19.3c-1.4.4-2.2.9-2.2 1.5 0 1.1 3 1.9 6.6 1.9s6.6-.8 6.6-1.9c0-.6-.8-1.1-2.2-1.5"/></svg>`,
+    profile:`<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.15"/><path d="M5.3 20c.7-3.6 3.1-5.5 6.7-5.5s6 1.9 6.7 5.5"/><path d="M18.4 5.2c1 .9 1.5 2 1.5 3.4s-.5 2.5-1.5 3.4"/></svg>`
   };
   return icons[name];
 }
@@ -6030,7 +6941,7 @@ function render(){
   document.querySelector(".screen")?.setAttribute("data-page", state.page);
   const app=document.getElementById("app");
   app.innerHTML=state.page==="chat"?chatPage():featurePage(state.page);
-  if(!["login","agents","createAgent"].includes(state.page)&&!state.keyboard&&!state.emoji)app.insertAdjacentHTML("beforeend",tabbar());
+  if(["chat","online","scene","profile"].includes(state.page)&&!state.keyboard&&!state.emoji)app.insertAdjacentHTML("beforeend",tabbar());
   if(state.drawer)app.insertAdjacentHTML("beforeend",drawer());
   if(state.modal==="capsule")app.insertAdjacentHTML("beforeend",capsuleModal());
   if(state.keyboard&&state.page==="chat")app.insertAdjacentHTML("beforeend",keyboardPanel());
@@ -6056,14 +6967,15 @@ function tabTitle(icon,title,sub){return`<div class="tab-title"><div class="mark
 function chatPage(){return`<section class="page chat-page ${state.keyboard?"keyboard-open":""} ${state.emoji?"emoji-open":""}"><div class="chat-head"><button class="avatar image-avatar" data-action="page" data-page="profile">${agentPortrait()}</button><div class="chat-name"><b>${state.currentAgent}</b><small>互动中 · 文字 / 表情 / 功能卡片</small></div><button class="head-btn" data-action="drawer" aria-label="功能">${uiIcon("menu")}</button></div><div class="chat-scroll">${state.messages.map(messageHTML).join("")}</div><div class="composer"><div class="composer-field"><div class="input" data-action="open-keyboard">${state.keyboard?"我想找点事做，不想一直陷在坏心情里。":state.emoji?"选择一个表情…":"发消息…"}</div><button class="input-voice" data-action="voice" aria-label="语音">${uiIcon("mic")}</button></div><button class="round" data-action="emoji-toggle" aria-label="表情">${uiIcon("smile")}</button></div></section>`}
 function keyboardPanel(){const rows=[["Q","W","E","R","T","Y","U","I","O","P"],["A","S","D","F","G","H","J","K","L"],["⇧","Z","X","C","V","B","N","M","⌫"]];return`<div class="keyboard"><div class="keyboard-bar"><span>我想找点事做，不想一直陷在坏心情里。</span><button data-action="keyboard-close">完成</button></div>${rows.map((r,ri)=>`<div class="key-row">${r.map(k=>`<button class="key ${ri===2&&(k==="⇧"||k==="⌫")?"wide":""}" data-action="keyboard-key">${k}</button>`).join("")}</div>`).join("")}<div class="key-row"><button class="key wide" data-action="keyboard-key">123</button><button class="key wide" data-action="voice">${uiIcon("mic")}</button><button class="key space" data-action="keyboard-key">空格</button><button class="key send" data-action="keyboard-send">发送</button></div></div>`}
 function emojiPanel(){const emojis=["😊","😂","🥹","🤍","🙌","🌧️","☀️","🎧","🍿","🎮","📚","🍰","🧋","🌙","✨","🫶","😌","😵‍💫","😭","👍","👀"];return`<div class="emoji-panel"><div class="emoji-head"><b>常用表情</b><button data-action="emoji-close">关闭</button></div><div class="emoji-grid">${emojis.map(e=>`<button class="emoji" data-action="emoji-pick" data-emoji="${e}">${e}</button>`).join("")}</div></div>`}
-function messageHTML(m){if(m.from==="card")return`<div class="msg"><div class="mini-av image-avatar">${agentPortrait()}</div><button class="card-msg" data-action="open-card" data-kind="${m.kind}"><div class="tag">Companion Card</div><h4>${m.title}</h4><p>${m.desc}</p><div class="foot"><span>${m.foot}</span><span>打开 ›</span></div></button></div>`;if(m.from==="me")return`<div class="msg user"><div class="bubble">${m.text}</div></div>`;return`<div class="msg"><div class="mini-av image-avatar">${agentPortrait()}</div><div class="bubble">${m.text}</div></div>`}
+function messageHTML(m){if(m.from==="card")return`<div class="msg"><div class="mini-av image-avatar">${agentPortrait()}</div><button class="card-msg" data-action="open-card" data-kind="${m.kind}"><div class="tag">Companion Card</div><h4>${m.title}</h4><p>${m.desc}</p><div class="foot"><span>${m.foot}</span><span>打开 ›</span></div></button></div>`;if(m.from==="me")return`<div class="msg user"><div class="bubble">${m.text}</div><div class="mini-av image-avatar">${userPortrait()}</div></div>`;return`<div class="msg"><div class="mini-av image-avatar">${agentPortrait()}</div><div class="bubble">${m.text}</div></div>`}
 function drawer(){return`<button class="scrim" data-action="close"></button><aside class="drawer">${sideItems.map(i=>`<button class="drawer-btn" style="--icon-soft:${i[2]};--icon-ink:${i[3]};--icon-accent:${i[4]}" aria-label="${i[1]}" data-action="page" data-page="${i[0]}">${sideIcon(i[0])}</button>`).join("")}</aside>`}
 function featurePage(page){const map={login,agents,createAgent,online,scene,weather,capsule,legacy,achieve,checkin,shop,music,movie,game,daily,aiAccount,offlineInvite,progress,profile};return map[page]?map[page]():chatPage()}
-function brandLogo(){return`<svg viewBox="0 0 256 256" aria-hidden="true"><defs><radialGradient id="lgA" cx="28%" cy="18%" r="86%"><stop offset="0" stop-color="#78d5ff"/><stop offset=".52" stop-color="#2d95ff"/><stop offset="1" stop-color="#0966df"/></radialGradient><linearGradient id="lgB" x1="82" y1="38" x2="148" y2="218"><stop stop-color="#fff"/><stop offset="1" stop-color="#e8f3ff"/></linearGradient></defs><rect width="256" height="256" rx="24" fill="#f8fbff"/><circle cx="128" cy="128" r="108" fill="url(#lgA)"/><path d="M86 221c3-49 18-82 44-99 19-12 20-26 12-43-12-27 6-48 34-50 23-2 45 13 54 35 12 31-1 65-32 80-18 9-27 22-29 42-1 10-1 21 0 35H86Z" fill="url(#lgB)"/><circle cx="173" cy="158" r="24" fill="url(#lgB)"/></svg>`}
-function agentPortrait(){const mark=state.currentAgent.slice(-1)||"芜";const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><radialGradient id="pbg" cx="28%" cy="12%" r="90%"><stop offset="0" stop-color="#f6ffff"/><stop offset=".48" stop-color="#d8eeea"/><stop offset="1" stop-color="#89bbb4"/></radialGradient><linearGradient id="hair" x1="20" y1="24" x2="75" y2="90"><stop stop-color="#264b4e"/><stop offset="1" stop-color="#113237"/></linearGradient><linearGradient id="skin" x1="32" y1="25" x2="62" y2="62"><stop stop-color="#fff4e8"/><stop offset="1" stop-color="#ead0c0"/></linearGradient></defs><rect width="96" height="96" rx="28" fill="url(#pbg)"/><circle cx="72" cy="20" r="14" fill="#fff" opacity=".28"/><path d="M20 77c3-26 14-45 32-54 16 7 25 25 25 54H20Z" fill="url(#hair)"/><path d="M31 44c0-15 10-25 22-25 13 0 22 10 22 25 0 17-10 30-22 30S31 61 31 44Z" fill="url(#skin)"/><path d="M30 45c1-18 12-30 28-30 11 8 16 17 17 31-12-3-22-10-31-22-3 9-8 15-14 21Z" fill="url(#hair)"/><path d="M42 50c4 4 12 4 16 0" stroke="#8c6f64" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".58"/><circle cx="45" cy="43" r="2.4" fill="#17363b"/><circle cx="61" cy="43" r="2.4" fill="#17363b"/><text x="48" y="86" text-anchor="middle" font-size="13" font-weight="800" fill="#17363b" opacity=".82">${mark}</text></svg>`;return`<img alt="${state.currentAgent}头像" src="data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}">`}
-function login(){return`<section class="page login-page companion-entry"><div class="brand-logo">${brandLogo()}</div><div class="pro-hero" style="--pro:#1f6fff;--hero-a:rgba(31,111,255,.2);--hero-b:rgba(24,198,192,.14)"><div class="pro-kicker">companion</div><h2>有人和你一起长出日常</h2><p>把想说的话、想做的事和偶尔冒出来的小情绪，都放进一个长期陪伴的关系里。</p><div class="pro-metrics"><div class="pro-metric"><b>1</b><small>唯一关系</small></div><div class="pro-metric"><b>7</b><small>性格维度</small></div><div class="pro-metric"><b>∞</b><small>长期记忆</small></div></div><div class="pro-orb"></div></div><div class="pro-list"><div class="pro-row" style="--pro:#7c3cff"><div class="lead">听</div><div><h4>从一句话开始</h4><p>今天可以先从“我有点累”开始，不需要完整解释。</p></div><div class="trail">›</div></div><div class="pro-row" style="--pro:#ff6a3d"><div class="lead">伴</div><div><h4>只保留一个长期对象</h4><p>认真陪伴一个 TA，而不是在角色之间切换。</p></div><div class="trail">›</div></div></div><div><button class="wechat-btn" data-action="login"><span>微信</span><span>继续</span></button><div class="login-alt">手机号登录 · 隐私协议 · 数据可删除</div></div></section>`}
+function brandLogo(){return`<svg viewBox="0 0 256 256" aria-hidden="true"><defs><radialGradient id="lgA" cx="24%" cy="16%" r="92%"><stop offset="0" stop-color="#6ed6ff"/><stop offset=".48" stop-color="#2e9cff"/><stop offset="1" stop-color="#0665df"/></radialGradient><linearGradient id="lgB" x1="82" y1="30" x2="150" y2="224"><stop stop-color="#fff"/><stop offset=".58" stop-color="#fff"/><stop offset="1" stop-color="#e8f3ff"/></linearGradient><radialGradient id="lgC" cx="72%" cy="52%" r="58%"><stop stop-color="#fff"/><stop offset="1" stop-color="#e8f3ff"/></radialGradient></defs><rect width="256" height="256" fill="#f8fbff"/><circle cx="128" cy="128" r="108" fill="url(#lgA)"/><path d="M78 224c5-52 23-88 54-107 24-14 27-37 15-59-8-17 10-30 32-29 30 2 54 27 54 58 0 35-23 62-58 70-23 5-35 21-38 48-.7 6-.9 13-.7 19H78Z" fill="url(#lgB)"/><circle cx="174" cy="158" r="25" fill="url(#lgC)"/></svg>`}
+function agentPortrait(){return`<img alt="${state.currentAgent}头像" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=240&h=240&q=82">`}
+function userPortrait(){return`<img alt="我的头像" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=240&h=240&q=82">`}
+function login(){return`<section class="page login-page companion-entry login-v3"><div class="login-logo-v3">${brandLogo()}</div><div class="login-hero-v3"><div class="pro-kicker">COMPANION</div><h1>有人和你一起长出日常</h1><p>不用先整理好情绪。先说一句，小芜会接住今天的开头。</p><div class="login-glass-orb"><i></i><i></i><i></i></div><div class="login-metrics-v3"><span><b>1</b><small>唯一关系</small></span><span><b>7</b><small>性格维度</small></span><span><b>∞</b><small>长期记忆</small></span></div></div><div class="login-preview-v3"><div class="preview-av">${agentPortrait()}</div><div><b>小芜</b><p>我在。今天想先听歌、看电影，还是只聊一会儿？</p></div></div><div><button class="wechat-btn" data-action="login"><span>微信</span><span>继续</span></button><div class="login-alt">手机号登录 · 隐私协议 · 数据可删除</div></div></section>`}
 function agents(){return`<section class="page"><div class="nav"><button class="icon" data-action="page" data-page="chat" aria-label="返回">${uiIcon("chevron-left")}</button><div class="nav-title">当前伴生对象</div><button class="icon" data-action="page" data-page="profile" aria-label="设置">${uiIcon("user")}</button></div><div class="scroll pro-scroll"><div class="pro-hero" style="--pro:#18c6c0;--hero-a:rgba(24,198,192,.2);--hero-b:rgba(31,111,255,.12)"><div class="pro-kicker">only agent</div><h2>${state.currentAgent}</h2><p>当前账号只和这一个 agent 建立长期关系。删除后，才可以重新创建新的伴生对象。</p><div class="pro-metrics"><div class="pro-metric"><b>126</b><small>陪伴天数</small></div><div class="pro-metric"><b>48h</b><small>累计聊天</small></div><div class="pro-metric"><b>P4</b><small>亲密阶段</small></div></div><div class="pro-orb"></div></div><button class="pro-row" style="--pro:#e35b6f" data-action="page" data-page="createAgent"><div class="lead">${uiIcon("archive")}</div><div><h4>删除当前 agent 后重新创建</h4><p>删除会清空与 TA 绑定的长期关系和对话入口。</p></div><div class="trail">›</div></button></div></section>`}
-function createAgent(){return`<section class="page create-page"><div class="nav"><button class="icon" data-action="page" data-page="login" aria-label="返回">${uiIcon("chevron-left")}</button><div class="nav-title">创建伴生对象</div><button class="share" data-action="create-agent">完成</button></div><div class="scroll pro-scroll"><div class="pro-hero" style="--pro:#18c6c0;--hero-a:rgba(24,198,192,.2);--hero-b:rgba(124,60,255,.12)"><div class="pro-kicker">first profile</div><h2>给 TA 一个名字和最初的性格</h2><p>名字、性别和 7 个维度会成为第一份角色档案，也会决定初始聊天节奏。</p><div class="pro-orb"></div></div><div class="creation-card"><span class="form-label">姓名</span><input class="name-input" data-field="agent-name" value="${state.agentName}" placeholder="输入名字"></div><div class="creation-card"><span class="form-label">性别</span><div class="gender-row"><button class="gender-pill ${state.agentGender==="male"?"on":""}" data-action="set-gender" data-gender="male">男</button><button class="gender-pill ${state.agentGender==="female"?"on":""}" data-action="set-gender" data-gender="female">女</button><button class="gender-pill ${state.agentGender==="random"?"on":""}" data-action="set-gender" data-gender="random">随机</button></div></div><div class="creation-card"><div class="dimension-head"><div><b>7 个性格维度</b><div class="form-label" style="margin:3px 0 0">可手动调整，也可以随机生成</div></div><button data-action="random-dimensions">随机生成</button></div><div class="dimension-list">${state.dimensions.map((d,i)=>`<div class="dimension-row"><div class="dimension-top"><span>${d.name}</span><small data-dim-value="${i}">${d.value}</small></div><input class="range-line" style="--v:${d.value}%" type="range" min="0" max="100" value="${d.value}" data-dim-index="${i}" aria-label="${d.name}"><div class="dimension-labels"><span>${d.low}</span><span>${d.high}</span></div></div>`).join("")}</div></div><button class="create-cta" data-action="create-agent">创建并开始聊天</button></div></section>`}
+function createAgent(){const traitColors=["#18c6c0","#1f6fff","#7c3cff","#ff6a3d","#22c66b","#ffc936","#e35b6f"];return`<section class="page create-page create-v3"><div class="nav"><button class="icon" data-action="page" data-page="login" aria-label="返回">${uiIcon("chevron-left")}</button><div class="nav-title">创建伴生对象</div><button class="share" data-action="create-agent">完成</button></div><div class="scroll pro-scroll"><div class="create-hero-v3"><div class="pro-kicker">FIRST PROFILE</div><h2>先给 TA 一个能被记住的开头</h2><p>名字、性别和性格倾向会成为第一份档案，也会影响第一段聊天的节奏。</p><div class="login-glass-orb"><i></i><i></i><i></i></div></div><div class="creation-card identity-card-v3"><span class="form-label">姓名</span><input class="name-input" data-field="agent-name" value="${state.agentName}" placeholder="输入名字"></div><div class="creation-card gender-card-v3"><span class="form-label">性别</span><div class="gender-row"><button class="gender-pill ${state.agentGender==="male"?"on":""}" data-action="set-gender" data-gender="male">男</button><button class="gender-pill ${state.agentGender==="female"?"on":""}" data-action="set-gender" data-gender="female">女</button><button class="gender-pill ${state.agentGender==="random"?"on":""}" data-action="set-gender" data-gender="random">随机</button></div></div><div class="creation-card trait-studio-v3"><div class="dimension-head"><div><b>7 个性格维度</b><div class="form-label" style="margin:3px 0 0">拖动每张卡片里的性格坐标，或一键随机生成</div></div><button data-action="random-dimensions">随机生成</button></div><div class="trait-map-v3">${state.dimensions.map((d,i)=>`<i style="--x:${18+i*10.5}%;--y:${82-d.value}%;--c:${traitColors[i%traitColors.length]}"></i>`).join("")}</div><div class="trait-grid-v3">${state.dimensions.map((d,i)=>{const c=traitColors[i%traitColors.length];return`<div class="dimension-row trait-card-v3" style="--accent:${c};--v:${d.value}%"><div class="dimension-top"><span>${d.name}</span><small data-dim-value="${i}">${d.value}</small></div><div class="trait-axis-labels"><span>${d.low}</span><span>${d.high}</span></div><input class="range-line" style="--v:${d.value}%" type="range" min="0" max="100" value="${d.value}" data-dim-index="${i}" aria-label="${d.name}"></div>`}).join("")}</div></div><button class="create-cta" data-action="create-agent">创建并开始聊天</button></div></section>`}
 function weather(){return`<section class="page">${nav("天气","weather")}<div class="scroll pro-scroll"><div class="pro-hero" style="--pro:#1f8fff;--hero-a:rgba(31,143,255,.22);--hero-b:rgba(255,201,54,.14)"><div class="pro-kicker">weather card</div><h2>24° 多云，傍晚适合短途散步</h2><p>小芜所在地 · 杭州。全天 19° - 27°，风力 2 级。</p><div class="pro-metrics"><div class="pro-metric"><b>42</b><small>AQI 优</small></div><div class="pro-metric"><b>62%</b><small>湿度</small></div><div class="pro-metric"><b>2级</b><small>东南风</small></div></div><div class="pro-orb"></div></div><div class="pro-line-chart"><svg viewBox="0 0 260 64" fill="none"><path d="M4 45 C38 35 56 18 92 24 C132 31 142 11 178 18 C208 23 226 33 256 21" stroke="#1f8fff" stroke-width="3" stroke-linecap="round"/><path d="M4 48 C42 52 75 44 102 50 C145 59 178 43 256 48" stroke="#22c66b" stroke-width="2" stroke-dasharray="5 6" stroke-linecap="round"/></svg></div><div class="pro-list"><button class="pro-row" style="--pro:#1f8fff" data-action="share" data-kind="weather"><div class="lead">18</div><div><h4>18:00 降温</h4><p>出门建议薄外套，小芜会在傍晚前提醒。</p></div><div class="trail">22°</div></button></div></div></section>`}
 function capsule(){return`<section class="page">${nav("时间胶囊","capsule")}<div class="scroll pro-scroll"><div class="pro-hero" style="--pro:#7c3cff;--hero-a:rgba(124,60,255,.2);--hero-b:rgba(31,111,255,.12)"><div class="pro-kicker">future capsule</div><h2>把今天的话，交给未来某一天打开</h2><p>按开启时间管理所有封存内容，草稿可随时继续编辑。</p><div class="pro-actions"><button class="pro-pill primary" data-action="modal" data-modal="capsule">写新胶囊</button><button class="pro-pill">草稿 2</button></div><div class="pro-orb"></div></div><div class="section-title">2026 年 6 月开启</div><div class="pro-list">${["给考完试的自己","夏天开始前","毕业前夜"].map((x,i)=>`<button class="pro-row" style="--pro:#7c3cff" data-action="share" data-kind="capsule"><div class="lead">${i+1}</div><div><h4>${x}</h4><p>${["希望那天你已经睡了很长的一觉。","记得买一束便宜但漂亮的花。","给未来保留一点不确定的勇气。"][i]}</p></div><div class="trail">06/${["01","18","29"][i]}</div></button>`).join("")}</div></div></section>`}
 function capsuleModal(){return`<button class="scrim" data-action="close-modal"></button><div class="sheet-note"><h3 style="margin-bottom:10px">写胶囊</h3><textarea>未来的我，如果今天又觉得不够好，请先去喝水、洗澡，然后再判断。</textarea><div class="btn-row"><button class="btn" data-action="close-modal">存草稿</button><button class="btn primary" data-action="save-capsule">封存</button></div></div>`}
@@ -6071,7 +6983,7 @@ function legacy(){return`<section class="page">${nav("遗言","legacy")}<div cla
 function achieve(){const badges=[["初次相遇","第一段完整对话","#1f6fff","01"],["七日不断","连续陪伴一周","#22c66b","07"],["深夜树洞","被认真接住过","#7c3cff","夜"],["未来胶囊","写给未来的话","#ff6a3d","封"],["共同听歌","共享一首歌","#18c6c0","听"],["长期陪伴","关系进入 P4","#ffc936","P4"]];return`<section class="page">${nav("成就","achieve")}<div class="scroll pro-scroll"><div class="pro-hero" style="--pro:#ffc936;--hero-a:rgba(255,201,54,.24);--hero-b:rgba(124,60,255,.13)"><div class="pro-kicker">achievement</div><h2>把关系里发生过的事，变成可回看的里程碑</h2><p>成就不是任务压力，而是你们长期陪伴慢慢留下的证据。</p><div class="pro-metrics"><div class="pro-metric"><b>18</b><small>已解锁</small></div><div class="pro-metric"><b>金</b><small>最高等级</small></div><div class="pro-metric"><b>3</b><small>本周新增</small></div></div><div class="pro-orb"></div></div><div class="pro-mini-grid">${badges.map(x=>`<button class="pro-card" style="--pro:${x[2]}" data-action="share" data-kind="achieve"><div class="pro-card-icon">${x[3]}</div><h3>${x[0]}</h3><p>${x[1]}</p><footer><span>已获得</span><span>›</span></footer></button>`).join("")}</div></div></section>`}
 function checkin(){const week=["一","二","三","四","五","六","日"];return`<section class="page">${nav("打卡提醒","checkin")}<div class="scroll pro-scroll"><div class="pro-hero habit-hero"><div class="pro-kicker">habit rhythm</div><h2>提醒不是催促，是有人陪你把一天收住</h2><p>小芜会按你的状态选择语音、消息或轻提醒，不把打卡做成压力。</p><div class="habit-week">${week.map((d,i)=>`<span class="habit-day ${[1,2,4,5].includes(i)?"on":""}">${d}</span>`).join("")}</div></div><div class="section-title">今天的时间线</div><div class="habit-line"><button class="habit-item" data-time="08:10" data-action="share" data-kind="checkin"><h4>轻声叫起床</h4><p>先给 5 分钟缓冲，再确认今天第一件事。</p></button><button class="habit-item" data-time="20:30" data-action="share" data-kind="checkin"><h4>工作冲刺 25 分钟</h4><p>番茄钟期间只保留必要提醒，结束后建议休息。</p></button><button class="habit-item" data-time="22:40" data-action="share" data-kind="checkin"><h4>睡前收尾</h4><p>把未完成的事放到明天，不让它继续占据睡眠。</p></button></div></div></section>`}
 function shop(){const items=[["极简气泡","320 积分","▱","#1f6fff"],["蓝雾背景","520 积分","◌","#18c6c0"],["银线头像框","680 积分","◎","#7c3cff"],["补签卡 x1","120 积分","✓","#22c66b"]];return`<section class="page">${nav("积分商城","shop")}<div class="scroll pro-scroll"><div class="pro-hero" style="--pro:#ff6a3d;--hero-a:rgba(255,106,61,.18);--hero-b:rgba(255,201,54,.17)"><div class="pro-kicker">point shop</div><h2>2,816 积分</h2><p>只保留能让对话更有质感的小物件：气泡、背景、头像框和补签卡。</p><div class="pro-actions"><button class="pro-pill primary">气泡</button><button class="pro-pill">背景</button><button class="pro-pill">头像框</button></div><div class="pro-orb"></div></div><div class="pro-grid">${items.map(x=>`<button class="pro-card" style="--pro:${x[3]}" data-action="share" data-kind="shop"><div class="pro-card-icon">${x[2]}</div><h3>${x[0]}</h3><p>${x[1]} · 可立即兑换并应用到聊天。</p><footer><span>兑换</span><span>›</span></footer></button>`).join("")}</div></div></section>`}
-function online(){const tiles=[["movie","一起看电影","海报轮播、同步进度、共同弹幕。","房间就绪","movie"],["game","一起玩游戏","动态棋盘、低压力小游戏和语音同步。","4 个游戏","game"],["daily","日常分享","书影音、美食和照片被整理成分享卡。","今日 5 张","daily"],["music","一起听音乐","五线谱、键盘和共享乐评一起进入聊天。","播放中","music"]];return`<section class="page hub-page online-hub-v5"><div class="scroll pro-scroll"><div class="online-hero-v4"><div class="pro-kicker">online room</div><h2>有我在，消解所有独处的无趣</h2><p>小芜已经把今晚能一起做的事放好了：电影房间待开场，小游戏可随时开始，音乐继续播到 01:42。</p><div class="online-orbit"><i></i><i></i><i></i></div></div><div class="portal-grid">${tiles.map(x=>`<button class="portal-card ${x[4]}" data-action="page" data-page="${x[0]}"><div class="portal-art"></div><h3>${x[1]}</h3><p>${x[2]}</p><footer><span>${x[3]}</span><span>›</span></footer></button>`).join("")}</div></div></section>`}
+function online(){const tiles=[["movie","一起看电影","海报轮播、同步进度、共同弹幕。","房间就绪","movie"],["game","一起玩游戏","动态棋盘、低压力小游戏和语音同步。","4 个游戏","game"],["daily","日常分享","书影音、美食和照片被整理成分享卡。","今日 5 张","daily"],["music","一起听音乐","五线谱、键盘和共享乐评一起进入聊天。","播放中","music"]];return`<section class="page hub-page online-hub-v5"><div class="scroll pro-scroll"><div class="online-hero-v4"><div class="pro-kicker">online room</div><h2>今晚想和小芜做点什么？</h2><p>电影房间还在片头，小游戏随时能开，歌也播到 01:42。选一个就好。</p><div class="online-orbit"><i></i><i></i><i></i></div></div><div class="portal-grid">${tiles.map(x=>`<button class="portal-card ${x[4]}" data-action="page" data-page="${x[0]}"><div class="portal-art"></div><h3>${x[1]}</h3><p>${x[2]}</p><footer><span>${x[3]}</span><span>›</span></footer></button>`).join("")}</div></div></section>`}
 function scene(){const rows=[["wallet","TA的小金库","本周 6 次照顾行为 · 余额 ¥86.40","¥86","#ff6a3d","aiAccount"],["scene","线下活动邀请","周六电影预约码 B612 · 待确认","2","#22c66b","offlineInvite"],["arrow","动态进程显示","外卖、包裹和任务进度集中追踪","3","#1f6fff","progress"]];return`<section class="page hub-page scene-hub">${tabTitle("scene","场景交互","账户、线下活动和现实进程。")}<div class="scroll pro-scroll"><div class="scene-hero-v4"><div class="pro-kicker">real world board</div><h2>让 TA 参与真实生活，而不是停在聊天框里</h2><p>现实任务不做成同款大卡片，而像生活控制台：消费、邀约、配送和提醒各自有状态。</p><div class="online-orbit" style="background:linear-gradient(145deg,#ff6a3d,#ffc936)"><i></i><i></i><i></i></div></div><div class="pro-list">${rows.map(x=>`<button class="pro-row" style="--pro:${x[4]}" data-action="page" data-page="${x[5]}"><div class="lead">${uiIcon(x[0])}</div><div><h4>${x[1]}</h4><p>${x[2]}</p></div><div class="trail">${x[3]} ›</div></button>`).join("")}</div></div></section>`}
 function music(){
   const wave=[66,112,52,126,78,108,64,96,48,132,84,116,70,101,56,124,88,136,58,104];
@@ -6212,6 +7124,8 @@ document.addEventListener("input",e=>{
     const row=el.closest(".dimension-row");
     const label=row&&row.querySelector(`[data-dim-value="${i}"]`);
     if(label)label.textContent=String(v);
+    const dot=document.querySelector(`.trait-map-v3 i:nth-child(${i+1})`);
+    if(dot)dot.style.setProperty("--y",(82-v)+"%");
   }
 });
 function fit(){const s=Math.min((innerWidth-18)/390,(innerHeight-18)/844,1);document.getElementById("phoneScale").style.setProperty("--scale",s)}

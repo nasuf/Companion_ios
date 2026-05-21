@@ -12,6 +12,9 @@ struct ContentView: View {
                         .scaleEffect(1.25)
                 }
                 .environment(\.prototypeTheme, .blue)
+            } else if !appViewModel.hasAuthenticatedSession {
+                AuthView()
+                    .transition(.opacity)
             } else if appViewModel.isProvisioningAgent, appViewModel.agentId != nil {
                 AgentProvisioningView()
                     .transition(.opacity)
@@ -30,6 +33,7 @@ struct ContentView: View {
             }
         }
         .animation(.easeInOut(duration: 0.5), value: appViewModel.isInitialized)
+        .animation(.easeInOut(duration: 0.5), value: appViewModel.hasAuthenticatedSession)
         .animation(.easeInOut(duration: 0.5), value: appViewModel.agentId)
         .animation(.easeInOut(duration: 0.5), value: appViewModel.isProvisioningAgent)
         .task {

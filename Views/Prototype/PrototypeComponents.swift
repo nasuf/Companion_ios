@@ -15,21 +15,24 @@ struct PrototypeScreen<Content: View>: View {
     @Environment(\.prototypePalette) private var palette
     let showsBottomPadding: Bool
     let backgroundStyle: PrototypeBackgroundStyle
+    let animatesBackground: Bool
     @ViewBuilder var content: () -> Content
 
     init(
         showsBottomPadding: Bool = true,
         backgroundStyle: PrototypeBackgroundStyle = .base,
+        animatesBackground: Bool = true,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.showsBottomPadding = showsBottomPadding
         self.backgroundStyle = backgroundStyle
+        self.animatesBackground = animatesBackground
         self.content = content
     }
 
     var body: some View {
         ZStack {
-            PrototypeBackground(style: backgroundStyle)
+            PrototypeBackground(style: backgroundStyle, isAnimated: animatesBackground)
             content()
                 .padding(.bottom, showsBottomPadding ? 92 : 0)
         }
@@ -41,61 +44,70 @@ struct PrototypeScreen<Content: View>: View {
 struct PrototypeBackground: View {
     @Environment(\.prototypePalette) private var palette
     var style: PrototypeBackgroundStyle = .base
+    var isAnimated = true
 
     var body: some View {
-        TimelineView(.animation(minimumInterval: 1 / 30)) { timeline in
-            let time = timeline.date.timeIntervalSinceReferenceDate
+        Group {
+            if isAnimated {
+                TimelineView(.animation(minimumInterval: 1 / 30)) { timeline in
+                    backgroundLayers(time: timeline.date.timeIntervalSinceReferenceDate)
+                }
+            } else {
+                backgroundLayers(time: 0)
+            }
+        }
+    }
 
-            ZStack {
-                baseFill
+    private func backgroundLayers(time: TimeInterval) -> some View {
+        ZStack {
+            baseFill
 
+            LinearGradient(
+                colors: [
+                    Color.white.opacity(style == .movie ? 0.38 : style == .onboarding ? 0.34 : 0.62),
+                    Color.white.opacity(style == .onboarding ? 0.08 : 0.16),
+                    Color.clear
+                ],
+                startPoint: .top,
+                endPoint: UnitPoint(x: 0.5, y: 0.42)
+            )
+
+            if style != .onboarding {
                 LinearGradient(
                     colors: [
-                        Color.white.opacity(style == .movie ? 0.38 : style == .onboarding ? 0.34 : 0.62),
-                        Color.white.opacity(style == .onboarding ? 0.08 : 0.16),
-                        Color.clear
+                        Color.black.opacity(0.0),
+                        Color.black.opacity(0.035)
                     ],
                     startPoint: .top,
-                    endPoint: UnitPoint(x: 0.5, y: 0.42)
+                    endPoint: .bottom
                 )
-
-                if style != .onboarding {
-                    LinearGradient(
-                        colors: [
-                            Color.black.opacity(0.0),
-                            Color.black.opacity(0.035)
-                        ],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
-                }
-
-                ForEach(Array(ambientFields.enumerated()), id: \.offset) { index, field in
-                    RoundedRectangle(cornerRadius: field.cornerRadius, style: .continuous)
-                        .fill(field.gradient)
-                        .frame(width: field.size.width, height: field.size.height)
-                        .rotationEffect(.degrees(field.rotation + sin(time / field.period + Double(index)) * field.rotationDrift))
-                        .offset(
-                            x: field.offset.width + cos(time / field.period + Double(index) * 0.7) * field.drift.width,
-                            y: field.offset.height + sin(time / (field.period * 0.86) + Double(index)) * field.drift.height
-                        )
-                        .blur(radius: field.blur)
-                        .opacity(field.opacity)
-                }
-
-                if style == .game {
-                    PrototypeFineGrid()
-                        .opacity(0.16)
-                        .offset(y: sin(time / 8) * 5)
-                }
-
-                if style == .music {
-                    PrototypeWaveMist(time: time)
-                        .opacity(0.22)
-                }
             }
-            .ignoresSafeArea()
+
+            ForEach(Array(ambientFields.enumerated()), id: \.offset) { index, field in
+                RoundedRectangle(cornerRadius: field.cornerRadius, style: .continuous)
+                    .fill(field.gradient)
+                    .frame(width: field.size.width, height: field.size.height)
+                    .rotationEffect(.degrees(field.rotation + sin(time / field.period + Double(index)) * field.rotationDrift))
+                    .offset(
+                        x: field.offset.width + cos(time / field.period + Double(index) * 0.7) * field.drift.width,
+                        y: field.offset.height + sin(time / (field.period * 0.86) + Double(index)) * field.drift.height
+                    )
+                    .blur(radius: field.blur)
+                    .opacity(field.opacity)
+            }
+
+            if style == .game {
+                PrototypeFineGrid()
+                    .opacity(0.16)
+                    .offset(y: sin(time / 8) * 5)
+            }
+
+            if style == .music {
+                PrototypeWaveMist(time: time)
+                    .opacity(0.22)
+            }
         }
+        .ignoresSafeArea()
     }
 
     private var baseFill: some View {
@@ -354,14 +366,76 @@ struct PrototypeAvatar: View {
 
     var body: some View {
         ZStack {
+            RoundedRectangle(cornerRadius: size * 0.28, style: .continuous)
+                .fill(
+                    LinearGradient(
+                        colors: [
+                            Color(hex: 0xF2FDFF),
+                            Color(hex: 0x8EE7FF),
+                            Color(hex: 0x4D91FF),
+                            Color(hex: 0x7C3CFF)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+
             Circle()
-                .fill(.linearGradient(colors: [palette.accentSoft, .white.opacity(0.9)], startPoint: .topLeading, endPoint: .bottomTrailing))
-            Text(String(name.prefix(1)))
-                .font(.system(size: size * 0.42, weight: .heavy))
-                .foregroundStyle(palette.accentInk)
+                .fill(Color.white.opacity(0.32))
+                .frame(width: size * 0.82, height: size * 0.82)
+                .offset(x: -size * 0.10, y: -size * 0.02)
+
+            Circle()
+                .fill(Color.white.opacity(0.94))
+                .frame(width: size * 0.58, height: size * 0.58)
+                .overlay(alignment: .top) {
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: [Color(hex: 0x16385F), Color(hex: 0x1F6FFF), Color(hex: 0x7C3CFF)],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .frame(width: size * 0.48, height: size * 0.22)
+                        .offset(y: -size * 0.06)
+                }
+                .overlay {
+                    HStack(spacing: size * 0.15) {
+                        Circle()
+                            .fill(Color(hex: 0x101820))
+                            .frame(width: size * 0.055, height: size * 0.09)
+                        Circle()
+                            .fill(Color(hex: 0x101820))
+                            .frame(width: size * 0.055, height: size * 0.09)
+                    }
+                    .offset(y: size * 0.05)
+                }
+                .overlay(alignment: .bottom) {
+                    Capsule()
+                        .stroke(Color(hex: 0x1C2B3A), lineWidth: max(1.1, size * 0.032))
+                        .frame(width: size * 0.18, height: size * 0.08)
+                        .offset(y: -size * 0.13)
+                }
+
+            Circle()
+                .fill(Color(hex: 0xFFF06A))
+                .frame(width: size * 0.10, height: size * 0.10)
+                .overlay(
+                    Circle()
+                        .fill(Color(hex: 0x21D3C2))
+                        .frame(width: size * 0.06, height: size * 0.06)
+                        .offset(x: size * 0.04, y: size * 0.03)
+                )
+                .offset(x: size * 0.31, y: -size * 0.34)
         }
         .frame(width: size, height: size)
-        .overlay(Circle().stroke(palette.hairline, lineWidth: 1))
+        .overlay(
+            RoundedRectangle(cornerRadius: size * 0.28, style: .continuous)
+                .stroke(Color.white.opacity(0.72), lineWidth: 1)
+        )
+        .shadow(color: Color(hex: 0x1F6FFF).opacity(0.18), radius: size * 0.34, y: size * 0.14)
+        .accessibilityLabel(name)
     }
 }
 

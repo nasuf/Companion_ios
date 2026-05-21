@@ -13,7 +13,7 @@ struct PrototypeRootView: View {
     var body: some View {
         NavigationStack(path: $path) {
             nativeTabView
-                .tint(theme.palette.accent)
+                .tint(CreationPalette.blue)
             .environment(\.prototypeTheme, theme)
             .navigationDestination(for: PrototypeRoute.self) { route in
                 PrototypeRouteView(route: route)

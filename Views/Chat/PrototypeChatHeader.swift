@@ -8,45 +8,45 @@ struct PrototypeChatHeader: View {
     let onDrawer: () -> Void
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 14) {
             Button(action: onProfile) {
-                PrototypeAvatar(name: agentName, size: 38)
+                PrototypeAvatar(name: agentName, size: 48)
             }
             .buttonStyle(.prototypeGlassPress)
 
-            VStack(alignment: .leading, spacing: 3) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text(agentName)
-                    .font(.system(size: 16, weight: .heavy))
+                    .font(.system(size: 19, weight: .heavy))
                     .foregroundStyle(palette.fg)
                 HStack(spacing: 4) {
                     Image(systemName: "flame.fill")
                         .foregroundStyle(.linearGradient(colors: [Color(hex: 0xFF4D42), Color(hex: 0xFFC736)], startPoint: .top, endPoint: .bottom))
                     Text("22天")
-                    if let status {
-                        Text("· \(status.displayStatus)")
-                    }
                 }
-                .font(.system(size: 10.5, weight: .semibold))
-                .foregroundStyle(palette.muted)
+                .font(.system(size: 13.5, weight: .heavy))
+                .foregroundStyle(Color(hex: 0xFF6A24))
             }
 
             Spacer()
 
             Button(action: onDrawer) {
                 Image(systemName: "line.3.horizontal")
-                    .font(.system(size: 16, weight: .bold))
+                    .font(.system(size: 21, weight: .bold))
                     .foregroundStyle(palette.fg)
-                    .frame(width: 36, height: 36)
-                    .prototypeLiquidGlass(cornerRadius: 18, tint: Color.white.opacity(0.26), interactive: true)
+                    .frame(width: 48, height: 48)
+                    .background(Color.white.opacity(0.54))
+                    .clipShape(Circle())
+                    .prototypeLiquidGlass(cornerRadius: 24, tint: Color.white.opacity(0.30), interactive: true)
+                    .overlay(Circle().stroke(palette.hairline, lineWidth: 1))
             }
             .buttonStyle(.prototypeGlassProminentPress)
         }
-        .padding(.horizontal, 16)
-        .padding(.top, 8)
-        .padding(.bottom, 8)
-        .frame(height: 54)
-        .background(Color.white.opacity(0.08))
-        .prototypeLiquidGlass(cornerRadius: 0, tint: Color.white.opacity(0.08))
+        .padding(.horizontal, 26)
+        .padding(.top, 14)
+        .padding(.bottom, 14)
+        .frame(height: 88)
+        .background(Color.white.opacity(0.44))
+        .prototypeLiquidGlass(cornerRadius: 0, tint: Color.white.opacity(0.22))
         .overlay(alignment: .bottom) {
             Rectangle()
                 .fill(palette.hairline)
