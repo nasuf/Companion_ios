@@ -49,7 +49,9 @@ struct PrototypeBackground: View {
 
     var body: some View {
         Group {
-            if isAnimated {
+            if style == .game {
+                PrototypeGameBackground(isAnimated: isAnimated)
+            } else if isAnimated {
                 TimelineView(.animation(minimumInterval: 1 / 30)) { timeline in
                     backgroundLayers(time: timeline.date.timeIntervalSinceReferenceDate)
                 }
@@ -98,8 +100,8 @@ struct PrototypeBackground: View {
             }
 
             if style == .game || style == .scene || style == .profile || style == .online {
-                PrototypeFineGrid()
-                    .opacity(style == .game ? 0.16 : style == .online ? 0.16 : 0.10)
+                PrototypeFineGrid(step: style == .game ? 42 : 24, lineOpacity: style == .game ? 0.034 : 0.18)
+                    .opacity(style == .game ? 1 : style == .online ? 0.16 : 0.10)
                     .offset(y: style == .game ? sin(time / 8) * 5 : 0)
             }
 
@@ -153,6 +155,16 @@ struct PrototypeBackground: View {
                     startPoint: .top,
                     endPoint: .bottom
                 )
+            } else if style == .game {
+                LinearGradient(
+                    colors: [
+                        Color(hex: 0xFFFEFB),
+                        Color(hex: 0xEEFCFF),
+                        Color(hex: 0xFFF7F1)
+                    ],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
             } else {
                 palette.bg
             }
@@ -187,8 +199,9 @@ struct PrototypeBackground: View {
             ]
         case .game:
             return [
-                PrototypeAmbientField.custom(colors: [Color(hex: 0x7C3CFF).opacity(0.18), Color(hex: 0x35C9FF).opacity(0.14)], width: 276, height: 214, x: 168, y: 88, opacity: 0.78),
-                PrototypeAmbientField.custom(colors: [Color(hex: 0x22C66B).opacity(0.13), Color(hex: 0xFFBE3D).opacity(0.11)], width: 244, height: 182, x: -112, y: 560, opacity: 0.72)
+                PrototypeAmbientField.custom(colors: [Color(hex: 0xFF6948).opacity(0.18), Color(hex: 0xFFC936).opacity(0.08)], width: 210, height: 180, x: -128, y: -310, opacity: 0.76),
+                PrototypeAmbientField.custom(colors: [Color(hex: 0x1D76FF).opacity(0.14), Color(hex: 0x18C6C0).opacity(0.10)], width: 240, height: 210, x: 178, y: -246, opacity: 0.58),
+                PrototypeAmbientField.custom(colors: [Color(hex: 0xFF5E3B).opacity(0.18), Color(hex: 0xFFCF40).opacity(0.16)], width: 180, height: 180, x: -178, y: 44, opacity: 0.58)
             ]
         case .music:
             return [
@@ -294,10 +307,12 @@ private struct PrototypeAmbientField {
 }
 
 private struct PrototypeFineGrid: View {
+    var step: CGFloat = 24
+    var lineOpacity: Double = 0.18
+
     var body: some View {
         Canvas { context, size in
             var path = Path()
-            let step: CGFloat = 24
             var x: CGFloat = 0
             while x <= size.width {
                 path.move(to: CGPoint(x: x, y: 0))
@@ -310,9 +325,185 @@ private struct PrototypeFineGrid: View {
                 path.addLine(to: CGPoint(x: size.width, y: y))
                 y += step
             }
-            context.stroke(path, with: .color(Color.black.opacity(0.18)), lineWidth: 0.5)
+            context.stroke(path, with: .color(Color.black.opacity(lineOpacity)), lineWidth: 0.5)
         }
         .ignoresSafeArea()
+    }
+}
+
+private struct PrototypeGameBackground: View {
+    let isAnimated: Bool
+    @State private var floats = false
+    @State private var piecesFloat = false
+
+    var body: some View {
+        ZStack {
+            LinearGradient(
+                colors: [
+                    Color(hex: 0xFFFEFB),
+                    Color(hex: 0xEEFCFF),
+                    Color(hex: 0xFFF7F1)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+
+            LinearGradient(
+                colors: [
+                    Color.white.opacity(0.62),
+                    Color.white.opacity(0.16),
+                    Color.clear
+                ],
+                startPoint: .top,
+                endPoint: UnitPoint(x: 0.5, y: 0.42)
+            )
+
+            Color.clear
+                .overlay(alignment: .topLeading) {
+                    gameBlob(
+                        colors: [Color(hex: 0xFF6948).opacity(0.18), Color(hex: 0xFFC936).opacity(0.08)],
+                        width: 210,
+                        height: 180,
+                        x: -128,
+                        y: -310,
+                        opacity: 0.76,
+                        delay: 0
+                    )
+                }
+                .overlay(alignment: .topTrailing) {
+                    gameBlob(
+                        colors: [Color(hex: 0x1D76FF).opacity(0.14), Color(hex: 0x18C6C0).opacity(0.10)],
+                        width: 240,
+                        height: 210,
+                        x: 44,
+                        y: -246,
+                        opacity: 0.58,
+                        delay: 0.8
+                    )
+                }
+                .overlay(alignment: .leading) {
+                    gameBlob(
+                        colors: [Color(hex: 0xFF5E3B).opacity(0.18), Color(hex: 0xFFCF40).opacity(0.16)],
+                        width: 180,
+                        height: 180,
+                        x: -104,
+                        y: 44,
+                        opacity: 0.58,
+                        delay: 1.4
+                    )
+                }
+
+            PrototypeGameBoardBackdropSmooth(floats: floats, piecesFloat: piecesFloat)
+
+            PrototypeFineGrid(step: 42, lineOpacity: 0.034)
+                .offset(y: floats ? 5 : -2)
+                .animation(isAnimated ? .easeInOut(duration: 8).repeatForever(autoreverses: true) : nil, value: floats)
+        }
+        .ignoresSafeArea()
+        .onAppear {
+            guard isAnimated else { return }
+            withAnimation(.easeInOut(duration: 10).repeatForever(autoreverses: true)) {
+                floats = true
+            }
+            withAnimation(.easeInOut(duration: 7).repeatForever(autoreverses: true)) {
+                piecesFloat = true
+            }
+        }
+    }
+
+    private func gameBlob(
+        colors: [Color],
+        width: CGFloat,
+        height: CGFloat,
+        x: CGFloat,
+        y: CGFloat,
+        opacity: Double,
+        delay: Double
+    ) -> some View {
+        RoundedRectangle(cornerRadius: min(width, height) * 0.34, style: .continuous)
+            .fill(.linearGradient(colors: colors, startPoint: .topLeading, endPoint: .bottomTrailing))
+            .frame(width: width, height: height)
+            .rotationEffect(.degrees(floats ? -5 : -16))
+            .offset(x: x + (floats ? 12 : -6), y: y + (floats ? 18 : -8))
+            .blur(radius: 28)
+            .opacity(opacity)
+            .animation(isAnimated ? .easeInOut(duration: 7.5 + delay).delay(delay).repeatForever(autoreverses: true) : nil, value: floats)
+    }
+}
+
+private struct PrototypeGameBoardBackdropSmooth: View {
+    let floats: Bool
+    let piecesFloat: Bool
+
+    var body: some View {
+        GeometryReader { proxy in
+            ZStack {
+                RoundedRectangle(cornerRadius: 34, style: .continuous)
+                    .fill(.linearGradient(
+                        colors: [
+                            Color(hex: 0x2DE087).opacity(0.52),
+                            Color(hex: 0x2574FF).opacity(0.48)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ))
+                    .overlay(boardGrid.clipShape(RoundedRectangle(cornerRadius: 34, style: .continuous)))
+                    .overlay(boardPieces)
+                    .shadow(color: Color(hex: 0x1F6FFF).opacity(0.13), radius: 32, y: 26)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 34, style: .continuous)
+                            .stroke(Color.white.opacity(0.36), lineWidth: 1)
+                    )
+            }
+            .frame(width: 178, height: 126)
+            .opacity(0.52)
+            .rotationEffect(.degrees(floats ? -0.4 : -3.4))
+            .position(
+                x: proxy.size.width - 76 + (floats ? 7 : -5),
+                y: 156 + (floats ? 8 : -6)
+            )
+            .animation(.easeInOut(duration: 10).repeatForever(autoreverses: true), value: floats)
+        }
+        .ignoresSafeArea()
+    }
+
+    private var boardGrid: some View {
+        Canvas { context, size in
+            var path = Path()
+            let step: CGFloat = 28
+            var x: CGFloat = 0
+            while x <= size.width {
+                path.move(to: CGPoint(x: x, y: 0))
+                path.addLine(to: CGPoint(x: x, y: size.height))
+                x += step
+            }
+            var y: CGFloat = 0
+            while y <= size.height {
+                path.move(to: CGPoint(x: 0, y: y))
+                path.addLine(to: CGPoint(x: size.width, y: y))
+                y += step
+            }
+            context.stroke(path, with: .color(Color(hex: 0x142836).opacity(0.12)), lineWidth: 0.7)
+        }
+    }
+
+    private var boardPieces: some View {
+        ZStack {
+            Circle()
+                .fill(Color.white.opacity(0.82))
+                .frame(width: 18, height: 18)
+                .position(x: 42, y: piecesFloat ? 46 : 38)
+            Capsule()
+                .fill(Color.white.opacity(0.82))
+                .frame(width: 34, height: 20)
+                .position(x: 150, y: piecesFloat ? 55 : 63)
+            Capsule()
+                .fill(Color.white.opacity(0.82))
+                .frame(width: 42, height: 18)
+                .position(x: 84, y: piecesFloat ? 102 : 94)
+        }
+        .shadow(color: Color(hex: 0x1F4356).opacity(0.11), radius: 13, y: 10)
+        .animation(.easeInOut(duration: 7).repeatForever(autoreverses: true), value: piecesFloat)
     }
 }
 
