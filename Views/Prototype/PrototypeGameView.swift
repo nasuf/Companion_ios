@@ -72,12 +72,12 @@ private struct GameGroupCard: View {
         VStack(alignment: .leading, spacing: 13) {
             ZStack(alignment: .bottomLeading) {
                 GeometryReader { proxy in
-                    PrototypeAssetImage(name: group.image)
+                    PrototypeAssetImage(name: group.image, contentMode: isOpen ? .fill : .fit)
                         .frame(width: proxy.size.width, height: proxy.size.height)
                         .clipped()
                         .overlay(.linearGradient(colors: [.clear, Color.black.opacity(0.72)], startPoint: .top, endPoint: .bottom))
                 }
-                .frame(height: isOpen ? 184 : 116)
+                .frame(height: isOpen ? 184 : 128)
 
                 VStack(alignment: .leading, spacing: 7) {
                     Text(group.kicker)
