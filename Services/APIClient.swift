@@ -1,5 +1,24 @@
 import Foundation
 
+enum BackendConfig {
+    static var baseURL: String {
+        if let override = ProcessInfo.processInfo.environment["API_BASE_URL"],
+           !override.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return override
+        }
+
+#if DEBUG
+        #if targetEnvironment(simulator)
+        return "http://127.0.0.1:8000"
+        #else
+        return "http://192.168.1.102:8000"
+        #endif
+#else
+        return "http://127.0.0.1:8000"
+#endif
+    }
+}
+
 enum SSEEvent {
     case token(String)
     case reply(text: String, index: Int, stickerURL: String?)
@@ -20,7 +39,7 @@ actor WebSocketClient {
     private let baseURL: String
 
     init() {
-        self.baseURL = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "http://127.0.0.1:8000"
+        self.baseURL = BackendConfig.baseURL
     }
 
     func connect(conversationId: String) -> AsyncThrowingStream<SSEEvent, Error> {
@@ -166,7 +185,7 @@ actor APIClient {
     private let encoder: JSONEncoder
 
     private init() {
-        self.baseURL = ProcessInfo.processInfo.environment["API_BASE_URL"] ?? "http://127.0.0.1:8000"
+        self.baseURL = BackendConfig.baseURL
 #if DEBUG
         print("[API] baseURL=\(baseURL)")
 #endif
