@@ -9,8 +9,8 @@ struct PrototypeMessageList: View {
     let isLoadingMore: Bool
     let hasMoreHistory: Bool
     let isTyping: Bool
-    let showEmojiPanel: Bool
-    let showMorePanel: Bool
+    let bottomInset: CGFloat
+    @Binding var scrollTarget: String?
     let loadMoreHistory: () -> Void
     let onMessageVisible: (Int) -> Void
 
@@ -38,11 +38,13 @@ struct PrototypeMessageList: View {
                 }
 
                 Color.clear
-                    .frame(height: bottomSpacerHeight)
+                    .frame(height: max(20, bottomInset + 20))
                     .id(Self.bottomID)
             }
+            .scrollTargetLayout()
             .padding(.top, 22)
         }
+        .scrollPosition(id: $scrollTarget, anchor: .bottom)
         .scrollIndicators(.hidden)
     }
 
@@ -59,10 +61,6 @@ struct PrototypeMessageList: View {
         }
     }
 
-    private var bottomSpacerHeight: CGFloat {
-        if showMorePanel || showEmojiPanel { return 18 }
-        return 20
-    }
 }
 
 private struct PrototypeEmptyConversation: View {

@@ -8,8 +8,11 @@ struct ChatView: View {
     @State private var showEmojiPanel = false
     @State private var showMorePanel = false
     @State private var lastVisibleIndex = -1
+    @State private var messageScrollTarget: String? = PrototypeMessageList.bottomID
+    @State private var composerHeight: CGFloat = 116
 
     private let openRoute: ((PrototypeRoute) -> Void)?
+    private let panelAnimation = Animation.spring(response: 0.32, dampingFraction: 0.84)
 
     init(
         conversationId: String,
@@ -28,26 +31,7 @@ struct ChatView: View {
     var body: some View {
         PrototypeScreen(showsBottomPadding: false, animatesBackground: false) {
             ZStack(alignment: .bottomTrailing) {
-                VStack(spacing: 0) {
-                    PrototypeChatHeader(
-                        agentName: appViewModel.agentName ?? PrototypeFixtures.agentName,
-                        status: viewModel.agentStatus,
-                        onProfile: { openRoute?(.portrait) },
-                        onDrawer: { toggleDrawer() }
-                    )
-
-                    messageArea
-                    blockedOverlay
-
-                    PrototypeChatComposer(
-                        text: $viewModel.inputText,
-                        isFocused: $isInputFocused,
-                        isWaitingReply: viewModel.isWaitingReply,
-                        showEmojiPanel: $showEmojiPanel,
-                        showMorePanel: $showMorePanel,
-                        onSend: sendMessage
-                    )
-                }
+                chatSurface
                 .blur(radius: showDrawer ? 3.5 : 0)
 
                 if showDrawer {
@@ -61,6 +45,46 @@ struct ChatView: View {
         .onDisappear(perform: stopChat)
     }
 
+    private var chatSurface: some View {
+        ZStack(alignment: .bottom) {
+            VStack(spacing: 0) {
+                PrototypeChatHeader(
+                    agentName: appViewModel.agentName ?? PrototypeFixtures.agentName,
+                    status: viewModel.agentStatus,
+                    onProfile: { openRoute?(.portrait) },
+                    onDrawer: { toggleDrawer() }
+                )
+
+                messageArea
+            }
+
+            blockedOverlay
+                .padding(.bottom, composerHeight)
+
+            PrototypeChatComposer(
+                text: $viewModel.inputText,
+                isFocused: $isInputFocused,
+                isWaitingReply: viewModel.isWaitingReply,
+                showEmojiPanel: $showEmojiPanel,
+                showMorePanel: $showMorePanel,
+                onSend: sendMessage
+            )
+            .background(
+                GeometryReader { proxy in
+                    Color.clear
+                        .preference(key: ChatComposerHeightKey.self, value: proxy.size.height)
+                }
+            )
+        }
+        .onPreferenceChange(ChatComposerHeightKey.self) { height in
+            guard height > 0, abs(height - composerHeight) > 0.5 else { return }
+            withAnimation(panelAnimation) {
+                composerHeight = height
+                messageScrollTarget = PrototypeMessageList.bottomID
+            }
+        }
+    }
+
     private var messageArea: some View {
         ScrollViewReader { proxy in
             ZStack(alignment: .bottom) {
@@ -70,8 +94,8 @@ struct ChatView: View {
                     isLoadingMore: viewModel.isLoadingMoreHistory,
                     hasMoreHistory: viewModel.hasMoreHistory,
                     isTyping: viewModel.isTyping,
-                    showEmojiPanel: showEmojiPanel,
-                    showMorePanel: showMorePanel,
+                    bottomInset: composerHeight,
+                    scrollTarget: $messageScrollTarget,
                     loadMoreHistory: { Task { await viewModel.loadMoreHistory() } },
                     onMessageVisible: { index in
                         guard index > lastVisibleIndex else { return }
@@ -116,11 +140,14 @@ struct ChatView: View {
                     viewModel.hasUnreadReply = false
                 }
             }
-            .onChange(of: showMorePanel) { _, isOpen in
-                scrollToBottomAfterComposerChange(proxy, isOpen: isOpen)
+            .onChange(of: showMorePanel) { wasOpen, isOpen in
+                keepBottomPinnedAfterComposerChange(proxy, wasOpen: wasOpen, isOpen: isOpen)
             }
-            .onChange(of: showEmojiPanel) { _, isOpen in
-                scrollToBottomAfterComposerChange(proxy, isOpen: isOpen)
+            .onChange(of: showEmojiPanel) { wasOpen, isOpen in
+                keepBottomPinnedAfterComposerChange(proxy, wasOpen: wasOpen, isOpen: isOpen)
+            }
+            .onChange(of: composerHeight) {
+                syncMessageListWithComposer(proxy)
             }
         }
     }
@@ -197,15 +224,37 @@ struct ChatView: View {
 
     private func scrollToBottom(_ proxy: ScrollViewProxy) {
         withAnimation(.easeOut(duration: 0.2)) {
+            messageScrollTarget = PrototypeMessageList.bottomID
             proxy.scrollTo(PrototypeMessageList.bottomID, anchor: .bottom)
         }
     }
 
-    private func scrollToBottomAfterComposerChange(_ proxy: ScrollViewProxy, isOpen: Bool) {
-        guard isOpen, lastVisibleIndex >= viewModel.messages.count - 3 else { return }
+    private func keepBottomPinnedAfterComposerChange(_ proxy: ScrollViewProxy, wasOpen: Bool, isOpen: Bool) {
+        guard wasOpen || isOpen || lastVisibleIndex >= viewModel.messages.count - 3 else { return }
+        animateMessageListBottom(proxy)
         Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(90))
-            scrollToBottom(proxy)
+            await Task.yield()
+            animateMessageListBottom(proxy)
         }
+    }
+
+    private func animateMessageListBottom(_ proxy: ScrollViewProxy) {
+        withAnimation(panelAnimation) {
+            messageScrollTarget = PrototypeMessageList.bottomID
+            proxy.scrollTo(PrototypeMessageList.bottomID, anchor: .bottom)
+        }
+    }
+
+    private func syncMessageListWithComposer(_ proxy: ScrollViewProxy) {
+        guard lastVisibleIndex >= viewModel.messages.count - 4 || showEmojiPanel || showMorePanel else { return }
+        animateMessageListBottom(proxy)
+    }
+}
+
+private struct ChatComposerHeightKey: PreferenceKey {
+    static let defaultValue: CGFloat = 0
+
+    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
+        value = max(value, nextValue())
     }
 }

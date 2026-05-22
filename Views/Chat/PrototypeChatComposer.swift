@@ -10,28 +10,42 @@ struct PrototypeChatComposer: View {
     let onSend: () -> Void
 
     var body: some View {
-        VStack(spacing: 14) {
-            if showEmojiPanel {
-                PrototypeEmojiPanel { emoji in
-                    text.append(emoji)
-                } close: {
-                    showEmojiPanel = false
-                }
-                .transition(.move(edge: .bottom).combined(with: .opacity))
-            }
+        VStack(spacing: 12) {
+            emojiPanel
 
             inputRow
 
-            if showMorePanel {
-                PrototypeChatMorePanel()
-                    .transition(.move(edge: .top).combined(with: .opacity))
-            }
+            morePanel
         }
         .padding(.horizontal, 28)
-        .padding(.top, showMorePanel || showEmojiPanel ? 10 : 8)
+        .padding(.top, showEmojiPanel ? 10 : 8)
         .padding(.bottom, 18)
         .animation(.spring(response: 0.32, dampingFraction: 0.84), value: showMorePanel)
         .animation(.spring(response: 0.32, dampingFraction: 0.84), value: showEmojiPanel)
+    }
+
+    @ViewBuilder
+    private var emojiPanel: some View {
+        if showEmojiPanel {
+            PrototypeEmojiPanel { emoji in
+                text.append(emoji)
+            } close: {
+                withAnimation(.spring(response: 0.28, dampingFraction: 0.86)) {
+                    showEmojiPanel = false
+                }
+            }
+            .transition(.move(edge: .bottom).combined(with: .opacity))
+            .zIndex(2)
+        }
+    }
+
+    @ViewBuilder
+    private var morePanel: some View {
+        if showMorePanel {
+            PrototypeChatMorePanel()
+            .transition(.move(edge: .bottom).combined(with: .opacity))
+            .zIndex(0)
+        }
     }
 
     private var inputRow: some View {
@@ -44,15 +58,17 @@ struct PrototypeChatComposer: View {
                     if showMorePanel { showEmojiPanel = false }
                 }
             } label: {
-                Image(systemName: showMorePanel ? "xmark" : "plus")
+                Image(systemName: "plus")
                     .font(.system(size: 23, weight: .semibold))
-                    .foregroundStyle(showMorePanel ? Color.white : palette.fg)
+                    .foregroundStyle(showMorePanel ? CreationPalette.blue : palette.fg)
                     .frame(width: 52, height: 52)
-                    .background(showMorePanel ? CreationPalette.actionGradient : LinearGradient(colors: [Color.white.opacity(0.72), Color.white.opacity(0.52)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .rotationEffect(.degrees(showMorePanel ? 45 : 0))
+                    .background(LinearGradient(colors: [Color.white.opacity(0.74), Color.white.opacity(0.52)], startPoint: .topLeading, endPoint: .bottomTrailing))
                     .clipShape(Circle())
-                    .prototypeLiquidGlass(cornerRadius: 26, tint: (showMorePanel ? CreationPalette.action : Color.white).opacity(0.28), interactive: true)
+                    .prototypeLiquidGlass(cornerRadius: 26, tint: Color.white.opacity(showMorePanel ? 0.38 : 0.28), interactive: true)
                     .overlay(Circle().stroke(Color.white.opacity(0.72), lineWidth: 1))
-                    .shadow(color: (showMorePanel ? CreationPalette.action : Color.black).opacity(showMorePanel ? 0.26 : 0.08), radius: 18, y: 10)
+                    .shadow(color: CreationPalette.blue.opacity(showMorePanel ? 0.16 : 0.0), radius: 16, y: 8)
+                    .shadow(color: Color.black.opacity(showMorePanel ? 0.02 : 0.08), radius: 18, y: 10)
             }
             .buttonStyle(.prototypeGlassProminentPress)
 
@@ -153,52 +169,99 @@ private struct PrototypeEmojiPanel: View {
             }
         }
         .padding(16)
+        .frame(maxWidth: .infinity)
+        .background(
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .fill(Color.white.opacity(0.84))
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .stroke(Color.white.opacity(0.66), lineWidth: 1)
+        }
+        .shadow(color: Color.black.opacity(0.07), radius: 18, y: 10)
     }
 }
 
 private struct PrototypeChatMorePanel: View {
     @Environment(\.prototypePalette) private var palette
 
-    private let tools = [
-        ("图片", "photo", Color(hex: 0x1F6FFF)),
-        ("拍摄", "camera", Color(hex: 0x18C6C0)),
-        ("红包", "gift", Color(hex: 0xFF4D5F)),
-        ("位置", "location", Color(hex: 0x22C66B)),
-        ("查找", "magnifyingglass", Color(hex: 0x7C3CFF)),
-        ("电话", "phone", Color(hex: 0xFF8A3D))
+    private let tools: [PrototypeChatToolItem] = [
+        PrototypeChatToolItem("图片", "photo", Color(hex: 0x1F6FFF)),
+        PrototypeChatToolItem("拍摄", "camera", Color(hex: 0x18C6C0)),
+        PrototypeChatToolItem("红包", "gift", Color(hex: 0xFF4D5F)),
+        PrototypeChatToolItem("位置", "location", Color(hex: 0x22C66B)),
+        PrototypeChatToolItem("查找", "magnifyingglass", Color(hex: 0x7C3CFF)),
+        PrototypeChatToolItem("电话", "phone", Color(hex: 0xFF8A3D))
     ]
 
     var body: some View {
-        LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 16) {
-            ForEach(tools, id: \.0) { tool in
-                VStack(spacing: 8) {
-                    Image(systemName: tool.1)
-                        .font(.system(size: 21, weight: .bold))
-                        .foregroundStyle(.white)
-                        .frame(width: 50, height: 50)
-                        .background(tool.2)
-                        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-                        .overlay(alignment: .topTrailing) {
-                            Circle()
-                                .fill(Color(hex: 0x22C66B))
-                                .frame(width: 9, height: 9)
-                                .offset(x: -5, y: 5)
-                        }
-                    Text(tool.0)
-                        .font(.system(size: 13.5, weight: .heavy))
-                        .foregroundStyle(palette.muted)
+        VStack(spacing: 20) {
+            HStack(spacing: 0) {
+                ForEach(tools.prefix(3)) { tool in
+                    PrototypeChatToolButton(tool: tool)
+                }
+            }
+            HStack(spacing: 0) {
+                ForEach(tools.suffix(3)) { tool in
+                    PrototypeChatToolButton(tool: tool)
                 }
             }
         }
-        .padding(.horizontal, 32)
+        .padding(.horizontal, 22)
         .padding(.vertical, 24)
-        .background(Color.white.opacity(0.78))
-        .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
-        .prototypeLiquidGlass(cornerRadius: 30, tint: Color.white.opacity(0.28))
-        .overlay(
+        .frame(maxWidth: .infinity)
+        .background(
             RoundedRectangle(cornerRadius: 30, style: .continuous)
-                .stroke(Color.white.opacity(0.62), lineWidth: 1)
+                .fill(Color.white.opacity(0.86))
+                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 30, style: .continuous))
         )
-        .shadow(color: Color.black.opacity(0.08), radius: 22, y: 12)
+        .overlay {
+            RoundedRectangle(cornerRadius: 30, style: .continuous)
+                .stroke(Color.white.opacity(0.66), lineWidth: 1)
+        }
+        .shadow(color: Color.black.opacity(0.07), radius: 18, y: 10)
+    }
+}
+
+private struct PrototypeChatToolItem: Identifiable {
+    let title: String
+    let symbol: String
+    let color: Color
+
+    var id: String { title }
+
+    init(_ title: String, _ symbol: String, _ color: Color) {
+        self.title = title
+        self.symbol = symbol
+        self.color = color
+    }
+}
+
+private struct PrototypeChatToolButton: View {
+    @Environment(\.prototypePalette) private var palette
+    let tool: PrototypeChatToolItem
+
+    var body: some View {
+        VStack(spacing: 8) {
+            Image(systemName: tool.symbol)
+                .font(.system(size: 21, weight: .bold))
+                .foregroundStyle(.white)
+                .frame(width: 48, height: 48)
+                .background(tool.color)
+                .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                .overlay(alignment: .topTrailing) {
+                    Circle()
+                        .fill(Color(hex: 0x22C66B))
+                        .frame(width: 9, height: 9)
+                        .offset(x: -5, y: 5)
+                }
+
+            Text(tool.title)
+                .font(.system(size: 13.5, weight: .heavy))
+                .foregroundStyle(palette.muted)
+        }
+        .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
     }
 }
