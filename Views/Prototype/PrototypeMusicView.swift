@@ -314,43 +314,54 @@ private struct MusicWaveBar: View {
 
 private struct MusicLyricsDisplay: View {
     let isPlaying: Bool
-    @State private var rolls = false
+    @State private var scrollOffset: CGFloat = 46
 
     private let lyrics = ["你的晚风里有一点潮湿", "我先不说话，陪你听到副歌", "这句像傍晚路灯刚亮的时候", "如果你也喜欢，就让这一句多停一会儿", "下一首换你收藏里的那首晴天", "等旋律落下来，再慢慢回消息"]
+    private let offsets: [CGFloat] = [46, 10, -28, -66]
 
     var body: some View {
-        ZStack {
-            VStack(alignment: .leading, spacing: 18) {
-                ForEach(Array(lyrics.enumerated()), id: \.offset) { index, line in
-                    Text(line)
-                        .font(.system(size: index == 2 ? 22 : 16, weight: index == 2 ? .heavy : .semibold))
-                        .foregroundStyle(index == 2 ? Color.white : Color.white.opacity(0.30))
-                        .lineLimit(1)
-                        .offset(x: index.isMultiple(of: 2) ? 0 : 18)
-                }
+        VStack(alignment: .leading, spacing: 18) {
+            ForEach(Array(lyrics.enumerated()), id: \.offset) { index, line in
+                Text(line)
+                    .font(.system(size: index == 2 ? 22 : 16, weight: index == 2 ? .heavy : .semibold))
+                    .foregroundStyle(index == 2 ? Color.white : Color.white.opacity(0.27))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.86)
+                    .shadow(color: index == 2 ? Color(hex: 0x5DD8FF).opacity(0.28) : .clear, radius: 28, y: 10)
             }
-            .offset(y: rolls && isPlaying ? -58 : 36)
-            .animation(.easeInOut(duration: 10.5).repeatForever(autoreverses: true), value: rolls)
-
-            VStack(alignment: .leading, spacing: 14) {
-                Capsule()
-                    .fill(LinearGradient(colors: [Color(hex: 0x8EE7FF), Color(hex: 0x1F6FFF)], startPoint: .leading, endPoint: .trailing))
-                    .frame(width: 34, height: 4)
-                    .shadow(color: Color(hex: 0x4ECAFF).opacity(0.55), radius: 18)
-
-                Text("这句像傍晚路灯刚亮的时候")
-                    .font(.system(size: 22, weight: .heavy))
-                    .foregroundStyle(.white)
-                    .lineLimit(2)
-                    .shadow(color: Color(hex: 0x5DD8FF).opacity(0.30), radius: 34, y: 12)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .offset(y: isPlaying ? scrollOffset : 10)
         .padding(.horizontal, 4)
         .mask(
             LinearGradient(colors: [.clear, .black, .black, .clear], startPoint: .top, endPoint: .bottom)
         )
-        .onAppear { rolls = true }
+        .task(id: isPlaying) {
+            guard isPlaying else {
+                await MainActor.run { scrollOffset = 10 }
+                return
+            }
+
+            await MainActor.run { scrollOffset = offsets[0] }
+            while !Task.isCancelled {
+                for offset in offsets.dropFirst() {
+                    try? await Task.sleep(nanoseconds: 1_600_000_000)
+                    if Task.isCancelled { return }
+                    await MainActor.run {
+                        withAnimation(.easeInOut(duration: 1.45)) {
+                            scrollOffset = offset
+                        }
+                    }
+                }
+                try? await Task.sleep(nanoseconds: 1_600_000_000)
+                if Task.isCancelled { return }
+                await MainActor.run {
+                    withAnimation(.easeInOut(duration: 1.45)) {
+                        scrollOffset = offsets[0]
+                    }
+                }
+            }
+        }
     }
 }
 
