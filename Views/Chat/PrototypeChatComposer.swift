@@ -1,12 +1,21 @@
 import SwiftUI
+import UIKit
+
+enum PrototypeChatInputMode: Equatable {
+    case none
+    case keyboard
+    case emoji
+    case more
+}
 
 struct PrototypeChatComposer: View {
     @Environment(\.prototypePalette) private var palette
     @Binding var text: String
-    var isFocused: FocusState<Bool>.Binding
     let isWaitingReply: Bool
-    @Binding var showEmojiPanel: Bool
-    @Binding var showMorePanel: Bool
+    @Binding var inputMode: PrototypeChatInputMode
+    let emojiPanelHeight: CGFloat
+    let accessoryPanelHeight: CGFloat
+    let onFocusChanged: (Bool) -> Void
     let onSend: () -> Void
 
     var body: some View {
@@ -18,22 +27,22 @@ struct PrototypeChatComposer: View {
             morePanel
         }
         .padding(.horizontal, 28)
-        .padding(.top, showEmojiPanel ? 10 : 8)
+        .padding(.top, inputMode == .emoji ? 10 : 8)
         .padding(.bottom, 18)
-        .animation(.spring(response: 0.32, dampingFraction: 0.84), value: showMorePanel)
-        .animation(.spring(response: 0.32, dampingFraction: 0.84), value: showEmojiPanel)
+        .animation(.spring(response: 0.32, dampingFraction: 0.84), value: inputMode)
     }
 
     @ViewBuilder
     private var emojiPanel: some View {
-        if showEmojiPanel {
+        if inputMode == .emoji {
             PrototypeEmojiPanel { emoji in
                 text.append(emoji)
             } close: {
                 withAnimation(.spring(response: 0.28, dampingFraction: 0.86)) {
-                    showEmojiPanel = false
+                    inputMode = .none
                 }
             }
+            .frame(height: emojiPanelHeight)
             .transition(.move(edge: .bottom).combined(with: .opacity))
             .zIndex(2)
         }
@@ -41,10 +50,11 @@ struct PrototypeChatComposer: View {
 
     @ViewBuilder
     private var morePanel: some View {
-        if showMorePanel {
+        if inputMode == .more {
             PrototypeChatMorePanel()
-            .transition(.move(edge: .bottom).combined(with: .opacity))
-            .zIndex(0)
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .frame(height: accessoryPanelHeight)
+                .zIndex(0)
         }
     }
 
@@ -54,23 +64,24 @@ struct PrototypeChatComposer: View {
 
             Button {
                 withAnimation(.spring(response: 0.28, dampingFraction: 0.82)) {
-                    showMorePanel.toggle()
-                    if showMorePanel { showEmojiPanel = false }
+                    inputMode = inputMode == .more ? .none : .more
+                    Self.dismissKeyboard()
                 }
             } label: {
                 Image(systemName: "plus")
                     .font(.system(size: 23, weight: .semibold))
-                    .foregroundStyle(showMorePanel ? CreationPalette.blue : palette.fg)
+                    .foregroundStyle(inputMode == .more ? CreationPalette.blue : palette.fg)
                     .frame(width: 52, height: 52)
-                    .rotationEffect(.degrees(showMorePanel ? 45 : 0))
-                    .background(LinearGradient(colors: [Color.white.opacity(0.74), Color.white.opacity(0.52)], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .rotationEffect(.degrees(inputMode == .more ? 45 : 0))
+                    .background(Color.white.opacity(0.86))
                     .clipShape(Circle())
-                    .prototypeLiquidGlass(cornerRadius: 26, tint: Color.white.opacity(showMorePanel ? 0.38 : 0.28), interactive: true)
                     .overlay(Circle().stroke(Color.white.opacity(0.72), lineWidth: 1))
-                    .shadow(color: CreationPalette.blue.opacity(showMorePanel ? 0.16 : 0.0), radius: 16, y: 8)
-                    .shadow(color: Color.black.opacity(showMorePanel ? 0.02 : 0.08), radius: 18, y: 10)
+                    .shadow(color: CreationPalette.blue.opacity(inputMode == .more ? 0.16 : 0.0), radius: 16, y: 8)
+                    .shadow(color: Color.black.opacity(inputMode == .more ? 0.02 : 0.08), radius: 18, y: 10)
             }
             .buttonStyle(.prototypeGlassProminentPress)
+            .accessibilityLabel(inputMode == .more ? "关闭功能面板" : "打开功能面板")
+            .accessibilityIdentifier("chat.more.button")
 
             if shouldShowSend {
                 Button(action: onSend) {
@@ -89,11 +100,24 @@ struct PrototypeChatComposer: View {
 
     private var inputCapsule: some View {
         HStack(spacing: 14) {
-            TextField(showMorePanel ? "选择一个功能..." : "发消息...", text: $text, axis: .vertical)
-                .lineLimit(1...4)
-                .font(.system(size: 16.5, weight: .regular))
-                .focused(isFocused)
-                .onSubmit(onSend)
+            ZStack(alignment: .leading) {
+                if text.isEmpty {
+                    Text(inputMode == .more ? "选择一个功能..." : "发消息...")
+                        .font(.system(size: 16.5))
+                        .foregroundStyle(palette.subtle)
+                        .allowsHitTesting(false)
+                }
+
+                PrototypeChatTextView(
+                    text: $text,
+                    onFocusChanged: onFocusChanged,
+                    onSubmit: onSend
+                )
+                .frame(minHeight: 24, maxHeight: 72)
+                .accessibilityLabel("消息输入框")
+                .accessibilityIdentifier("chat.message.input")
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
 
             Image(systemName: "mic")
                 .font(.system(size: 20, weight: .semibold))
@@ -102,25 +126,32 @@ struct PrototypeChatComposer: View {
 
             Button {
                 withAnimation(.spring(response: 0.26, dampingFraction: 0.86)) {
-                    showEmojiPanel.toggle()
-                    if showEmojiPanel { showMorePanel = false }
+                    inputMode = inputMode == .emoji ? .none : .emoji
+                    Self.dismissKeyboard()
                 }
             } label: {
                 Image(systemName: "face.smiling.fill")
                     .font(.system(size: 22, weight: .semibold))
                     .foregroundStyle(Color(hex: 0xFFD96C))
             }
+            .accessibilityLabel("表情")
+            .accessibilityIdentifier("chat.emoji.button")
             .buttonStyle(.prototypeGlassPress)
         }
         .foregroundStyle(palette.muted)
         .padding(.leading, 20)
         .padding(.trailing, 16)
         .frame(minHeight: 52)
-        .background(Color.white.opacity(0.78))
-        .clipShape(Capsule())
-        .prototypeLiquidGlass(cornerRadius: 26, tint: Color.white.opacity(0.30), interactive: true)
+        .contentShape(Capsule())
+        .background(inputCapsuleBackground)
         .overlay(Capsule().stroke(palette.hairline, lineWidth: 1))
         .shadow(color: Color.black.opacity(0.07), radius: 14, y: 8)
+    }
+
+    private var inputCapsuleBackground: some View {
+        Capsule()
+            .fill(Color.white.opacity(0.86))
+            .allowsHitTesting(false)
     }
 
     private var sendButtonColor: Color {
@@ -131,6 +162,93 @@ struct PrototypeChatComposer: View {
 
     private var shouldShowSend: Bool {
         !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isWaitingReply
+    }
+
+    private static func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
+private struct PrototypeChatTextView: UIViewRepresentable {
+    @Binding var text: String
+    let onFocusChanged: (Bool) -> Void
+    let onSubmit: () -> Void
+
+    func makeUIView(context: Context) -> UITextView {
+        let textView = UITextView()
+        textView.delegate = context.coordinator
+        textView.backgroundColor = .clear
+        textView.font = UIFont.systemFont(ofSize: 16.5)
+        textView.textColor = UIColor(Color(hex: 0x151716))
+        textView.tintColor = UIColor(CreationPalette.blue)
+        textView.returnKeyType = .send
+        textView.autocapitalizationType = .none
+        textView.autocorrectionType = .no
+        textView.spellCheckingType = .no
+        textView.smartDashesType = .no
+        textView.smartInsertDeleteType = .no
+        textView.smartQuotesType = .no
+        textView.textContentType = .none
+        textView.isScrollEnabled = false
+        textView.textContainerInset = .zero
+        textView.textContainer.lineFragmentPadding = 0
+        textView.inputAssistantItem.leadingBarButtonGroups = []
+        textView.inputAssistantItem.trailingBarButtonGroups = []
+        textView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        textView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        return textView
+    }
+
+    func updateUIView(_ textView: UITextView, context: Context) {
+        if textView.text != text {
+            textView.text = text
+        }
+
+        let contentHeight = textView.sizeThatFits(CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude)).height
+        textView.isScrollEnabled = contentHeight > 72
+    }
+
+    func sizeThatFits(_ proposal: ProposedViewSize, uiView: UITextView, context: Context) -> CGSize? {
+        let width = proposal.width ?? 0
+        let fittingSize = CGSize(width: width, height: .greatestFiniteMagnitude)
+        let height = uiView.sizeThatFits(fittingSize).height
+        return CGSize(width: width, height: min(max(24, height), 72))
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(text: $text, onFocusChanged: onFocusChanged, onSubmit: onSubmit)
+    }
+
+    final class Coordinator: NSObject, UITextViewDelegate {
+        @Binding private var text: String
+        private let onFocusChanged: (Bool) -> Void
+        private let onSubmit: () -> Void
+
+        init(text: Binding<String>, onFocusChanged: @escaping (Bool) -> Void, onSubmit: @escaping () -> Void) {
+            _text = text
+            self.onFocusChanged = onFocusChanged
+            self.onSubmit = onSubmit
+        }
+
+        func textViewDidBeginEditing(_ textView: UITextView) {
+            onFocusChanged(true)
+        }
+
+        func textViewDidEndEditing(_ textView: UITextView) {
+            onFocusChanged(false)
+        }
+
+        func textViewDidChange(_ textView: UITextView) {
+            text = textView.text
+        }
+
+        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText replacement: String) -> Bool {
+            if replacement == "\n" {
+                onSubmit()
+                return false
+            }
+            return true
+        }
     }
 }
 
@@ -152,6 +270,7 @@ private struct PrototypeEmojiPanel: View {
                     .foregroundStyle(palette.accent)
                     .buttonStyle(.prototypeGlassPress)
             }
+
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 8) {
                 ForEach(emojis, id: \.self) { emoji in
                     Button {
@@ -173,7 +292,6 @@ private struct PrototypeEmojiPanel: View {
         .background(
             RoundedRectangle(cornerRadius: 28, style: .continuous)
                 .fill(Color.white.opacity(0.84))
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
         )
         .overlay {
             RoundedRectangle(cornerRadius: 28, style: .continuous)
@@ -202,6 +320,7 @@ private struct PrototypeChatMorePanel: View {
                     PrototypeChatToolButton(tool: tool)
                 }
             }
+
             HStack(spacing: 0) {
                 ForEach(tools.suffix(3)) { tool in
                     PrototypeChatToolButton(tool: tool)
@@ -214,7 +333,6 @@ private struct PrototypeChatMorePanel: View {
         .background(
             RoundedRectangle(cornerRadius: 30, style: .continuous)
                 .fill(Color.white.opacity(0.86))
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 30, style: .continuous))
         )
         .overlay {
             RoundedRectangle(cornerRadius: 30, style: .continuous)

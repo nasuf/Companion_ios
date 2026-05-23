@@ -8,11 +8,12 @@ struct PrototypeMessageList: View {
     let isLoading: Bool
     let isLoadingMore: Bool
     let hasMoreHistory: Bool
+    let canLoadMoreHistory: Bool
     let isTyping: Bool
     let bottomInset: CGFloat
-    @Binding var scrollTarget: String?
     let loadMoreHistory: () -> Void
     let onMessageVisible: (Int) -> Void
+    let onBottomVisibilityChanged: (Bool) -> Void
 
     var body: some View {
         ScrollView {
@@ -39,13 +40,18 @@ struct PrototypeMessageList: View {
 
                 Color.clear
                     .frame(height: max(20, bottomInset + 20))
+
+                Color.clear
+                    .frame(height: 1)
                     .id(Self.bottomID)
+                    .onAppear { onBottomVisibilityChanged(true) }
+                    .onDisappear { onBottomVisibilityChanged(false) }
             }
             .scrollTargetLayout()
             .padding(.top, 22)
         }
-        .scrollPosition(id: $scrollTarget, anchor: .bottom)
         .scrollIndicators(.hidden)
+        .scrollDismissesKeyboard(.interactively)
     }
 
     @ViewBuilder
@@ -54,7 +60,7 @@ struct PrototypeMessageList: View {
             ProgressView()
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
-        } else if hasMoreHistory {
+        } else if hasMoreHistory && canLoadMoreHistory {
             Color.clear
                 .frame(height: 1)
                 .onAppear(perform: loadMoreHistory)
@@ -84,22 +90,24 @@ private struct PrototypeEmptyConversation: View {
 private struct PrototypeTypingBubble: View {
     @Environment(\.prototypePalette) private var palette
 
-    var body: some View {
-        HStack(alignment: .top, spacing: 10) {
-            PrototypeAvatar(name: PrototypeFixtures.agentName, size: 36)
-            HStack(spacing: 4) {
-                ForEach(0..<3, id: \.self) { index in
-                    Circle()
-                        .fill(palette.subtle)
-                        .frame(width: 5, height: 5)
-                        .opacity(index == 1 ? 0.55 : 0.9)
-                }
-            }
-            .padding(.horizontal, 12)
-            .frame(height: 36)
-            .prototypeLiquidGlass(cornerRadius: 18, tint: Color.white.opacity(0.24))
-            Spacer()
-        }
-        .padding(.horizontal, 20)
-    }
-}
+	    var body: some View {
+	        HStack(alignment: .top, spacing: 10) {
+	            PrototypeAvatar(name: PrototypeFixtures.agentName, size: 36)
+	            HStack(spacing: 4) {
+	                ForEach(0..<3, id: \.self) { index in
+	                    Circle()
+	                        .fill(palette.subtle)
+	                        .frame(width: 5, height: 5)
+	                        .opacity(index == 1 ? 0.55 : 0.9)
+	                }
+	            }
+	            .padding(.horizontal, 12)
+	            .frame(height: 36)
+	            .background(Color.white.opacity(0.92))
+	            .clipShape(Capsule())
+	            .overlay(Capsule().stroke(Color.black.opacity(0.05), lineWidth: 1))
+	            Spacer()
+	        }
+	        .padding(.horizontal, 20)
+	    }
+	}

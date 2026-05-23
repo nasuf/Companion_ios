@@ -24,11 +24,15 @@ struct PrototypeChatDrawer: View {
                 }
             }
             .padding(8)
-            .prototypeLiquidGlass(cornerRadius: 34, tint: Color.white.opacity(0.30))
+            .background(Color.white.opacity(0.92))
+            .clipShape(RoundedRectangle(cornerRadius: 34, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 34, style: .continuous).stroke(Color.black.opacity(0.05), lineWidth: 1))
 
             drawerButton(entries[5])
                 .padding(8)
-                .prototypeLiquidGlass(cornerRadius: 30, tint: Color.white.opacity(0.30))
+                .background(Color.white.opacity(0.92))
+                .clipShape(RoundedRectangle(cornerRadius: 30, style: .continuous))
+                .overlay(RoundedRectangle(cornerRadius: 30, style: .continuous).stroke(Color.black.opacity(0.05), lineWidth: 1))
 
             statusSummary
         }
@@ -68,7 +72,9 @@ struct PrototypeChatDrawer: View {
             .foregroundStyle(palette.muted)
             .padding(.vertical, 8)
             .frame(maxWidth: .infinity)
-            .prototypeLiquidGlass(cornerRadius: 18, tint: Color.white.opacity(0.18))
+            .background(Color.white.opacity(0.92))
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).stroke(Color.black.opacity(0.05), lineWidth: 1))
         }
     }
 }

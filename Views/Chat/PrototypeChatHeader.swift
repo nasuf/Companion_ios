@@ -34,9 +34,8 @@ struct PrototypeChatHeader: View {
                     .font(.system(size: 21, weight: .bold))
                     .foregroundStyle(palette.fg)
                     .frame(width: 48, height: 48)
-                    .background(Color.white.opacity(0.54))
+                    .background(Color.white.opacity(0.90))
                     .clipShape(Circle())
-                    .prototypeLiquidGlass(cornerRadius: 24, tint: Color.white.opacity(0.30), interactive: true)
                     .overlay(Circle().stroke(palette.hairline, lineWidth: 1))
             }
             .buttonStyle(.prototypeGlassProminentPress)
@@ -45,12 +44,6 @@ struct PrototypeChatHeader: View {
         .padding(.top, 14)
         .padding(.bottom, 14)
         .frame(height: 88)
-        .background(Color.white.opacity(0.44))
-        .prototypeLiquidGlass(cornerRadius: 0, tint: Color.white.opacity(0.22))
-        .overlay(alignment: .bottom) {
-            Rectangle()
-                .fill(palette.hairline)
-                .frame(height: 1)
-        }
+        .background(Color.white.opacity(0.94).ignoresSafeArea(edges: .top))
     }
 }
