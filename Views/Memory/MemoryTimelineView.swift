@@ -187,7 +187,7 @@ private struct PrototypeMemoryCard: View {
                         .foregroundStyle(palette.subtle)
                 }
 
-                Text(memory.summary ?? memory.content)
+                Text(memory.content)
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(palette.fg)
                     .lineLimit(3)

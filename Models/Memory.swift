@@ -8,13 +8,12 @@ struct Memory: Codable, Identifiable {
     let source: String?
     let level: Int
     let content: String
-    let summary: String?
     let importance: Double
     let createdAt: String
     var similarity: Double?
 
     enum CodingKeys: String, CodingKey {
-        case id, type, source, level, content, summary, importance, similarity
+        case id, type, source, level, content, importance, similarity
         case userId = "user_id"
         case createdAt = "created_at"
     }

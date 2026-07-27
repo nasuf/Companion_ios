@@ -36,9 +36,6 @@ struct MemoryDetailView: View {
 
     private var contentCard: some View {
         VStack(alignment: .leading, spacing: 14) {
-            if let summary = memory.summary, !summary.isEmpty {
-                textBlock(title: "摘要", content: summary)
-            }
             textBlock(title: "原文", content: memory.content)
         }
         .prototypeCard(cornerRadius: 28, padding: 17)
